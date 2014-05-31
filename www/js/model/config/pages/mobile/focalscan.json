@@ -1,0 +1,22 @@
+{
+    contents : {
+
+    },
+    pageComposition : {
+        template : 'model.ui.templates.common.MainLayout',
+        placeholders : {
+
+            'header' : {
+                'template' : 'model.ui.templates.common.PageHeaderTemplate',
+                'module': 'common:headerCtrl'
+            },
+            'body' : {
+                'template' : 'model.ui.templates.scans.focal.FocalDataTemplate',
+                'module': 'common:focalScanCtrl'
+            }
+        }
+    },
+    pageId : 'focalscan',
+    url : 'focalscan',
+    title : 'Focal Scan'
+}

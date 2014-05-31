@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+        <title>bandar</title>
+    </head>
+    <body>
+        <div id="container" class="splash"></div>
+        <div class="msk loading hidden">&nbsp;</div>
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/aria/ariatemplates.js"></script>
+        <script type="text/javascript">
+            var pageEngine = null;
+            aria.core.AppEnvironment.setEnvironment({
+              defaultWidgetLibs : {
+                "embed" : "aria.embed.EmbedLib"
+              }
+            });
+            
+            Aria.load({
+                classes: [
+                          "model.ui.utils.DataUtil",
+                          "aria.pageEngine.PageEngine",
+                          "aria.pageEngine.pageProviders.BasePageProvider"
+                ],
+                oncomplete: function() {
+
+                    /* decide default first page */
+                    var homePageId = 'authenticate';
+                    if (localStorage.getItem('logged_in') != null) {
+                        homePageId = 'mygroups';
+                    }
+
+                    pageEngine = new aria.pageEngine.PageEngine();
+                    pageEngine.start({
+                        pageProvider : new aria.pageEngine.pageProviders.BasePageProvider({
+                            'siteConfigLocation' : 'model/config/site/site.json',
+                            'pageBaseLocation' : 'model/config/pages/mobile/',
+                            'homePageId' : homePageId
+                        })
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+{
+    contents : {
+
+    },
+    pageComposition : {
+        template : 'model.ui.templates.common.MainLayout',
+        placeholders : {
+
+            'header' : {
+                'template' : 'model.ui.templates.common.PageHeaderTemplate',
+                'module': 'common:headerCtrl'
+            },
+            'body' : {
+                'template' : 'model.ui.templates.manage.scans.ManageScans'
+            }
+        }
+    },
+    pageId : 'managescans',
+    url : 'managescans',
+    title : 'Manage'
+}

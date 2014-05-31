@@ -1,0 +1,30 @@
+{
+    containerId : 'container',
+    appData : {
+    
+    },
+    navigation : 'hash',
+    commonModules : {
+        'headerCtrl' : {
+            classpath : 'model.ui.templates.common.PageHeaderCtrl',
+            priority : 2,
+            bind: {
+                header: 'appData:header'
+            }
+        },
+        'focalScanCtrl': {
+            classpath: 'model.ui.templates.scans.focal.FocalScanCtrl',
+            priority: 2
+        },
+        'touristScanCtrl': {
+            classpath: 'model.ui.templates.scans.tourist.TouristScanCtrl',
+            priority: 2
+        }
+    },
+    animations : true,
+    storage : {
+        active : true,
+        suffix : "myApp",
+        expiresAfter : 86400
+    }
+}

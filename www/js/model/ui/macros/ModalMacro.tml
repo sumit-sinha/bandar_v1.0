@@ -1,0 +1,32 @@
+{Library {
+    $classpath : "model.ui.macros.ModalMacro",
+    $res : {
+		resources: 'model.ui.resources.AppLocalization'
+	}
+}}
+
+    {macro showModal(args)}
+        <div class="bootbox modal" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						{if args.closeCb != null}
+							<button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;" {on tap args.closeCb/}>×</button>
+						{/if}
+						<div class="bootbox-body">${args.message}</div>
+					</div>
+					{if args.buttons != null && args.buttons.length > 0}
+						<div class="btn-group btn-group-justified border-bottom">
+							{foreach button in args.buttons}
+								<a class="btn btn-default" role="button" href="javascript:void(0);" {on click button.callback/}>
+									${button.label}
+								</a>
+							{/foreach}
+						</div>
+					{/if}
+				</div>
+			</div>
+		</div>
+    {/macro}
+
+{/Library}

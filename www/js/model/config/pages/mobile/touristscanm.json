@@ -1,0 +1,22 @@
+{
+    contents : {
+
+    },
+    pageComposition : {
+        template : 'model.ui.templates.common.MainLayout',
+        placeholders : {
+
+            'header' : {
+                'template' : 'model.ui.templates.common.PageHeaderTemplate',
+                'module': 'common:headerCtrl'
+            },
+            'body' : {
+                'template' : 'model.ui.templates.scans.tourist.TouristDataTemplate',
+                'module': 'common:touristScanCtrl'
+            }
+        }
+    },
+    pageId : 'touristscanm',
+    url : 'touristscanm',
+    title : 'Tourist Scan'
+}

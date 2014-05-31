@@ -1,0 +1,27 @@
+{
+    contents : {
+
+    },
+    pageComposition : {
+        template : 'model.ui.templates.common.MainLayout',
+        placeholders : {
+
+            'header' : {
+                'template' : 'model.ui.templates.common.PageHeaderTemplate',
+                'module': 'common:headerCtrl'
+            },
+            'body' : {
+                'template' : 'model.ui.templates.scans.range.RangeRestrictionTemplate',
+                'module': 'rangeCtrl'
+            }
+        },
+        modules : {
+            'rangeCtrl' : {
+                classpath : 'model.ui.templates.scans.range.RangeRestrictionCtrl'
+            }
+        }
+    },
+    pageId : 'rangerestriction',
+    url : 'rangerestriction',
+    title : 'Range Restriction'
+}

@@ -1,0 +1,27 @@
+{
+    contents : {
+
+    },
+    pageComposition : {
+        template : 'model.ui.templates.common.MainLayout',
+        placeholders : {
+
+            'header' : {
+                'template' : 'model.ui.templates.common.PageHeaderTemplate',
+                'module': 'common:headerCtrl'
+            },
+            'body' : {
+                'template' : 'model.ui.templates.login.RegisterFormTemplate',
+                'module': 'authCtrl'
+            }
+        },
+        modules : {
+            'authCtrl' : {
+                classpath : 'model.ui.templates.login.AuthenticationCtrl'
+            }
+        }
+    },
+    pageId : 'register',
+    url : 'register',
+    title : 'Register'
+}
