@@ -80,15 +80,33 @@
 										</div>
 									{/if}
 								{/foreach}
-								<div class="btn-group btn-group-justified border-bottom">
-									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
-										Save (${this.data.timer})
-									</a>
-								</div>
+								{section {
+								    id : "btnSection",
+								    type: 'div',
+								    macro : "monkeyButtons",
+								    bindRefreshTo : [{
+								        to : "paused",
+								        inside : this.data,
+								        recursive : true
+								    }]
+								}/}
 							</form>
 						</div>
 					</div>
 				</div>
+			{/if}
+		</div>
+	{/macro}
+
+	{macro monkeyButtons()}
+		<div class="btn-group btn-group-justified border-bottom">
+			<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
+				Save (${this.data.timer})
+			</a>
+			{if this.data.paused}
+				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnContinue"/} {on click {fn: 'onContinueClick', scope: this}/}>
+					Continue
+				</a>
 			{/if}
 		</div>
 	{/macro}

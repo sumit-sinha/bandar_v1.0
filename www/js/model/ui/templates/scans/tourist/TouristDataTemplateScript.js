@@ -22,6 +22,7 @@ Aria.tplScriptDefinition({
 			}
 
 			// init
+			this.data.timeStamps = [];
 			this.data.behaviors = this.db.getMonkeyBehaviors();
 			this.data.touristData = this.moduleCtrl.getTouristSessionData();
 
@@ -53,6 +54,7 @@ Aria.tplScriptDefinition({
 			if (args.behavior != null) {
 				var txtAreaEL = document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
 				if (txtAreaEL != null) {
+					this.data.timeStamps.push(this.utils.getCurrentTime());
 					txtAreaEL.value += ((txtAreaEL.value != '')?'-':'') + args.behavior.code; 
 				}
 
@@ -86,10 +88,12 @@ Aria.tplScriptDefinition({
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmTourist')));
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
+			input['behavior_timestamp'] = this.data.timeStamps;
 			
 			this.data.errors.list = this.moduleCtrl.onFinalSave(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
 				// show success dialog
+				this.data.timeStamps = [];
 				this.utils.showOverlay(false);
 				this.$json.setValue(this.data, 'tourist_saved', true);
 			} else {
@@ -104,6 +108,7 @@ Aria.tplScriptDefinition({
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmTourist')));
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
+			input['behavior_timestamp'] = this.data.timeStamps;
 
 			this.data.errors.list = this.moduleCtrl.saveTouristScanData(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
@@ -118,6 +123,7 @@ Aria.tplScriptDefinition({
 					behaviorEl.value = '';
 				}
 
+				this.data.timeStamps = [];
 				this.startTime = this.utils.getCurrentTime();
 			} else {
 				// show error

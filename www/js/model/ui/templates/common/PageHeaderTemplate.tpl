@@ -14,7 +14,7 @@
 			            	<span class="icon-bar"></span>
 			          	</button>
 			        {/if}
-		          	<a class="navbar-brand" href="javascript:void(0)">Bandar</a>
+		          	<a class="navbar-brand" href="javascript:void(0)">Bandar{if typeof pageEngine.getData == 'function' && pageEngine.getData() != null && pageEngine.getData().appData['user'] != null && pageEngine.getData().appData['user'].selectedGroup != null && pageEngine.getData().appData['user'].selectedGroup != ''} [${pageEngine.getData().appData['user'].selectedGroup}]{/if}</a>
 		        </div>
 		    </div>
 		</div>

@@ -170,12 +170,12 @@ Aria.classDefinition({
 
 						row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // duration
 						row.push(range.area_code); // location
-						row.push((behMapRange['W'] != null)?behMap['W']: 0); // Whoops
-						row.push((behMapRange['C'] != null)?behMap['C']: 0); // Chase
-						row.push((behMapRange['S'] != null)?behMap['S']: 0); // Stick
-						row.push((behMapRange['D'] != null)?behMap['D']: 0); // Dog
-						row.push((behMapRange['F'] != null)?behMap['F']: 0); // Firework
-						row.push((behMapRange['L'] != null)?behMap['L']: 0); // SlingShot
+						row.push((range.rr_type == 'W')?1: 0); // Whoops
+						row.push((range.rr_type == 'C')?1: 0); // Chase
+						row.push((range.rr_type == 'S')?1: 0); // Stick
+						row.push((range.rr_type == 'D')?1: 0); // Dog
+						row.push((range.rr_type == 'F')?1: 0); // Firework
+						row.push((range.rr_type == 'L')?1: 0); // SlingShot
 
 						row.push((fs.data.monkey.activity_code == 'F')?1: 0); // F-Foraging
 						row.push((fs.data.monkey.activity_code == 'R')?1: 0); // R-Resting
@@ -196,7 +196,7 @@ Aria.classDefinition({
 						row.push((behMap['GO'] != null)?behMap['GO']: 0);					
 						row.push((behMap['BG'] != null)?1: 0); // Being Groomed
 						row.push((behMap['BG'] != null)?behMap['BG']: 0); // Being Groomed Monkey Id
-						row.push(fs.data.tourist.notes); // Notes
+						row.push(range.notes); // Notes
 
 						// push to list
 						var key = i + j;

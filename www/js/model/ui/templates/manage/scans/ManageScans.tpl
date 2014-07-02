@@ -88,7 +88,7 @@
 				<div class="accordion-group">
 					<div class="accordion-heading">
 						<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseRR'}}/}>
-							Route Restriction
+							Range Restriction
 						</a>
 					</div>
 					<div {id "collapseRR"/} class="accordion-body collapse">
@@ -106,14 +106,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="btn-group" {id 'btnMenu'/}>
-				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" {on tap {fn: 'openButtonMenu', scope: this}/}>
-					Export <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="javascript:void(0);" {on click {fn: 'onExportFileClick', scope: this}/}>Text File</a></li>
-					<li><a href="javascript:void(0);" {on click {fn: 'onExportExcelClick', scope: this}/}>Excel Sheet</a></li>
-				</ul>
+			<div class="btn-group btn-group-justified border-bottom">
+				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'onExportFileClick', scope: this}/}>
+					Export Text File
+				</a>
+				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'onExportExcelClick', scope: this}/}>
+					Export Excel Sheet
+				</a>
 			</div>
 		</div>
 	{/macro}

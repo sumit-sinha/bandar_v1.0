@@ -30,13 +30,8 @@ Aria.tplScriptDefinition({
 
 			// init
 			this.data.timer = 600;
+			this.data.timeStamps = [];
 			this.data.behaviors = this.db.getMonkeyBehaviors();
-
-			// add tourist behaviors to list
-			var touristBehaviors = this.db.getTouristBehaviors();
-			for (var i = 0; i < touristBehaviors.length; i++) {
-				this.data.behaviors.push(touristBehaviors[i]);
-			}
 
 			// add tourist behaviors to list
 			var rrBehaviors = this.db.getRRBehaviors();
@@ -59,6 +54,7 @@ Aria.tplScriptDefinition({
 			if (args.behavior != null) {
 				var txtAreaEL = document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
 				if (txtAreaEL != null) {
+					this.data.timeStamps.push(this.utils.getCurrentTime());
 					txtAreaEL.value += ((txtAreaEL.value != '')?'-':'') + args.behavior.code; 
 				}
 
@@ -121,17 +117,13 @@ Aria.tplScriptDefinition({
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmRange')));
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
+			input['behavior_timestamp'] = this.data.timeStamps;
 
 			this.data.errors.list = this.moduleCtrl.addRangeRestriction(event, {
 				'input': input
 			});
 
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
-				// reset fields
-				var areaCodeEL= document.getElementById(this.$getId('AREA_CODE_1'));
-				if (areaCodeEL != null) {
-					areaCodeEL.value = '';
-				}
 
 				var monkeyIdEL= document.getElementById(this.$getId('MONKEY_ID_1'));
 				if (monkeyIdEL != null) {
@@ -142,13 +134,14 @@ Aria.tplScriptDefinition({
 				if (behaviourSeqEL != null) {
 					behaviourSeqEL.value = '';
 				}
+
+				// refresh buttons
+				this.$json.setValue(this.data, 'behavior_button_refresh', !this.data.behavior_button_refresh);
+				this.data.timeStamps = [];
 			}
 
 			// show error
 			this.$json.setValue(this.data.errors, 'error_occured', !this.data.errors.error_occured);
-
-			// refresh buttons
-			this.$json.setValue(this.data, 'behavior_button_refresh', !this.data.behavior_button_refresh);
 		},
 
 		onScanOver: function(event, args) {
@@ -157,6 +150,7 @@ Aria.tplScriptDefinition({
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmRange')));
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
+			input['behavior_timestamp'] = this.data.timeStamps;
 			
 			this.data.errors.list = this.moduleCtrl.addFinalRangeRestriction(event, {
 				'input': input
@@ -170,6 +164,7 @@ Aria.tplScriptDefinition({
 				// show success dialog
 				this.utils.showOverlay(false);
 				this.$json.setValue(this.data, 'rr_saved', true);
+				this.data.timeStamps = [];
 			}
 
 			// show error
@@ -179,9 +174,26 @@ Aria.tplScriptDefinition({
 		onModalTapEvent: function(event, args) {
 			// reset page
 			this.resetInput(event, {
+				inputId: 'RR_TYPE',
+				value: true
+			});
+
+
+			this.resetInput(event, {
 				inputId: 'AREA_CODE_1',
 				value: true
 			});
+
+			this.resetInput(event, {
+				inputId: 'NOTES_1',
+				value: true
+			});
+
+			this.resetInput(event, {
+				inputId: 'GRP_BEHAV',
+				value: true
+			});
+
 
 			this.resetInput(event, {
 				inputId: 'MONKEY_ID_1',

@@ -85,6 +85,15 @@ Aria.classDefinition({
 		 * @return JSONArray
 		 */
 		getTouristBehaviors: function() {
+
+			/*return [
+				{
+					text: 'Tourist Agression',
+					code: 'TA',
+					type: 'tourist'
+				}
+			];*/
+
 			return [
 				{
 					text: 'Tourist Feeding',
@@ -114,38 +123,7 @@ Aria.classDefinition({
 		 * @return JSONArray
 		 */
 		getRRBehaviors: function() {
-			return [
-				{
-					text: 'Whoops',
-					code: 'W',
-					type: 'range'
-				},
-				{
-					text: 'Chase',
-					code: 'C',
-					type: 'range'
-				},
-				{
-					text: 'Stick',
-					code: 'S',
-					type: 'range'
-				},
-				{
-					text: 'Dog',
-					code: 'D',
-					type: 'range'
-				},
-				{
-					text: 'Firework',
-					code: 'F',
-					type: 'range'
-				},
-				{
-					text: 'Sling Shot',
-					code: 'L',
-					type: 'range'
-				}
-			];
+			return [];
 		}
 	}
 });
