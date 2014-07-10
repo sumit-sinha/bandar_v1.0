@@ -43,7 +43,7 @@ Aria.tplScriptDefinition({
 			// serialize FORM to JSON
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmGroup')));
 			input['endTime'] = this.utils.getCurrentTime();
-			
+
 			this.data.errors.list = this.moduleCtrl.saveGroupScanData(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
 				

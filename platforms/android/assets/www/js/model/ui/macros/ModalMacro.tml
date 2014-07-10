@@ -13,7 +13,9 @@
 						{if args.closeCb != null}
 							<button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;" {on tap args.closeCb/}>×</button>
 						{/if}
-						<div class="bootbox-body">${args.message}</div>
+						{if args.message != null}
+							<div class="bootbox-body">${args.message}</div>
+						{/if}
 					</div>
 					{if args.buttons != null && args.buttons.length > 0}
 						<div class="btn-group btn-group-justified border-bottom">

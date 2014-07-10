@@ -23,6 +23,19 @@ Aria.tplScriptDefinition({
 					text: 'Monkey Group'
 				}
 			];
+
+			this.data.showScans = null;
+		},
+
+		/**
+		 * function triggered when close button of popup is clicked
+		 * @param event
+		 * @param args
+		 */
+		closeScanOption: function(event, args) {
+			// scan options
+			this.utils.hideOverlay();
+			this.$json.setValue(this.data, 'showScans', null);
 		},
 
 		/**
@@ -48,10 +61,70 @@ Aria.tplScriptDefinition({
 			var appData = pageEngine.getData().appData;
 			appData['user'].selectedGroup = args.group.code;
 
-			// navigate to focal-data page
+			// scan options
+			this.utils.showOverlay(false);
+			this.$json.setValue(this.data, 'showScans', !this.data.showScans);
+
+			/* navigate to focal-data page
 			this.moduleCtrl.navigate(null, {
 				pageRequest: {
 					pageId: 'selectscan'
+				}
+			});*/
+		},
+
+		/**
+		 * navigates user to route restriction page
+		 * @param event
+		 * @param args
+		 */
+		onRangeClick: function(event, args) {
+			// navigate to next page
+			this.moduleCtrl.navigate(null, {
+				pageRequest: {
+					pageId: 'rangerestriction'
+				}
+			});
+		},
+
+		/**
+		 * navigates user to group scan page
+		 * @param event
+		 * @param args
+		 */
+		onGroupClick: function(event, args) {
+			// navigate to next page
+			this.moduleCtrl.navigate(null, {
+				pageRequest: {
+					pageId: 'groupscan'
+				}
+			});
+		},
+
+		/**
+		 * navigates user to focal data collection page
+		 * @param event
+		 * @param args
+		 */
+		onFocalClick: function(event, args) {
+			// navigate to next page
+			this.moduleCtrl.navigate(null, {
+				pageRequest: {
+					pageId: 'touristfocalscan'
+				}
+			});
+		},
+
+		/**
+		 * navigates user to tourist scan page
+		 * @param event
+		 * @param args
+		 */
+		onTouristClick: function(event, args) {
+			// navigate to next page
+			this.moduleCtrl.navigate(null, {
+				pageRequest: {
+					pageId: 'touristscant'
 				}
 			});
 		}

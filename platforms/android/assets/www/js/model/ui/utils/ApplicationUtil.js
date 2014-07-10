@@ -163,7 +163,7 @@ Aria.classDefinition({
 					+ ((dt.getMonth() < 10)?'-0':'-') + dt.getMonth() 
 					+ ((dt.getDate() < 10)?'-0':'-') + dt.getDate()
 					+ ((dt.getHours() < 10)?'-0':'-') + dt.getHours() 
-					+ ((dt.getMinutes() < 10)?'-0':'-') + dt.getMinutes();
+					+ ((dt.getMinutes() < 10)?'-0':'-') + dt.getMinutes()
 					+ ((dt.getSeconds() < 10)?'-0':'-') + dt.getSeconds();
 		},
 

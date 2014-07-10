@@ -17,10 +17,11 @@ Aria.resourcesDefinition({
             'tx_error_invalid_monkey_id': 'Please provide a valid monkey id',
             'tx_error_invalid_area_code': 'Please provide a valid area code',
             'tx_error_invalid_activity_code': 'Please provide a valid activity code',
-            'tx_error_invalid_type_range': 'Please provide a valid type of range restriction',
+            'tx_error_invalid_type_range': 'Please provide a valid type of Crop Guarding',
             'tx_error_invalid_behavior_sequence': 'Please record behavior before saving data',
             'tx_error_invalid_use_of_space': 'Please provide a valid value for use of space',
-            'tx_error_invalid_no_of_tourist': 'Please provide a valid value for number of tourist'
+            'tx_error_invalid_no_of_tourist': 'Please provide a valid value for number of tourist',
+            'tx_lbl_range_restriction': 'Crop Guarding'
         }
     }
 });

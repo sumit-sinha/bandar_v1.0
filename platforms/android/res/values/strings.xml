@@ -1,4 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="tx_bandar_app_name">bandar</string>
+    <string name="app_name">bandar_v1.0</string>
 </resources>

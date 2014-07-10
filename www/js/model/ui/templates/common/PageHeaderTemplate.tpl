@@ -1,6 +1,9 @@
 {Template{
 	$classpath: 'model.ui.templates.common.PageHeaderTemplate',
-	$hasScript: true
+	$hasScript: true,
+	$res : {
+		resources: 'model.ui.resources.AppLocalization'
+	}
 }}
 	{macro main()}
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -50,7 +53,7 @@
 						</li>
 						<li>
 							<a href="javascript:void(0)" {on click {fn: 'onRouteRestrictionClick', scope: this}/}>
-								Range Restriction
+								${this.resources.label.tx_lbl_range_restriction}
 							</a>
 						</li>
 						<li class="divider"></li>

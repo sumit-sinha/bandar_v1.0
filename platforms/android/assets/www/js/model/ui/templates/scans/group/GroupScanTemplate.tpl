@@ -6,7 +6,8 @@
 	},
 	$macrolibs : {
 		modal : "model.ui.macros.ModalMacro",
-        message : "model.ui.macros.MessageMacro"
+        message : "model.ui.macros.MessageMacro",
+        application: "model.ui.macros.ApplicationMacro"
     }
 }}
 	{macro main()}
@@ -46,10 +47,16 @@
 							}/}
 
 							<form role="form" {id "frmGroup"/}>
-								<div class="form-group">
-									<label for="ACTIVITY_1">Activity Code</label>
-									<input type="text" name="activity_code" class="form-control" {id "ACTIVITY_1"/} placeholder="Activity Code">
-								</div>
+								{call application.createActivityAutoComplete({
+									id: 'ACTIVITY_CODE_1',
+									labelText: 'Activity Code',
+									name: 'activity_code',
+									type: 'text',
+									placeholder: 'Activity Code',
+									class: 'form-control',
+									noDel: true,
+									populate: 'C'
+								})/}
 								<div class="form-group">
 									<label for="USE_SPACE_1">Use of Space</label>
 									<input type="text" name="use_of_space" class="form-control" {id "USE_SPACE_1"/} placeholder="Use of Space">

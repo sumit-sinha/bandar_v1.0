@@ -6,7 +6,8 @@
 	},
 	$macrolibs : {
 		modal : "model.ui.macros.ModalMacro",
-        message : "model.ui.macros.MessageMacro"
+        message : "model.ui.macros.MessageMacro",
+        application: "model.ui.macros.ApplicationMacro"
     }
 }}
 	{macro main()}
@@ -47,8 +48,8 @@
 
 							<form role="form" {id "frmRange"/}>
 								<div class="form-group">
-									<label for="RR_TYPE">Range Restriction Type</label>
-									<input type="text" name="type_rr" class="form-control" {id "RR_TYPE"/} placeholder="Type of Range Restriction" {on keyup {fn: 'startTimer', scope: this}/}>
+									<label for="RR_TYPE">${this.resources.label.tx_lbl_range_restriction} Type</label>
+									<input type="text" name="type_rr" class="form-control" {id "RR_TYPE"/} placeholder="Type of ${this.resources.label.tx_lbl_range_restriction}" {on keyup {fn: 'startTimer', scope: this}/}>
 								</div>
 								<div class="form-group inline">
 									<label for="RR_TYPE">Group Behavior</label>
@@ -66,22 +67,15 @@
 									<label for="NOTES_1">Notes/Observation</label>
 									<textarea class="form-control" rows="2" {id "NOTES_1"/} name="notes"></textarea>
 								</div>
-								<div class="form-group">
-									<label for="BEHAVIOR_SEQUENCE_1">Behavior Sequence</label>
-									<textarea class="form-control" name="behavior_seq" rows="3" {id "BEHAVIOR_SEQUENCE_1"/}></textarea>
-								</div>
-								{section {
-									id: 'behButtons',
-									type: 'div',
-									macro: {
-										name: 'showBehButton',
+								{call application.createBehaviorField({
+									divCss: 'form-group',
+									id: 'BEHAVIOR_SEQUENCE_1',
+									name: 'behavior_seq',
+									onKeyUp: {
+										fn: 'onBehaviorClick',
 										scope: this
-									},
-									bindRefreshTo: [{
-										inside: this.data,
-										to: 'behavior_button_refresh'
-									}]
-								}/}
+									}
+								})/}
 								<div class="btn-group btn-group-justified border-bottom">
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnAddMore"/} {on click {fn: 'onAddMore', scope: this}/}>
 										Add and Reset (+)
@@ -98,24 +92,10 @@
 		</div>
 	{/macro}
 
-	{macro showBehButton()}
-		{foreach behavior in this.data.behaviors}
-			{if behavior_index % 3 == 0}
-				<div class="btn-group btn-group-justified border-bottom">
-			{/if}
-			<a class="btn btn-default{if behavior.type != null} ${behavior.type}{/if}" role="button" href="javascript:void(0);" {on click {'fn': 'onBehaviorClick', 'scope': this, 'args': {'behavior': behavior}}/} {id behavior.code/}>
-				(${behavior.code}) ${behavior.text}
-			</a>
-		    {if behavior_index % 3 == 2 || behavior_index == this.data.behaviors.length - 1}
-				</div>
-			{/if}
-		{/foreach}
-	{/macro}
-
 	{macro showSuccess()}
 		{if this.data.rr_saved}
 			{call modal.showModal({
-				message: 'Range Restriction data is saved :)',
+				message: this.resources.label.tx_lbl_range_restriction + ' data is saved :)',
 				closeCb: {
 					fn: 'onModalTapEvent',
 					scope: this

@@ -3,7 +3,10 @@
 	$hasScript: true,
 	$macrolibs : {
 		modal : "model.ui.macros.ModalMacro"
-    }
+    },
+    $res : {
+		resources: 'model.ui.resources.AppLocalization'
+	}
 }}
 	{macro main()}
 
@@ -88,7 +91,7 @@
 				<div class="accordion-group">
 					<div class="accordion-heading">
 						<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseRR'}}/}>
-							Range Restriction
+							${this.resources.label.tx_lbl_range_restriction}
 						</a>
 					</div>
 					<div {id "collapseRR"/} class="accordion-body collapse">

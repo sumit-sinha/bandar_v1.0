@@ -45,29 +45,6 @@ Aria.tplScriptDefinition({
 			this.$json.setValue(this.data.errors, 'error_occured', !this.data.errors.error_occured);
 		},
 
-		/**
-		 * function triggered when any behavior is clicked
-		 * @param event
-		 * @param args
-		 */
-		onBehaviorClick: function(event, args) {
-			if (args.behavior != null) {
-				var txtAreaEL = document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
-				if (txtAreaEL != null) {
-					this.data.timeStamps.push(this.utils.getCurrentTime());
-					txtAreaEL.value += ((txtAreaEL.value != '')?'-':'') + args.behavior.code; 
-				}
-
-				if (args.behavior.properties != null 
-						&& args.behavior.properties.allowed_click == 1) {
-					var el = document.getElementById(event.target.getProperty('id'));
-					if (el != null) {
-						el.className += ' disabled';
-					}
-				}
-			}
-		},
-
 		onTouristMScanClick: function() {
 
 			// serailize form
@@ -102,6 +79,16 @@ Aria.tplScriptDefinition({
 			}
 		},
 
+		/**
+		 * function triggered when any behavior is clicked
+		 * @param event
+		 * @param args
+		 */
+		onBehaviorClick: function(event, args) {
+			// set timestamp for each behavior
+			this.data.timeStamps.push(this.utils.getCurrentTime());
+		},
+
 		onAddMore: function(event, args) {
 
 			// serialize FORM to JSON
@@ -118,7 +105,7 @@ Aria.tplScriptDefinition({
 					monkeyIdEL.value = '';
 				}
 
-				var behaviorEl = document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
+				var behaviorEl = document.getElementById('BEHAVIOR_SEQUENCE_1');
 				if (behaviorEl != null) {
 					behaviorEl.value = '';
 				}

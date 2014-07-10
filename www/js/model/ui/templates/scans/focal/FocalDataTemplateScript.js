@@ -76,22 +76,8 @@ Aria.tplScriptDefinition({
 		 * @param args
 		 */
 		onBehaviorClick: function(event, args) {
-			if (args.behavior != null) {
-				var txtAreaEL = document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
-				if (txtAreaEL != null) {
-					this.data.timeStamps.push(this.utils.getCurrentTime());
-					txtAreaEL.value += ((txtAreaEL.value != '')?'-':'') + args.behavior.code; 
-				}
-
-				if (args.behavior.properties != null 
-						&& args.behavior.properties.allowed_click == 1) {
-					var el = document.getElementById(event.target.getProperty('id'));
-					if (el != null) {
-						el.className += ' disabled';
-					}
-				}
-			}
-
+			// set timestamp for each behavior
+			this.data.timeStamps.push(this.utils.getCurrentTime());
 			this.startTimer(event, args);
 		},
 

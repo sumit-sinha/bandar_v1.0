@@ -58,7 +58,7 @@ Aria.classDefinition({
 				var behMap = {};
 				var behaviors = rr.data.behavior_seq.split('-');
 				for (var j = 0; j < behaviors.length; j++) {
-					
+
 					var monkeyId = null;
 					if (behaviors[j].indexOf('BG') == '0' 
 							|| behaviors[j].indexOf('GO') == '0') {

@@ -38,19 +38,31 @@ Aria.tplScriptDefinition({
 				this.data.behaviors.push(touristBehaviors[i]);
 			}
 
-			if (this.data.focalData == null) {
+			if (aria.utils.Object.isEmpty(this.data.focalData)) {
 				this.data.timer = 120;
+				this.data.timeStamps = [];
 				this.data.focalData = {};
 			} else {
+
+				this.data.paused = true;
+				var timerInfo = this.utils.getTimerInfo();
+				this.data.timer = this.data.focalData.timer;
+				timerInfo.timer = this.data.focalData.timer;
+				this.data.timeStamps = this.data.focalData.behavior_timestamp;
 
 				if (this.data.focalData.timer == null) {
 					this.data.focalData.timer = 120;
 				}
 
-				var timerInfo = this.utils.getTimerInfo();
-				this.data.timer = this.data.focalData.timer;
-				timerInfo.timer = this.data.focalData.timer;
+				if (this.data.focalData.behavior_timestamp == null) {
+					this.data.timeStamps = [];
+				}
 			}
+		},
+
+		onContinueClick: function(event, args) {
+			this.startTimer(event, args);
+			this.$json.setValue(this.data, 'paused', false);
 		},
 
 		dismissError: function(event, args) {
@@ -64,21 +76,8 @@ Aria.tplScriptDefinition({
 		 * @param args
 		 */
 		onBehaviorClick: function(event, args) {
-			if (args.behavior != null) {
-				var txtAreaEL = document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
-				if (txtAreaEL != null) {
-					txtAreaEL.value += ((txtAreaEL.value != '')?'-':'') + args.behavior.code; 
-				}
-
-				if (args.behavior.properties != null 
-						&& args.behavior.properties.allowed_click == 1) {
-					var el = document.getElementById(event.target.getProperty('id'));
-					if (el != null) {
-						el.className += ' disabled';
-					}
-				}
-			}
-
+			// set timestamp for each behavior
+			this.data.timeStamps.push(this.utils.getCurrentTime());
 			this.startTimer(event, args);
 		},
 
@@ -129,6 +128,7 @@ Aria.tplScriptDefinition({
 			// serailize form
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmFocal')));
 			input.timer = this.data.timer;
+			input['behavior_timestamp'] = this.data.timeStamps;
 
 			// save data for prefilling
 			this.moduleCtrl.saveFocalSessionData(input);
@@ -145,6 +145,7 @@ Aria.tplScriptDefinition({
 			// serailize form
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmFocal')));
 			input.timer = this.data.timer;
+			input['behavior_timestamp'] = this.data.timeStamps;
 
 			// save data for prefilling
 			this.moduleCtrl.saveFocalSessionData(input);
@@ -163,6 +164,7 @@ Aria.tplScriptDefinition({
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmFocal')));
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
+			input['behavior_timestamp'] = this.data.timeStamps;
 			
 			this.data.errors.list = this.moduleCtrl.saveFocalData(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {

@@ -3,6 +3,9 @@ body {
   padding-bottom: 40px;
   background-color: #eee;
 }
+.nav-tabs>li>a {
+  color: rgb(39, 26, 20);
+}
 button.btn.btn-default.btn-primary.btn-big-rect {
   height: 10em;
   display: inline-block;
@@ -18,7 +21,7 @@ button.btn.btn-default.btn-primary.btn-big-rect {
 }
 div.form-group.inline {
   display: inline-block;
-  width: 32.7%;
+  width: 49.5%;
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -110,7 +113,7 @@ div.tourist-data-border:after {
   letter-spacing: 1px;
 }
 div.rr-data-border:after {
-  content: "Range Restriction";
+  content: "Crop Guarding";
   position: absolute;
   top: 15px;
   left: 15px;
@@ -204,7 +207,7 @@ li.divider {
   display: block;
 }
 div.navbar-vertical a {
-  color: #999;
+  color: #E6DEDE;
 }
 .navbar-nav-vertical {
   margin: 7.5px -15px;
@@ -328,6 +331,65 @@ div.modal-content-app {
   box-shadow: 0 3px 9px rgba(0,0,0,.5);
   background-clip: padding-box;
   outline: 0;
+}
+/* autocomplete css [START]*/
+.ui-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+  outline: none;
+}
+.ui-menu .ui-menu {
+  position: absolute;
+}
+.ui-menu .ui-menu-item {
+  position: relative;
+  margin: 0;
+  padding: 3px 1em 3px .4em;
+  cursor: pointer;
+  min-height: 0; 
+  list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+}
+.ui-menu .ui-menu-divider {
+  margin: 5px 0;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  border-width: 1px 0 0 0;
+}
+.ui-menu .ui-state-focus,
+.ui-menu .ui-state-active {
+  margin: -1px;
+}
+li.ui-menu-item {
+    background: white;
+    border-bottom: 1px dotted;
+}
+li.ui-menu-item:last-child {
+    border-bottom: none !important;
+}
+input.ui-autocomplete-input {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.ui-autocomplete li:hover {
+    background: #ccc;
+}
+li.ui-menu-item a {
+    color: black;
+}
+ul.ui-autocomplete.ui-menu {
+    margin-top: -10px !important;
+    border-bottom-left-radius: 0.2em;
+    border-bottom-right-radius: 0.2em;
+    border-left: 1px solid #8B8B8B;
+    border-right: 1px solid #8B8B8B;
+    border-bottom: 1px solid #8B8B8B;
+}
+/* autocomplete css [ END ]*/
+div.show-bold {
+  font-weight: bold;
 }
 @media (min-width: 768px) {
   div.register-form-border {

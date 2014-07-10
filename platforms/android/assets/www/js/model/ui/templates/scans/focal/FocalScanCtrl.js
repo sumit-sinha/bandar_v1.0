@@ -98,19 +98,9 @@ Aria.classDefinition({
 				errors.push('tx_error_invalid_type_range');
 			}
 
-			// monkey id should not be empty
-			if (input.monkey_id == null || input.monkey_id == '') {
-				errors.push('tx_error_invalid_monkey_id');
-			}
-
 			// activity_code should not be empty
 			if (input.area_code == null || input.area_code == '') {
 				errors.push('tx_error_invalid_area_code');
-			}
-
-			// behavior_seq should not be empty
-			if (input.behavior_seq == null || input.behavior_seq == '') {
-				errors.push('tx_error_invalid_behavior_sequence');
 			}
 
 			if (errors.length == 0) {

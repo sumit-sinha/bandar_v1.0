@@ -84,7 +84,24 @@ Aria.tplScriptDefinition({
 			var inputEL = document.getElementById(args.input.id);
 			if (inputEL != null) {
 				// show selected result
-				inputEL.value = args.suggestion.label;
+				var result = args.suggestion.label;
+				if (args.input.populate != null) {
+					switch (args.input.populate) {
+						case 'C':
+							result = args.suggestion.code;
+							break;
+						case 'L':
+							result = args.suggestion.label;
+							break;
+						case 'B':
+							result = args.suggestion.label + '[' + args.suggestion.code + ']';
+							break;
+						default:
+							result = args.suggestion.label;
+					}
+				}
+
+				inputEL.value = result;
 			}
 						
 			if(args.input.selectFn!=null){	
@@ -96,8 +113,9 @@ Aria.tplScriptDefinition({
 				this.$callback(cb);	
 			}
 			
-			if(args.input.onblur!=null)			
-					this.$callback(args.input.onblur);
+			if(args.input.onblur!=null) {
+				this.$callback(args.input.onblur);
+			}
 			
         },
 		
@@ -108,7 +126,7 @@ Aria.tplScriptDefinition({
 			{				
 				this.$callback(args.input.onblur);
 			}
-			setTimeout(function(){current.reactOnType(event, args)},500);
+			setTimeout(function(){current.reactOnType(event, args)},200);
 		}
     }
 });

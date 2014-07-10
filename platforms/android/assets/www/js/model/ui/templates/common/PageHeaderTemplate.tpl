@@ -1,6 +1,9 @@
 {Template{
 	$classpath: 'model.ui.templates.common.PageHeaderTemplate',
-	$hasScript: true
+	$hasScript: true,
+	$res : {
+		resources: 'model.ui.resources.AppLocalization'
+	}
 }}
 	{macro main()}
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -14,7 +17,7 @@
 			            	<span class="icon-bar"></span>
 			          	</button>
 			        {/if}
-		          	<a class="navbar-brand" href="javascript:void(0)">Bandar</a>
+		          	<a class="navbar-brand" href="javascript:void(0)">Bandar{if typeof pageEngine.getData == 'function' && pageEngine.getData() != null && pageEngine.getData().appData['user'] != null && pageEngine.getData().appData['user'].selectedGroup != null && pageEngine.getData().appData['user'].selectedGroup != ''} [${pageEngine.getData().appData['user'].selectedGroup}]{/if}</a>
 		        </div>
 		    </div>
 		</div>
@@ -50,7 +53,7 @@
 						</li>
 						<li>
 							<a href="javascript:void(0)" {on click {fn: 'onRouteRestrictionClick', scope: this}/}>
-								Range Restriction
+								${this.resources.label.tx_lbl_range_restriction}
 							</a>
 						</li>
 						<li class="divider"></li>

@@ -26,7 +26,7 @@
 							<a href="javascript: void(0);" data-toggle="tab">Tourist</a>
 						</li>
 						<li {on tap {fn: 'onRRFocalScanClick', scope: this}/}>
-							<a href="javascript: void(0);" data-toggle="tab">Range Restriction</a>
+							<a href="javascript: void(0);" data-toggle="tab">${this.resources.label.tx_lbl_range_restriction}</a>
 						</li>
 						<li {on tap {fn: 'onFocalScanClick', scope: this}/}>
 							<a href="javascript: void(0);" data-toggle="tab">Monkey</a>

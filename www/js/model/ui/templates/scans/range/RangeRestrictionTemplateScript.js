@@ -51,25 +51,11 @@ Aria.tplScriptDefinition({
 		 * @param args
 		 */
 		onBehaviorClick: function(event, args) {
-			if (args.behavior != null) {
-				var txtAreaEL = document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
-				if (txtAreaEL != null) {
-					this.data.timeStamps.push(this.utils.getCurrentTime());
-					txtAreaEL.value += ((txtAreaEL.value != '')?'-':'') + args.behavior.code; 
-				}
-
-				if (args.behavior.properties != null 
-						&& args.behavior.properties.allowed_click == 1) {
-					var el = document.getElementById(event.target.getProperty('id'));
-					if (el != null) {
-						el.className += ' disabled';
-					}
-				}
-			}
-
+			// set timestamp for each behavior
+			this.data.timeStamps.push(this.utils.getCurrentTime());
 			this.startTimer(event, args);
 		},
-
+		
 		/**
 		 * triggered when timer needs to start
 		 * @param event
@@ -130,7 +116,7 @@ Aria.tplScriptDefinition({
 					monkeyIdEL.value = '';
 				}
 
-				var behaviourSeqEL= document.getElementById(this.$getId('BEHAVIOR_SEQUENCE_1'));
+				var behaviourSeqEL= document.getElementById('BEHAVIOR_SEQUENCE_1');
 				if (behaviourSeqEL != null) {
 					behaviourSeqEL.value = '';
 				}
@@ -202,7 +188,8 @@ Aria.tplScriptDefinition({
 
 			this.resetInput(event, {
 				inputId: 'BEHAVIOR_SEQUENCE_1',
-				value: true
+				value: true,
+				absoluteId: true
 			});
 
 			this.data.timer = 120;
@@ -223,7 +210,12 @@ Aria.tplScriptDefinition({
 		},
 
 		resetInput: function(event, args) {
-			var el = document.getElementById(this.$getId(args.inputId));
+			var id = args.inputId;
+			if (!args.absoluteId) {
+				id = this.$getId(args.inputId);
+			}
+			
+			var el = document.getElementById(id);
 			if (el != null) {
 				if (args.innerHTML) {
 					el.innerHTML = '';

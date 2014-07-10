@@ -1,0 +1,113 @@
+{Library {
+    $classpath : "model.ui.macros.ApplicationMacro",
+    $res : {
+		resources: 'model.ui.resources.AppLocalization'
+	},
+	$dependencies: [
+		'model.ui.utils.DataUtil'
+	],
+	$macrolibs : {
+        autocomplete : "model.ui.widgets.autocomplete.AutoCompleteLibrary"
+    },
+    $hasScript: true
+}}
+	
+	{macro createActivityAutoComplete(args)}
+		
+		{if args != null}
+			{if args.source == null}
+				${args.source = model.ui.utils.DataUtil.getActivityCodes()|eat}
+			{/if}
+
+			{call autocomplete.createAutoComplete(args)/}
+		{/if}
+	{/macro}
+
+	{macro createBehaviorField(args)}
+		<div class="${args.divCss}">
+			<label for="${args.id}">Behavior Sequence</label>
+			<textarea class="form-control" name="${args.name}" rows="{if args.rows == null}3{else/}${args.rows}{/if}" id="${args.id}"{if args.onKeyUp != null} {on keyup args.onKeyUp/}{/if}>{if args.behavior_seq != null}${args.behavior_seq}{/if}</textarea>
+		</div>
+
+		{var glue = {
+			id: args.id,
+			onKeyUp: args.onKeyUp
+		}/}
+		{section {
+			id : "modalButton",
+			macro : {
+				name: "showModalButton",
+				args: [glue],
+				scope: this
+			},
+			bindRefreshTo : [{
+				to : "refresh",
+				inside : glue,
+				recursive : true
+			}]
+		}/}
+
+		// start creating buttons
+		{var behaviors = this.getBehaviorsList(args)/}
+		{foreach behavior in behaviors}
+			{if behavior_index % 3 == 0}
+				<div class="btn-group btn-group-justified border-bottom">
+			{/if}
+
+			<div class="btn-group">
+				<button class="btn btn-default ${behavior.code}{if behavior.type != 'list' && behavior.type != 'button'} ${behavior.type}{/if}" type="button" data-toggle="dropdown" {on click {fn: 'onBehaviorButtonClick', args: {glue: glue, behavior: behavior}}/}>
+					${behavior.label}{if behavior.type === 'list'} <span class="caret"></span>{else/} (${behavior.code}){/if}
+				</button>
+			</div>
+
+			{if behavior_index % 3 == 2 || behavior_index == behaviors.length - 1}
+				</div>
+			{/if}
+		{/foreach}
+	{/macro}
+
+	{macro showModalButton(glue)}
+		{if glue.refresh != null}
+			<div class="bootbox modal" tabindex="-1" role="dialog" aria-hidden="false">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						{if !glue.addMonkeyId}
+							<div class="modal-body">
+								<button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" style="margin-top: -10px;" {on tap {fn: 'onCloseCb', scope:this, args: {glue: glue}}/}>×</button>
+							</div>
+
+							{foreach behavior in glue.behaviors}
+								{if behavior_index % 2 == 0}
+									<div class="btn-group btn-group-justified border-bottom">
+								{/if}
+
+								<div class="btn-group">
+									<button class="btn btn-default ${behavior.code}" type="button" data-toggle="dropdown" {on click {fn: 'onBehaviorButtonClick', args: {glue: glue, behavior: behavior}}/}>
+										${behavior.label}{if behavior.type === 'list'} <span class="caret"></span>{else/} (${behavior.code}){/if}
+									</button>
+								</div>
+
+								{if behavior_index % 2 == 1 || behavior_index == glue.behaviors.length - 1}
+									</div>
+								{/if}
+							{/foreach}
+						{else/}
+							<div class="modal-body">
+								<div class="bootbox-body">Monkey Id: </div>
+								<input type="text" class="form-control" id="BEHAVIOR_MONKEY_ID" value=""/>
+							</div>
+							<div class="btn-group btn-group-justified border-bottom">
+								<div class="btn-group">
+									<button class="btn btn-default" type="button" data-toggle="dropdown" {on click {fn: 'onAddMonkeyId', args: {glue: glue}}/}>Ok</button>
+								</div>
+								<div class="btn-group">
+									<button class="btn btn-default" type="button" data-toggle="dropdown" {on click {fn: 'onCancelMonkeyId', args: {glue: glue}}/}>Cancel</button>
+								</div>
+							</div>
+						{/if}
+					</div>
+				</div>
+			</div>
+		{/if}
+	{/macro}
+{/Library}

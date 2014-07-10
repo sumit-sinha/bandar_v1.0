@@ -6,7 +6,8 @@
 	},
 	$macrolibs : {
 		modal : "model.ui.macros.ModalMacro",
-        message : "model.ui.macros.MessageMacro"
+        message : "model.ui.macros.MessageMacro",
+        application: "model.ui.macros.ApplicationMacro"
     }
 }}
 	{macro main()}
@@ -59,22 +60,16 @@
 									<input type="text" name="monkey_id" class="form-control" {id "MONKEY_ID_1"/} placeholder="Monkey ID" value="${this.data.touristData.monkey_id}">
 								</div>
 
-								<div class="form-group">
-									<label for="BEHAVIOR_SEQUENCE_1">Behavior Sequence</label>
-									<textarea class="form-control" name="behavior_seq" rows="3" {id "BEHAVIOR_SEQUENCE_1"/}>{if this.data.touristData.behavior_seq != null}${this.data.touristData.behavior_seq}{/if}</textarea>
-								</div>
-								{section {
-									id: 'behButtons',
-									type: 'div',
-									macro: {
-										name: 'showBehButton',
+								{call application.createBehaviorField({
+									divCss: 'form-group',
+									id: 'BEHAVIOR_SEQUENCE_1',
+									name: 'behavior_seq',
+									behavior_seq: this.data.touristData.behavior_seq,
+									onKeyUp: {
+										fn: 'onBehaviorClick',
 										scope: this
-									},
-									bindRefreshTo: [{
-										inside: this.data,
-										to: 'behavior_button_refresh'
-									}]
-								}/}
+									}
+								})/}
 								<div class="btn-group btn-group-justified border-bottom">
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnAddMore"/} {on click {fn: 'onAddMore', scope: this}/}>
 										Add and Reset (+)
@@ -89,20 +84,6 @@
 				</div>
 			{/if}
 		</div>
-	{/macro}
-
-	{macro showBehButton()}
-		{foreach behavior in this.data.behaviors}
-			{if behavior_index % 3 == 0}
-				<div class="btn-group btn-group-justified border-bottom">
-			{/if}
-			<a class="btn btn-default{if behavior.type == 'tourist'} tourist{/if}" role="button" href="javascript:void(0);" {on click {'fn': 'onBehaviorClick', 'scope': this, 'args': {'behavior': behavior}}/} {id behavior.code/}>
-				(${behavior.code}) ${behavior.text}
-			</a>
-		    {if behavior_index % 3 == 2 || behavior_index == this.data.behaviors.length - 1}
-				</div>
-			{/if}
-		{/foreach}
 	{/macro}
 
 	{macro showSuccess()}

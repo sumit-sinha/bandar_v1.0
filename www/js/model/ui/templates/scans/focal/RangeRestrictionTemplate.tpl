@@ -26,7 +26,7 @@
 							<a href="javascript: void(0);" data-toggle="tab">Tourist Data</a>
 						</li>
 						<li class="active">
-							<a href="javascript: void(0);" data-toggle="tab">Range Restriction</a>
+							<a href="javascript: void(0);" data-toggle="tab">${this.resources.label.tx_lbl_range_restriction}</a>
 						</li>
 						<li {on tap {fn: 'onFocalScanClick', scope: this}/}>
 							<a href="javascript: void(0);" data-toggle="tab">Monkey</a>
@@ -47,15 +47,15 @@
 
 							<form role="form" {id "frmRange"/}>
 								<div class="form-group">
-									<label for="RR_PRESENT_1">Range Restriction Present</label>
+									<label for="RR_PRESENT_1">${this.resources.label.tx_lbl_range_restriction} Present</label>
 									<div>
 										<input type="radio" name="hasRange" value="true" {id "RR_PRESENT_1_1"/} class="form-control-radio" {if this.data.rrSession.hasRange == null || this.data.rrSession.hasRange == 'true'} checked{/if}>Yes</input>
 										<input type="radio" name="hasRange" value="false" {id "RR_PRESENT_1_2"/} class="form-control-radio" {if this.data.rrSession.hasRange == 'false'} checked{/if}>No</input>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="RR_TYPE">Range Restriction Type</label>
-									<input type="text" name="type_rr" class="form-control" {id "RR_TYPE"/} placeholder="Type of Range Restriction" {if this.data.rrSession.type_rr != null}value="${this.data.rrSession.type_rr}"{/if}>
+									<label for="RR_TYPE">${this.resources.label.tx_lbl_range_restriction} Type</label>
+									<input type="text" name="type_rr" class="form-control" {id "RR_TYPE"/} placeholder="Type of ${this.resources.label.tx_lbl_range_restriction}" {if this.data.rrSession.type_rr != null}value="${this.data.rrSession.type_rr}"{/if}>
 								</div>
 								<div class="form-group inline">
 									<label for="RR_TYPE">Group Behavior</label>

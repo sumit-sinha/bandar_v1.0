@@ -23,6 +23,8 @@ Aria.tplScriptDefinition({
 				ts: []
 			}
 
+			this.data.file_exported = null;
+
 			// parse data
 			var user = this.utils.getLoggedInUser();
 			if (user.groups != null) {
@@ -176,22 +178,6 @@ Aria.tplScriptDefinition({
 		},
 
 		/**
-		 * function triggered when 'Export' button is clicked
-		 * @param event
-		 * @param args
-		 */
-		openButtonMenu: function(event, args) {
-			var btnMenu = document.getElementById(this.$getId('btnMenu'));
-			if (btnMenu != null) {
-				if (btnMenu.className.indexOf('open') == -1) {
-					btnMenu.className = 'btn-group open';
-				} else {
-					btnMenu.className = 'btn-group';
-				}
-			}
-		},
-
-		/**
 		 * function triggered when toggle button is clicked
 		 * @param event
 		 * @param args
@@ -216,7 +202,7 @@ Aria.tplScriptDefinition({
 			var user = this.utils.getLoggedInUser();
 			
 			if (user.groups != null) {
-				var content = JSON.stringify(aria.utils.Json.copy(user.groups), null, 4);
+				var content = this.createFileContent();
 				if (typeof file != 'undefined') {
 					file.writeFile('exported_file.txt', content, 'file');
 				} else {
@@ -238,6 +224,160 @@ Aria.tplScriptDefinition({
 			}
 			
 			this.$json.setValue(this.data, 'file_exported', !this.data.file_exported);
+		},
+
+		/**
+		 * creates the file content to be exported
+		 */
+		createFileContent: function() {
+			var timeStampArr = [];
+			if (this.data.scans.fs != null) {
+				for (var i = 0; i < this.data.scans.fs.length; i++) {
+					var fs = this.data.scans.fs[i];
+					if (fs.data != null) {
+						if (fs.data.monkey != null) {
+							var behaviors = fs.data.monkey.behavior_seq.split('-');
+							for (var j = 0; j < behaviors.length; j++) {
+
+								if (behaviors[j].indexOf('BG') == '0' 
+										|| behaviors[j].indexOf('GO') == '0') {
+									behaviors[j] = behaviors[j].substring(0,2);
+								}
+
+								var jsTime = fs.data.monkey.behavior_timestamp[j].split('-');
+								var item = {
+									time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
+									group: fs.group,
+									monkeyId: fs.data.monkey.monkey_id,
+									scan: 'FS',
+									behavior: behaviors[j]							
+								}
+
+								timeStampArr.push(item);
+							}
+						}
+
+						if (fs.data.range != null) {
+							for (var k = 0; k < fs.data.range.length; k++) {
+								var behaviors = fs.data.range[k].behavior_seq.split('-');
+								for (var j = 0; j < behaviors.length; j++) {
+
+									if (behaviors[j].indexOf('BG') == '0' 
+											|| behaviors[j].indexOf('GO') == '0') {
+										behaviors[j] = behaviors[j].substring(0,2);
+									}
+
+									var jsTime = fs.data.range[k].behavior_timestamp[j].split('-');
+									var item = {
+										time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
+										group: fs.group,
+										monkeyId: fs.data.range[k].monkey_id,
+										scan: 'FS',
+										behavior: behaviors[j]							
+									}
+
+									timeStampArr.push(item);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (this.data.scans.ts != null) {
+				for (var i = 0; i < this.data.scans.ts.length; i++) {
+					var ts = this.data.scans.ts[i];
+					for (var k = 0; k < ts.data.monkey.length; k++) {
+						var behaviors = ts.data.monkey[k].behavior_seq.split('-');
+						for (var j = 0; j < behaviors.length; j++) {
+							if (behaviors[j].indexOf('BG') == '0' 
+										|| behaviors[j].indexOf('GO') == '0') {
+								behaviors[j] = behaviors[j].substring(0,2);
+							}
+
+							var jsTime = ts.data.monkey[k].behavior_timestamp[j].split('-');
+							var item = {
+								time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
+								group: ts.group,
+								monkeyId: ts.data.monkey[k].monkey_id,
+								scan: 'TS',
+								behavior: behaviors[j]							
+							}
+
+							timeStampArr.push(item);
+						}
+					}			
+				}
+			}
+
+			if (this.data.scans.rr != null) {
+				for (var i = 0; i < this.data.scans.rr.length; i++) {
+					var rr = this.data.scans.rr[i];
+					var behaviors = rr.data.behavior_seq.split('-');
+					for (var j = 0; j < behaviors.length; j++) {
+						if (behaviors[j].indexOf('BG') == '0' 
+									|| behaviors[j].indexOf('GO') == '0') {
+							behaviors[j] = behaviors[j].substring(0,2);
+						}
+
+						var jsTime = rr.data.behavior_timestamp[j].split('-');
+						var item = {
+							time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
+							group: rr.group,
+							monkeyId: rr.data.monkey_id,
+							scan: 'RR',
+							behavior: behaviors[j]							
+						}
+
+						timeStampArr.push(item);
+					}
+				}			
+			}
+
+			// sort the array based on time
+			for (var i = 0; i < timeStampArr.length; i++) {
+				for (var j = i + 1; j < timeStampArr.length; j++) {
+
+					var timeI = timeStampArr[i];
+					var timeJ = timeStampArr[j];
+
+					if (timeI.time.getTime() > timeJ.time.getTime()) {
+						// swap elements
+						var temp = {
+							time: timeI.time,
+							group: timeI.group,
+							monkeyId: timeI.monkeyId,
+							scan: timeI.scan,
+							behavior: timeI.behavior
+						};
+
+						timeStampArr[i] = timeStampArr[j];
+						timeStampArr[j] = temp;
+					}
+				}
+			}
+
+			// convert contents to text
+			var content = 'time                  |  group |  monkey id    | scan   |  behavior\r\n';
+			for (var i = 0; i < timeStampArr.length; i++) {
+				
+				var dt = timeStampArr[i].time;
+				var dtString = dt.getFullYear() 
+						+ ((dt.getMonth() < 10)?'/0':'/') + dt.getMonth() 
+						+ ((dt.getDate() < 10)?'/0':'/') + dt.getDate()
+						+ ((dt.getHours() < 10)?' 0':' ') + dt.getHours() 
+						+ ((dt.getMinutes() < 10)?':0':':') + dt.getMinutes()
+						+ ((dt.getSeconds() < 10)?':0':':') + dt.getSeconds();
+
+				content += dtString;
+				content += '    |  ';
+				content += timeStampArr[i].group + '    |  ';
+				content += timeStampArr[i].monkey_id + '    |  ';
+				content += timeStampArr[i].scan + '    |  ';
+				content += timeStampArr[i].behavior + '    |  \r\n';
+			}
+
+			return content;
 		},
 
 		/**
