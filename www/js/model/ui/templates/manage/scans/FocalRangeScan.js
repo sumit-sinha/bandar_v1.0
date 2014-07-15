@@ -48,7 +48,7 @@ Aria.classDefinition({
 							'Notes'];
 
 			// start work sheet
-			var xmlContent = '<ss:Worksheet ss:Name="Focal RR"><ss:Table>';
+			var xmlContent = '<ss:Worksheet ss:Name="Focal CG"><ss:Table>';
 
 			// prepare header [START] */
 			xmlContent += '<ss:Row>';

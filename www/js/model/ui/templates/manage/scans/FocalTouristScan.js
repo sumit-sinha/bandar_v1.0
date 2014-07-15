@@ -11,18 +11,19 @@ Aria.classDefinition({
 		 */
 		createFsTouristWorkBook: function(args) {
 			var fsData = ['Date',
-							'Observer', 
-							'Group', 
-							'Monkey', 
-							'Focal#', 
-							'Start Time', 
-							'End Time', 
-							'Total Time', 
-							'TDen', 
-							'TSex', 
-							'TNat', 
-							'TAge', 
-							'Tourist', 
+							'Observer',
+							'Group',
+							'Monkey',
+							'Focal#',
+							'Start Time',
+							'End Time',
+							'Total Time',
+							'Behavior Time',
+							'TDen',
+							'TSex',
+							'TNat',
+							'TAge',
+							'Tourist',
 							'T Feed',
 							'T Aggrs',
 							'T Tease',
@@ -31,13 +32,13 @@ Aria.classDefinition({
 							'Food Item',
 							'Locomotion',
 							'Position',
-							'SDB (stress)' 
-							'T-Tourist Agg', 
-							'C-ConAgg', 
-							'ID', 
+							'SDB (stress)',
+							'T-Tourist Agg',
+							'C-ConAgg',
+							'ID',
 							'Approach T',
-							'Approach C', 
-							'ID', 
+							'Approach C',
+							'ID',
 							'Leave T',
 							'Leave C',
 							'ID',
@@ -103,20 +104,22 @@ Aria.classDefinition({
 					var behaviors = fs.data.monkey.behavior_seq.split('-');
 					for (var j = 0; j < behaviors.length; j++) {
 						
-						var monkeyId = null;
-						if (behaviors[j].indexOf('BG') == '0' 
-								|| behaviors[j].indexOf('GO') == '0') {
-							monkeyId = behaviors[j].substring(2);
+						var monkeyIds = [];
+						if (behaviors[j].indexOf(',') != '-1') {
+							var entries = behaviors[j].split(',');
 							behaviors[j] = behaviors[j].substring(0,2);
+							for (var l = 1; l < entries.length; l++) {
+								monkeyIds.push(entries[l]);
+							}
 						}
 
 						if (behMap[behaviors[j]] != null) {
 							behMap[behaviors[j]]++;
 						} else {
-							if (monkeyId == null) {
+							if (monkeyIds == null || monkeyIds.length == 0) {
 								behMap[behaviors[j]] = 1;
 							} else {
-								behMap[behaviors[j]] = monkeyId
+								behMap[behaviors[j]] = monkeyIds;
 							}
 						}
 					}
@@ -136,31 +139,170 @@ Aria.classDefinition({
 					row.push(timeArr[3] + ':' + timeArr[4]); // end time
 
 					row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // total time
+					row.push(''); // Behavior time
 					row.push(fs.data.tourist.density); // TDen
 					row.push(fs.data.tourist.gender); // TSex
 					row.push(fs.data.tourist.nationality); // TNat
 					row.push(fs.data.tourist.averageAge); // TAge
 					row.push((fs.data.tourist.hasTourist)?'1':'0'); // Tourist
-					row.push((behMap['TF'] != null)?behMap['TF']: 0); // Feed
-					row.push((behMap['TA'] != null)?behMap['TA']: 0); // Aggrs
-					row.push((behMap['TT'] != null)?behMap['TT']: 0); // Attn
-					row.push((fs.data.monkey.activity_code == 'F')?1: 0); // F-Foraging
-					row.push((fs.data.monkey.activity_code == 'R')?1: 0); // R-Resting
-					row.push((fs.data.monkey.activity_code == 'L')?1: 0); // L-Locomoting
-					row.push((behMap['H'] != null)?behMap['H']: 0); // H-Scratch
-					row.push((behMap['P'] != null)?behMap['P']: 0); // P-Pick
-					row.push((behMap['G'] != null)?behMap['G']: 0); // G-Groom
-					row.push((behMap['AT'] != null)?behMap['AT']: 0); // AT-Tourist Aggrs
-					row.push((behMap['AC'] != null)?behMap['AC']: 0); // Con Agg
-					row.push((behMap['UT'] != null)?behMap['UT']: 0); // Tourist Thrt
-					row.push((behMap['CT'] != null)?behMap['CT']: 0); // Con Thrt
-					row.push((behMap['Y'] != null)?behMap['Y']: 0); // Yawn
-					row.push((behMap['XC'] != null)?behMap['XC']: 0); // Prox Cntnt
-					row.push((behMap['XN'] != null)?behMap['XN']: 0); // Prox No Cntnt
-					row.push((behMap['GO'] != null)?1: 0); // Soc Grooming
-					row.push((behMap['GO'] != null)?behMap['GO']: 0);					
-					row.push((behMap['BG'] != null)?1: 0); // Being Groomed
-					row.push((behMap['BG'] != null)?behMap['BG']: 0); // Being Groomed Monkey Id
+					row.push((behMap['tf'] != null)?behMap['tf']: 0); // T Feed
+					row.push((behMap['ta'] != null)?behMap['ta']: 0); // T Aggrs
+					row.push((behMap['tt'] != null)?behMap['tt']: 0); // T Tease
+					row.push((behMap['tn'] != null)?behMap['tn']: 0); // T Attn
+					row.push(fs.data.monkey.activity_code); // Activity
+
+					// get all food items
+					var foodItem = '';
+					var foodItems = ['f','fl','l','a','m','v','an'];
+					for (var l = 0; l < foodItems.length; l++) {
+						if (behMap[foodItems[l]] != null) {
+							foodItem += ((foodItem != '')?',':'') + foodItems[l];
+						}
+					}
+
+					row.push(foodItem); // Foor Item
+
+					// get all locomotion
+					var locomotion = '';
+					var locomotions = ['w','r','s','st','cu','cd','l'];
+					for (var l = 0; l < locomotions.length; l++) {
+						if (behMap[locomotions[l]] != null) {
+							locomotion += ((locomotion != '')?',':'') + locomotions[l];
+						}
+					}
+
+					row.push(locomotion); // Locomotion
+
+					// get all position items
+					var position = '';
+					var positions = ['0','1','2','3','4','5','6','a','b'];
+					for (var l = 0; l < positions.length; l++) {
+						if (behMap[positions[l]] != null) {
+							position += ((position != '')?',':'') + positions[l];
+						}
+					}
+
+					row.push(position); // Position
+
+					// get all stress activities
+					var stress = '';
+					var stresses = ['yg','ys'];
+					for (var l = 0; l < stresses.length; l++) {
+						if (behMap[stresses[l]] != null) {
+							stress += ((stress != '')?',':'') + stresses[l];
+						}
+					}
+
+					row.push(stress); // SDB (stress)
+
+					// get all tourist agg behaviours
+					var monkeyIds = '';
+					var touristAgg = '';
+					var touristAggs = ['at','ac','ab','ak','au','ap','ar','a0','ai'];
+					for (var l = 0; l < touristAggs.length; l++) {
+						if (behMap[touristAggs[l]] != null) {
+							touristAgg += ((touristAgg != '')?',':'') + touristAggs[l];
+							if (behMap[touristAggs[l]] instanceof Array && behMap[touristAggs[l]].length > 0) {
+								for (var monkeyId in behMap[touristAggs[l]]) {
+									monkeyIds += ((monkeyIds != '')?',': '') + monkeyId;
+								}
+							}
+						}
+					}
+					row.push(touristAgg); // Tourist Agg
+
+					// get all tourist agg behaviours
+					var conAgg = '';
+					var conAggs = ['at','ad','ac','ab','ak','au','ap','ar','al','as','av','ae','a0','ai'];
+					for (var l = 0; l < conAggs.length; l++) {
+						if (behMap[conAggs[l]] != null) {
+							conAgg += ((conAgg != '')?',':'') + conAggs[l];
+							if (behMap[conAggs[l]] instanceof Array && behMap[conAggs[l]].length > 0) {
+								for (var monkeyId in behMap[conAggs[l]]) {
+									monkeyIds += ((monkeyIds != '')?',': '') + monkeyId;
+								}
+							}
+						}
+					}
+
+					row.push(conAgg); // Con Agg
+					row.push(monkeyIds); // ID
+					row.push((behMap['yy'] != null)?behMap['yy']: 0); // Yawn
+
+					row.push(''); // Approach T
+					row.push(''); // Approach C
+					row.push(''); // ID
+
+					row.push(''); // Leave T
+					row.push(''); // Leave C
+					row.push(''); // ID
+
+					// get all sexual behaviours
+					var sexualBehaviour = '';
+					var sexualBehaviours = ['sp','sa','so','si','sm','sj','sb','s','st','sr'];
+					for (var l = 0; l < sexualBehaviours.length; l++) {
+						if (behMap[sexualBehaviours[l]] != null) {
+							sexualBehaviour += ((sexualBehaviour != '')?',':'') + sexualBehaviours[l];
+						}
+					}
+					row.push(sexualBehaviour);
+
+					// get all vocal behaviours
+					var vocalBehaviour = '';
+					var vocalBehaviours = ['vs','vw','vf','vm','vl'];
+					for (var l = 0; l < vocalBehaviours.length; l++) {
+						if (behMap[vocalBehaviours[l]] != null) {
+							vocalBehaviour += ((vocalBehaviour != '')?',':'') + vocalBehaviours[l];
+						}
+					}
+					row.push(vocalBehaviour);
+
+					// get all food related behaviours
+					var foodBehaviour = '';
+					var foodBehaviours = ['ih','ii','ir','id','iw','pr'];
+					for (var l = 0; l < foodBehaviours.length; l++) {
+						if (behMap[foodBehaviours[l]] != null) {
+							foodBehaviour += ((foodBehaviour != '')?',':'') + foodBehaviours[l];
+						}
+					}
+					row.push(foodBehaviour);
+
+					// get all infant related behaviours
+					var infntRelBehaviour = '';
+					var infntRelBehaviours = ['ct','ce','cp','cm'];
+					for (var l = 0; l < infntRelBehaviours.length; l++) {
+						if (behMap[infntRelBehaviours[l]] != null) {
+							infntRelBehaviour += ((infntRelBehaviour != '')?',':'') + infntRelBehaviours[l];
+						}
+					}
+					row.push(infntRelBehaviour);
+
+					// get all affiliative behaviours
+					var afflBehaviour = '';
+					var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0'];
+					for (var l = 0; l < afflBehaviours.length; l++) {
+						if (behMap[afflBehaviours[l]] != null) {
+							afflBehaviour += ((afflBehaviour != '')?',':'') + afflBehaviours[l];
+						}
+					}
+					row.push(afflBehaviour);
+
+					if (behMap['mse'] != null) {
+						row.push('ms');
+						row.push(behMap['mse']);
+					} else {
+						row.push('');
+						row.push('');
+					}
+
+					if (behMap['msr'] != null) {
+						row.push('ms');
+						row.push(behMap['msr']);
+					} else {
+						row.push('');
+						row.push('');
+					}
+
 					row.push(fs.data.tourist.notes); // Notes
 
 					// push to list

@@ -127,54 +127,14 @@ Aria.classDefinition({
 				label: 'Food',
 				code: 'food',
 				items: [{
-					type: 'list',
 					label: 'Food - Fruit',
-					code: 'F',
-					items: [{
-						label: 'Ripe',
-						code: 'fr'
-					}, {
-						label: 'Unripe',
-						code: 'fu'
-					}, {
-						label: 'Old',
-						code: 'fo'
-					}, {
-						label: 'Seeds',
-						code: 'fs'
-					}, {
-						label: 'Pulp',
-						code: 'fp'
-					}, {
-						label: 'Cover',
-						code: 'fc'
-					}, {
-						label: 'Water/Juice',
-						code: 'fw'
-					}]
+					code: 'f'
 				}, {
-					label: 'Food - Flower Bud',
-					code: 'fb'
+					label: 'Food - Flowers',
+					code: 'fl'
 				}, {
-					type: 'list',
 					label: 'Food - Leaves',
-					code: 'l',
-					items: [{
-						label: 'Young',
-						code: 'ly'
-					}, {
-						label: 'Mature',
-						code: 'lm'
-					}, {
-						label: 'Old',
-						code: 'lo'
-					}]
-				}, {
-					label: 'Food - Plant Parts',
-					code: 'p'
-				}, {
-					label: 'Food - Bark',
-					code: 'b'
+					code: 'l'
 				}, {
 					label: 'Food - Mushrooms',
 					code: 'm'
@@ -182,45 +142,11 @@ Aria.classDefinition({
 					label: 'Food - Anthropogenic',
 					code: 'an'
 				}, {
-					type: 'list',
 					label: 'Food - Anthropods',
-					code: 'a',
-					items: [{
-						label: 'Caterpillar',
-						code: 'ca'
-					}, {
-						label: 'Ant',
-						code: 'an'
-					}, {
-						label: 'Ant eggs',
-						code: 'eg'
-					}, {
-						label: 'Spider',
-						code: 'sp'
-					}, {
-						label: 'Grass Hopper',
-						code: 'gh'
-					}, {
-						label: 'Fly',
-						code: 'fl'
-					}]
+					code: 'a'
 				}, {
-					type: 'list',
 					label: 'Food - Vertebrates',
-					code: 'v',
-					items: [{
-						label: 'Snake',
-						code: 'sn'
-					}, {
-						label: 'Lizard',
-						code: 'li'
-					}, {
-						label: 'Bird',
-						code: 'bi'
-					}, {
-						label: 'Mammal',
-						code: 'ma'
-					}]
+					code: 'v'
 				}]
 			}, {
 				type: 'list',
@@ -352,6 +278,18 @@ Aria.classDefinition({
 				items: [{
 					label: 'Gree/Grasp/...',
 					code: 'fa',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Groome',
+					code: 'mse',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Groomer',
+					code: 'msr',
 					properties: {
 						input_monkey_id: true
 					}
@@ -564,13 +502,13 @@ Aria.classDefinition({
 					type: 'tourist'
 				},
 				{
-					label: 'Tourist Interaction',
-					code: 'ti',
+					label: 'Tourist Tease',
+					code: 'tt',
 					type: 'tourist'
 				},
 				{
 					label: 'Tourist Attention',
-					code: 'tt',
+					code: 'tn',
 					type: 'tourist'
 				}
 			];

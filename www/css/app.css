@@ -310,6 +310,13 @@ div.accordion-inner ul.list-group li.no-data {
 .tourist {
   background-color: antiquewhite;
 }
+.btn-primary {
+  background-color: #222;
+  border-color: #101010;
+}
+button.bootbox-close-button.close {
+  font-size: 42px;
+}
 a.btn.btn-default.range {
   background-color: rgb(170, 224, 211);
 }

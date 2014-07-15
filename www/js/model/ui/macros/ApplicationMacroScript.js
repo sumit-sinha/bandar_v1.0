@@ -83,7 +83,7 @@ Aria.tplScriptDefinition({
 			var el = document.getElementById(args.glue.id);
 			var txt = document.getElementById('BEHAVIOR_MONKEY_ID');
 			if (el != null && txt != null) {
-				el.value += txt.value;
+				el.value += ((el.value == null || el.value == '')?'':',') + txt.value;
 			}
 
 			this.onCancelMonkeyId(event, args);

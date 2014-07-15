@@ -38,7 +38,7 @@ Aria.classDefinition({
 							'Notes'];
 
 			// start work sheet
-			var xmlContent = '<ss:Worksheet ss:Name="Range Restriction"><ss:Table>';
+			var xmlContent = '<ss:Worksheet ss:Name="Crop Guarding"><ss:Table>';
 
 			// prepare header [START] */
 			xmlContent += '<ss:Row>';
