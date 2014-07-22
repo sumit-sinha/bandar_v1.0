@@ -1,3 +1,8 @@
 *.apk
 *.apk
 *.ap_
+*.apk
+*.apk
+*.apk
+platforms/android/CordovaLib/bin/classes/com/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1.class
+*.class
