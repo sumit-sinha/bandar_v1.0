@@ -48,6 +48,8 @@ Aria.tplScriptDefinition({
 			if (args == null) {
 				args = {};
 			}
+
+			args.useSamePage = true;
 			args.nextpage = 'focalscan';
 			this.onSaveClick(event, args);
 		},
@@ -71,7 +73,8 @@ Aria.tplScriptDefinition({
 			
 			// creates a new FOCAL_SESSION
 			this.data.errors.list = null;
-			this.data.errors.list = this.moduleCtrl.createNewFocalScan(this.utils.formToJson(document.getElementById(this.$getId('frmFocalTourist'))));
+			var formData = this.utils.formToJson(document.getElementById(this.$getId('frmFocalTourist')));
+			this.data.errors.list = this.moduleCtrl.createNewFocalScan(formData);
 
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
 				
@@ -79,6 +82,10 @@ Aria.tplScriptDefinition({
 				var nextpage = 'focalscan';
 				if (args != null && args.nextpage != null) {
 					nextpage = args.nextpage;
+				}
+
+				if (!args.useSamePage && formData.hasTourist == 'false') {
+					nextpage = 'rangerestrfocal';
 				}
 
 				this.moduleCtrl.navigate(null, {

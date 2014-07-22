@@ -154,10 +154,22 @@ Aria.classDefinition({
 				code: 'eventsampling',
 				items: [{
 					label: 'Approach',
-					code: 'da'
+					code: 'da',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Approach Tourist',
+					code: 'tda'
 				}, {
 					label: 'Leave Proximity',
-					code: 'la'
+					code: 'la',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Leave Proximity-Tourist',
+					code: 'tla'
 				}]
 			}, {
 				type: 'list',
@@ -282,7 +294,7 @@ Aria.classDefinition({
 						input_monkey_id: true
 					}
 				}, {
-					label: 'Groome',
+					label: 'Groomee',
 					code: 'mse',
 					properties: {
 						input_monkey_id: true

@@ -239,18 +239,24 @@ Aria.tplScriptDefinition({
 							var behaviors = fs.data.monkey.behavior_seq.split('-');
 							for (var j = 0; j < behaviors.length; j++) {
 
-								if (behaviors[j].indexOf('BG') == '0' 
-										|| behaviors[j].indexOf('GO') == '0') {
-									behaviors[j] = behaviors[j].substring(0,2);
+								var monkeyIds = [];
+								var behavior = behaviors[j];
+
+								if (behavior.indexOf(',') != '-1') {
+									var entries = behavior.split(',');
+									behavior = behavior.substring(0,2);
+									for (var l = 1; l < entries.length; l++) {
+										monkeyIds.push(entries[l]);
+									}
 								}
 
 								var jsTime = fs.data.monkey.behavior_timestamp[j].split('-');
 								var item = {
 									time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
 									group: fs.group,
-									monkeyId: fs.data.monkey.monkey_id,
+									monkeyId: monkeyIds,
 									scan: 'FS',
-									behavior: behaviors[j]							
+									behavior: behavior				
 								}
 
 								timeStampArr.push(item);
@@ -258,22 +264,27 @@ Aria.tplScriptDefinition({
 						}
 
 						if (fs.data.range != null) {
-							for (var k = 0; k < fs.data.range.length; k++) {
-								var behaviors = fs.data.range[k].behavior_seq.split('-');
+							for (var k = 0; k < fs.data.monkey.length; k++) {
+								var behaviors = fs.data.monkey[k].behavior_seq.split('-');
 								for (var j = 0; j < behaviors.length; j++) {
 
-									if (behaviors[j].indexOf('BG') == '0' 
-											|| behaviors[j].indexOf('GO') == '0') {
-										behaviors[j] = behaviors[j].substring(0,2);
-									}
+									var monkeyIds = [];
+									var behavior = behaviors[j];
 
-									var jsTime = fs.data.range[k].behavior_timestamp[j].split('-');
+									if (behavior.indexOf(',') != '-1') {
+										var entries = behavior.split(',');
+										behavior = behavior.substring(0,2);
+										for (var l = 1; l < entries.length; l++) {
+											monkeyIds.push(entries[l]);
+										}
+									}
+									var jsTime = fs.data.monkey[k].behavior_timestamp[j].split('-');
 									var item = {
 										time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
 										group: fs.group,
-										monkeyId: fs.data.range[k].monkey_id,
+										monkeyId: monkeyIds,
 										scan: 'FS',
-										behavior: behaviors[j]							
+										behavior: behavior							
 									}
 
 									timeStampArr.push(item);
@@ -290,18 +301,24 @@ Aria.tplScriptDefinition({
 					for (var k = 0; k < ts.data.monkey.length; k++) {
 						var behaviors = ts.data.monkey[k].behavior_seq.split('-');
 						for (var j = 0; j < behaviors.length; j++) {
-							if (behaviors[j].indexOf('BG') == '0' 
-										|| behaviors[j].indexOf('GO') == '0') {
-								behaviors[j] = behaviors[j].substring(0,2);
+							var monkeyIds = [];
+							var behavior = behaviors[j];
+
+							if (behavior.indexOf(',') != '-1') {
+								var entries = behavior.split(',');
+								behavior = behavior.substring(0,2);
+								for (var l = 1; l < entries.length; l++) {
+									monkeyIds.push(entries[l]);
+								}
 							}
 
 							var jsTime = ts.data.monkey[k].behavior_timestamp[j].split('-');
 							var item = {
 								time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
 								group: ts.group,
-								monkeyId: ts.data.monkey[k].monkey_id,
+								monkeyId: monkeyIds,
 								scan: 'TS',
-								behavior: behaviors[j]							
+								behavior: behavior							
 							}
 
 							timeStampArr.push(item);
@@ -315,18 +332,24 @@ Aria.tplScriptDefinition({
 					var rr = this.data.scans.rr[i];
 					var behaviors = rr.data.behavior_seq.split('-');
 					for (var j = 0; j < behaviors.length; j++) {
-						if (behaviors[j].indexOf('BG') == '0' 
-									|| behaviors[j].indexOf('GO') == '0') {
-							behaviors[j] = behaviors[j].substring(0,2);
+						var monkeyIds = [];
+						var behavior = behaviors[j];
+
+						if (behavior.indexOf(',') != '-1') {
+							var entries = behavior.split(',');
+							behavior = behavior.substring(0,2);
+							for (var l = 1; l < entries.length; l++) {
+								monkeyIds.push(entries[l]);
+							}
 						}
 
 						var jsTime = rr.data.behavior_timestamp[j].split('-');
 						var item = {
 							time: new Date(jsTime[0],parseInt(jsTime[1]) + 1,jsTime[2],jsTime[3],jsTime[4],jsTime[5]),
 							group: rr.group,
-							monkeyId: rr.data.monkey_id,
+							monkeyId: monkeyIds,
 							scan: 'RR',
-							behavior: behaviors[j]							
+							behavior: behavior						
 						}
 
 						timeStampArr.push(item);

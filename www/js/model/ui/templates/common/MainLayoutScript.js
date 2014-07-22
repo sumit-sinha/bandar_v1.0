@@ -13,7 +13,7 @@ Aria.tplScriptDefinition({
 				var appData = pageEngine.getData().appData;
 				var code = localStorage.getItem('logged_in');
 				if (code != null && appData['user'] == null) {
-					var data = JSON.parse(localStorage.getItem(code));
+					var data = JSON.parse(decodeURIComponent(localStorage.getItem(code)));
 					aria.utils.Json.setValue(appData, 'user', data);
 				}
 			} catch (e) {

@@ -32,10 +32,11 @@ Aria.tplScriptDefinition({
 			this.data.behaviors = this.db.getMonkeyBehaviors();
 			this.data.rrSession = this.moduleCtrl.getRRSessionData();
 
-			if (this.data.rrSession == null) {
+			if (this.data.rrSession == null || this.data.rrSession.startTime == null) {
 				this.data.rrSession = {};
+				this.startTime = this.utils.getCurrentTime();
 			} else {
-
+				this.startTime = this.data.rrSession.startTime;
 				var timerInfo = this.utils.getTimerInfo();
 				timerInfo.timer = this.data.rrSession.timer;
 			}
@@ -60,14 +61,13 @@ Aria.tplScriptDefinition({
 			input['endTime'] = this.utils.getCurrentTime();
 
 			// save before navigation
-			var input = this.utils.formToJson(document.getElementById(this.$getId('frmRange')));
 			this.moduleCtrl.saveRRSessionData(input);
 
 			this.data.errors.list = this.moduleCtrl.addRangeRestriction({
 				'input': input
 			});
 
-			if (input.hasRange === "true" && this.data.errors.list.length > 0) {
+			if (input.hasRange === "true" && this.data.errors.list != null && this.data.errors.list.length > 0) {
 				// show error
 				this.$json.setValue(this.data.errors, 'error_occured', !this.data.errors.error_occured);
 			} else {
@@ -84,6 +84,9 @@ Aria.tplScriptDefinition({
 
 			// save before navigation
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmRange')));
+			input['startTime'] = this.startTime;
+			input['endTime'] = this.utils.getCurrentTime();
+
 			this.moduleCtrl.saveRRSessionData(input);
 
 			// navigate to next page
@@ -102,7 +105,6 @@ Aria.tplScriptDefinition({
 			input['endTime'] = this.utils.getCurrentTime();
 
 			// save before navigation
-			var input = this.utils.formToJson(document.getElementById(this.$getId('frmRange')));
 			this.moduleCtrl.saveRRSessionData(input);
 
 			this.data.errors.list = this.moduleCtrl.addRangeRestriction({
@@ -112,7 +114,7 @@ Aria.tplScriptDefinition({
 			// show error
 			this.$json.setValue(this.data.errors, 'error_occured', !this.data.errors.error_occured);
 
-			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
+			if (this.data.errors.list == null || this.data.errors.list == null || this.data.errors.list.length == 0) {
 
 				// refresh buttons
 				this.$json.setValue(this.data, 'behavior_button_refresh', !this.data.behavior_button_refresh);

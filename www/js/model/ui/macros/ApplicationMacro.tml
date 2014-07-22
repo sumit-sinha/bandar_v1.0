@@ -19,6 +19,8 @@
 				${args.source = model.ui.utils.DataUtil.getActivityCodes()|eat}
 			{/if}
 
+			// allow user to enter multiple values
+			${args.multipleValues = true|eat}
 			{call autocomplete.createAutoComplete(args)/}
 		{/if}
 	{/macro}
