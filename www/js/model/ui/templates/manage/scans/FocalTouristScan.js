@@ -412,15 +412,7 @@ Aria.classDefinition({
 			}
 
 			row.push(''); // MNP Social
-			if (range != null) {
-				row.push(range.notes);
-			} else {
-				if (args.fs.data.tourist != null) {
-					row.push(args.fs.data.tourist.notes); // Notes
-				} else {
-					row.push('');
-				}
-			}
+			row.push(args.fs.data.monkey.notes); // Notes
 
 			return row;
 		}

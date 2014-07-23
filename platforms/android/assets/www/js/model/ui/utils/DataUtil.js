@@ -127,54 +127,14 @@ Aria.classDefinition({
 				label: 'Food',
 				code: 'food',
 				items: [{
-					type: 'list',
 					label: 'Food - Fruit',
-					code: 'F',
-					items: [{
-						label: 'Ripe',
-						code: 'fr'
-					}, {
-						label: 'Unripe',
-						code: 'fu'
-					}, {
-						label: 'Old',
-						code: 'fo'
-					}, {
-						label: 'Seeds',
-						code: 'fs'
-					}, {
-						label: 'Pulp',
-						code: 'fp'
-					}, {
-						label: 'Cover',
-						code: 'fc'
-					}, {
-						label: 'Water/Juice',
-						code: 'fw'
-					}]
+					code: 'f'
 				}, {
-					label: 'Food - Flower Bud',
-					code: 'fb'
+					label: 'Food - Flowers',
+					code: 'fl'
 				}, {
-					type: 'list',
 					label: 'Food - Leaves',
-					code: 'l',
-					items: [{
-						label: 'Young',
-						code: 'ly'
-					}, {
-						label: 'Mature',
-						code: 'lm'
-					}, {
-						label: 'Old',
-						code: 'lo'
-					}]
-				}, {
-					label: 'Food - Plant Parts',
-					code: 'p'
-				}, {
-					label: 'Food - Bark',
-					code: 'b'
+					code: 'l'
 				}, {
 					label: 'Food - Mushrooms',
 					code: 'm'
@@ -182,45 +142,11 @@ Aria.classDefinition({
 					label: 'Food - Anthropogenic',
 					code: 'an'
 				}, {
-					type: 'list',
 					label: 'Food - Anthropods',
-					code: 'a',
-					items: [{
-						label: 'Caterpillar',
-						code: 'ca'
-					}, {
-						label: 'Ant',
-						code: 'an'
-					}, {
-						label: 'Ant eggs',
-						code: 'eg'
-					}, {
-						label: 'Spider',
-						code: 'sp'
-					}, {
-						label: 'Grass Hopper',
-						code: 'gh'
-					}, {
-						label: 'Fly',
-						code: 'fl'
-					}]
+					code: 'a'
 				}, {
-					type: 'list',
 					label: 'Food - Vertebrates',
-					code: 'v',
-					items: [{
-						label: 'Snake',
-						code: 'sn'
-					}, {
-						label: 'Lizard',
-						code: 'li'
-					}, {
-						label: 'Bird',
-						code: 'bi'
-					}, {
-						label: 'Mammal',
-						code: 'ma'
-					}]
+					code: 'v'
 				}]
 			}, {
 				type: 'list',
@@ -228,10 +154,22 @@ Aria.classDefinition({
 				code: 'eventsampling',
 				items: [{
 					label: 'Approach',
-					code: 'da'
+					code: 'da',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Approach Tourist',
+					code: 'tda'
 				}, {
 					label: 'Leave Proximity',
-					code: 'la'
+					code: 'la',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Leave Proximity-Tourist',
+					code: 'tla'
 				}]
 			}, {
 				type: 'list',
@@ -351,7 +289,22 @@ Aria.classDefinition({
 				code: 'affiliativebehav',
 				items: [{
 					label: 'Gree/Grasp/...',
-					code: 'fa'
+					code: 'fa',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Groomee',
+					code: 'mse',
+					properties: {
+						input_monkey_id: true
+					}
+				}, {
+					label: 'Groomer',
+					code: 'msr',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Play Face/Mock/...',
 					code: 'fp'
@@ -363,7 +316,10 @@ Aria.classDefinition({
 					code: 'fx'
 				}, {
 					label: 'Genital Grasp',
-					code: 'fg'
+					code: 'fg',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Mount',
 					code: 'fm'
@@ -380,22 +336,34 @@ Aria.classDefinition({
 				code: 'aggresssubmissive',
 				items: [{
 					label: 'Half Open Mouth/Bared Teeth/...',
-					code: 'at'
+					code: 'at',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Displacement',
-					code: 'ad'
+					code: 'ad',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Chase',
 					code: 'ac'
 				}, {
 					label: 'Hit/Grab/Push/...',
-					code: 'ab'
+					code: 'ab',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Support Shake',
 					code: 'ak'
 				}, {
 					label: 'Lunge',
-					code: 'au'
+					code: 'au',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Stamp',
 					code: 'ap'
@@ -404,7 +372,10 @@ Aria.classDefinition({
 					code: 'ar'
 				}, {
 					label: 'Avoid',
-					code: 'al'
+					code: 'al',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Scream',
 					code: 'as'
@@ -419,7 +390,10 @@ Aria.classDefinition({
 					code: 'a0'
 				}, {
 					label: 'Ignore/Look Away',
-					code: 'ai'
+					code: 'ai',
+					properties: {
+						input_monkey_id: true
+					}
 				}]
 			}];
 		},
@@ -530,23 +504,23 @@ Aria.classDefinition({
 
 			return [
 				{
-					text: 'Tourist Feeding',
+					label: 'Tourist Feeding',
 					code: 'tf',
 					type: 'tourist'
 				},
 				{
-					text: 'Tourist Agression',
+					label: 'Tourist Agression',
 					code: 'ta',
 					type: 'tourist'
 				},
 				{
-					text: 'Tourist Interaction',
-					code: 'ti',
+					label: 'Tourist Tease',
+					code: 'tt',
 					type: 'tourist'
 				},
 				{
-					text: 'Tourist Attention',
-					code: 'tt',
+					label: 'Tourist Attention',
+					code: 'tn',
 					type: 'tourist'
 				}
 			];

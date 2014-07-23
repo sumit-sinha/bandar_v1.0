@@ -32,6 +32,7 @@ Aria.tplScriptDefinition({
 		 * @param args
 		 */
 		onBehaviorButtonClick: function(event, args) {
+
 			if (args.behavior.items == null || args.behavior.items.length == 0) {
 				var el = document.getElementById(args.glue.id);
 				if (el != null) {
@@ -66,6 +67,9 @@ Aria.tplScriptDefinition({
 				if (args.glue.behaviors != null) {
 					args.glue.previousList.push(args.glue.behaviors);
 				}
+
+				// scroll to top
+				window.scrollTo(0, 0);
 
 				args.glue.behaviors = args.behavior.items;
 				model.ui.utils.ApplicationUtil.showOverlay(false);

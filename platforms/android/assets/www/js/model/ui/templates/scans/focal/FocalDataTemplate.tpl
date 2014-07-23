@@ -87,6 +87,7 @@
 										fn: 'onBehaviorClick',
 										scope: this
 									},
+									hasTouristBehaviors: true,
 									behavior_seq: this.data.focalData.behavior_seq
 								})/}
 								{section {

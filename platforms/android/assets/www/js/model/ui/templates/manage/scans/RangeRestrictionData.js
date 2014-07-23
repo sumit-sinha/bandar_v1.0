@@ -21,24 +21,27 @@ Aria.classDefinition({
 							'End Time',
 							'Duration',
 							'Monkey Id',
-							'H-Scratch',
-							'K-Pick',
-							'G-Groom',
-							'Tourist Agg',
+							'Behavior Time',
+							'SDB Stress',
 							'Con Agg',
-							'Tour Thrt',
-							'Con Thrt',
+							'ID',
 							'Yawn',
-							'Prox Cntct',
-							'Prox NoCon',
-							'Being Groomed',
+							'Approach C',
 							'ID',
-							'Groom Other',
+							'Leave C',
 							'ID',
+							'Sexual Beh',
+							'Vocal',
+							'Infant Rltd',
+							'Food Rltd',
+							'Affiliative',
+							'Groomee',
+							'ID',
+							'Groomer',
 							'Notes'];
 
 			// start work sheet
-			var xmlContent = '<ss:Worksheet ss:Name="Range Restriction"><ss:Table>';
+			var xmlContent = '<ss:Worksheet ss:Name="Crop Guarding"><ss:Table>';
 
 			// prepare header [START] */
 			xmlContent += '<ss:Row>';
@@ -52,79 +55,185 @@ Aria.classDefinition({
 
 			// prepare content [START] */
 			for (var i = 0; i < args.list.length; i++) {
-				var row = [];
 				var rr = args.list[i];
-
-				var behMap = {};
 				var behaviors = rr.data.behavior_seq.split('-');
 				for (var j = 0; j < behaviors.length; j++) {
 
-					var monkeyId = null;
-					if (behaviors[j].indexOf('BG') == '0' 
-							|| behaviors[j].indexOf('GO') == '0') {
-						monkeyId = behaviors[j].substring(2);
-						behaviors[j] = behaviors[j].substring(0,2);
-					}
+					var row = [];
+					var monkeyIds = [];
+					var behavior = behaviors[j];
 
-					if (behMap[behaviors[j]] != null) {
-						behMap[behaviors[j]]++;
-					} else {
-						if (monkeyId == null) {
-							behMap[behaviors[j]] = 1;
-						} else {
-							behMap[behaviors[j]] = monkeyId
+					if (behavior.indexOf(',') != '-1') {
+						var entries = behavior.split(',');
+						behavior = behavior.substring(0,2);
+						for (var l = 1; l < entries.length; l++) {
+							monkeyIds.push(entries[l]);
 						}
 					}
+
+					row = this._getRowData(row, {
+						rr: rr,
+						utils: args.utils,
+						user: args.user,
+						behavior: behavior,
+						monkeyIds: monkeyIds,
+						behavior_timestamp: rr.data.behavior_timestamp[j]
+					});
+
+					xmlContent += '<ss:Row>';
+					for (var k = 0; k < row.length; k++) {
+						xmlContent += '<ss:Cell>'
+										+ '<ss:Data ss:Type="String">' + row[k] + '</ss:Data>'
+									+ '</ss:Cell>';							
+					}
+					xmlContent += '</ss:Row>';
 				}
-
-				row.push(rr.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(rr.timeStamp.substring(4,6))}) + '-' + rr.timeStamp.substring(0,4)); // date
-				row.push(args.user.code); // observer
-				row.push(rr.group); // group
-				row.push(rr.data.area_code); // location
-				row.push(rr.data.type_rr); // type
-				row.push(rr.data.group_behavior); // group behavior
-				row.push(1); // session
-
-				var timeArr = rr.data.startTime.split('-');
-				var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-				row.push(timeArr[3] + ':' + timeArr[4]); // start time
-
-				timeArr = rr.data.endTime.split('-');
-				var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-				row.push(timeArr[3] + ':' + timeArr[4]); // end time
-
-				row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // duration
-				row.push(rr.data.monkey_id);
-				row.push((behMap['H'] != null)?behMap['H']: 0); // H-Scratch
-				row.push((behMap['P'] != null)?behMap['P']: 0); // P-Pick
-				row.push((behMap['G'] != null)?behMap['G']: 0); // G-Groom
-
-				row.push((behMap['AT'] != null)?behMap['AT']: 0); // AT-Tourist Aggrs
-				row.push((behMap['AC'] != null)?behMap['AC']: 0); // Con Agg
-				row.push((behMap['UT'] != null)?behMap['UT']: 0); // Tourist Thrt
-				row.push((behMap['CT'] != null)?behMap['CT']: 0); // Con Thrt
-				row.push((behMap['Y'] != null)?behMap['Y']: 0); // Yawn
-				row.push((behMap['XC'] != null)?behMap['XC']: 0); // Prox Cntnt
-				row.push((behMap['XN'] != null)?behMap['XN']: 0); // Prox No Cntnt
-				row.push((behMap['BG'] != null)?1: 0); // Being Groomed
-				row.push((behMap['BG'] != null)?behMap['BG']: 0); // Being Groomed Monkey Id
-				row.push((behMap['GO'] != null)?1: 0); // Soc Grooming
-				row.push((behMap['GO'] != null)?behMap['GO']: 0);					
-				row.push(rr.data.notes); // Notes
-
-				xmlContent += '<ss:Row>';
-				for (var j = 0; j < row.length; j++) {
-					xmlContent += '<ss:Cell>'
-									+ '<ss:Data ss:Type="String">' + row[j] + '</ss:Data>'
-								+ '</ss:Cell>';							
-				}
-				xmlContent += '</ss:Row>';
 			}
 			// prepare content [ END ] */
 
 			// close work sheet
 			xmlContent += '</ss:Table></ss:Worksheet>'
 			return xmlContent;
+		},
+
+		_getRowData: function(row, args) {
+			row.push(args.rr.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(args.rr.timeStamp.substring(4,6))}) + '-' + args.rr.timeStamp.substring(0,4)); // date
+			row.push(args.user.code); // observer
+			row.push(args.rr.group); // group
+			row.push(args.rr.data.area_code); // location
+			row.push(args.rr.data.type_rr); // type
+			row.push(args.rr.data.group_behavior); // group behavior
+			row.push(1); // session
+
+			var timeArr = args.rr.data.startTime.split('-');
+			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
+			row.push(timeArr[3] + ':' + timeArr[4]); // start time
+
+			timeArr = args.rr.data.endTime.split('-');
+			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
+			row.push(timeArr[3] + ':' + timeArr[4]); // end time
+
+			row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // duration
+			row.push(args.rr.data.monkey_id);
+			
+			timeArr = args.behavior_timestamp.split('-');
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // Behavior time
+
+			// get all stress activities
+			var stress = '';
+			var stresses = ['yg','ys'];
+			for (var l = 0; l < stresses.length; l++) {
+				if (args.behavior == stresses[l]) {
+					stress += ((stress != '')?',':'') + stresses[l];
+				}
+			}
+
+			row.push(stress); // SDB (stress)
+
+			// get all con agg behaviours
+			var conAgg = '';
+			var monkeyIds = '';
+			var conAggs = ['at','ad','ac','ab','ak','au','ap','ar','al','as','av','ae','a0','ai'];
+			for (var l = 0; l < conAggs.length; l++) {
+				if (args.behavior == conAggs[l]) {
+					conAgg += ((conAgg != '')?',':'') + conAggs[l];
+					if (args.behavior == conAgg[l] && args.monkeyIds instanceof Array && args.monkeyIds.length > 0) {
+						for (var monkeyId in args.monkeyIds) {
+							monkeyIds += ((monkeyIds != '')?',': '') + monkeyId;
+						}
+					}
+				}
+			}
+
+			row.push(conAgg); // Con Agg
+			row.push(monkeyIds); // ID
+			row.push((args.behavior == 'yy')?1: 0); // Yawn
+
+			if (args.behavior == 'da') {
+				row.push(1); // Approach C
+				row.push(args.monkeyIds); // ID
+			} else {
+				row.push(0);
+				row.push('');
+			}
+
+			if (args.behavior == 'la') {
+				row.push(1); // // Leave C
+				row.push(args.monkeyIds); // ID
+			} else {
+				row.push(0);
+				row.push('');
+			}
+
+			// get all sexual behaviours
+			var sexualBehaviour = '';
+			var sexualBehaviours = ['sp','sa','so','si','sm','sj','sb','s','st','sr'];
+			for (var l = 0; l < sexualBehaviours.length; l++) {
+				if (args.behavior == sexualBehaviours[l]) {
+					sexualBehaviour += ((sexualBehaviour != '')?',':'') + sexualBehaviours[l];
+				}
+			}
+			row.push(sexualBehaviour);
+
+			// get all vocal behaviours
+			var vocalBehaviour = '';
+			var vocalBehaviours = ['vs','vw','vf','vm','vl'];
+			for (var l = 0; l < vocalBehaviours.length; l++) {
+				if (args.behavior == vocalBehaviours[l]) {
+					vocalBehaviour += ((vocalBehaviour != '')?',':'') + vocalBehaviours[l];
+				}
+			}
+			row.push(vocalBehaviour);
+
+			// get all infant related behaviours
+			var infntRelBehaviour = '';
+			var infntRelBehaviours = ['ct','ce','cp','cm'];
+			for (var l = 0; l < infntRelBehaviours.length; l++) {
+				if (args.behavior == infntRelBehaviours[l]) {
+					infntRelBehaviour += ((infntRelBehaviour != '')?',':'') + infntRelBehaviours[l];
+				}
+			}
+			row.push(infntRelBehaviour);
+
+			// get all food related behaviours
+			var foodBehaviour = '';
+			var foodBehaviours = ['ih','ii','ir','id','iw','pr'];
+			for (var l = 0; l < foodBehaviours.length; l++) {
+				if (args.behavior == foodBehaviours[l]) {
+					foodBehaviour += ((foodBehaviour != '')?',':'') + foodBehaviours[l];
+				}
+			}
+			row.push(foodBehaviour);
+
+			// get all affiliative behaviours
+			var afflBehaviour = '';
+			var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0'];
+			for (var l = 0; l < afflBehaviours.length; l++) {
+				if (args.behavior == afflBehaviours[l]) {
+					afflBehaviour += ((afflBehaviour != '')?',':'') + afflBehaviours[l];
+				}
+			}
+			row.push(afflBehaviour);
+
+			if (args.behavior == 'mse') {
+				row.push('ms');
+				row.push(1);
+			} else {
+				row.push('');
+				row.push('');
+			}
+
+			if (args.behavior == 'msr') {
+				row.push('ms');
+				row.push(1);
+			} else {
+				row.push('');
+				row.push('');
+			}
+
+			row.push(args.rr.data.notes); // Notes
+
+			return row;
 		}
 	}
 });

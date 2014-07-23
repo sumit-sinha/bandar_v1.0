@@ -64,6 +64,7 @@
 									divCss: 'form-group',
 									id: 'BEHAVIOR_SEQUENCE_1',
 									name: 'behavior_seq',
+									hasTouristBehaviors: true,
 									behavior_seq: this.data.touristData.behavior_seq,
 									onKeyUp: {
 										fn: 'onBehaviorClick',

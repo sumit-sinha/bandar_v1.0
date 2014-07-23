@@ -79,6 +79,10 @@
 										populate: 'C'
 									})/}
 								</div>
+								<div class="form-group">
+									<label for="NOTES_1">Notes/Observation</label>
+									<textarea class="form-control" rows="2" {id "NOTES_1"/} name="notes">{if this.data.focalData.notes != null}${this.data.focalData.notes}{/if}</textarea>
+								</div>
 								{call application.createBehaviorField({
 									divCss: 'form-group',
 									id: 'BEHAVIOR_SEQ_1',

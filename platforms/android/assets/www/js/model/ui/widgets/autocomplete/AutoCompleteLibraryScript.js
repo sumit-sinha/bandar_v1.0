@@ -29,6 +29,11 @@ Aria.tplScriptDefinition({
 					|| args.showEmpty == false) {
 					value = inputEL.value;
 				}
+
+				if (value.indexOf(';') != -1) {
+					var values = value.split(';');
+					value = values[values.length - 1];
+				}
 				
 				// get suggestions
 				args.suggestionsController.suggestValue(value);
@@ -101,6 +106,21 @@ Aria.tplScriptDefinition({
 					}
 				}
 
+				var inputELValue = inputEL.value;
+				if (inputELValue.indexOf(';') != -1) {
+					var currentValue = '';
+					var values = inputELValue.split(';');
+					for (var i = 0; i < values.length - 1; i++) {
+						currentValue += ((currentValue != '')?';':'') + values[i];
+					}
+
+					result = currentValue + ';' + result;
+				}
+
+				if (args.input.multipleValues) {
+					result += ';';
+				}
+
 				inputEL.value = result;
 			}
 						
@@ -117,6 +137,7 @@ Aria.tplScriptDefinition({
 				this.$callback(args.input.onblur);
 			}
 			
+			inputEL.focus();
         },
 		
 		onInputBlur: function(event, args) {

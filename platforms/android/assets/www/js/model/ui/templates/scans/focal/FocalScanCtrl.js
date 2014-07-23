@@ -180,6 +180,7 @@ Aria.classDefinition({
 				localStorage.setItem(user.code, aria.utils.Json.convertToJsonString(copiedUser));
 
 				// reset
+				this.data.rrCurrentData = {};
 				this.data.focalData = {};
 				this.data.focalSession = {};
 

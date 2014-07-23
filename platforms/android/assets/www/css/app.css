@@ -231,6 +231,8 @@ a.btn.btn-default {
 }
 input.form-control-radio {
   margin-right: 0.5em;
+  margin-left: 0.2em;
+  transform: scale(1.5);
 }
 .modal {
   display: block;
@@ -307,8 +309,15 @@ div.accordion-inner ul.list-group li.no-data {
   list-style: none;
   padding: 5px;
 }
-a.btn.btn-default.tourist {
+.tourist {
   background-color: antiquewhite;
+}
+.btn-primary {
+  background-color: #222;
+  border-color: #101010;
+}
+button.bootbox-close-button.close {
+  font-size: 42px;
 }
 a.btn.btn-default.range {
   background-color: rgb(170, 224, 211);

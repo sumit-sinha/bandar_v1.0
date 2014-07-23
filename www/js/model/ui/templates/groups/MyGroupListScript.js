@@ -45,6 +45,9 @@ Aria.tplScriptDefinition({
 		 */
 		onGroupTap: function(event, args) {
 
+			// scroll to top
+			window.scrollTo(0, 0);
+
 			for (var i = 0; i < this.data.groups.length; i++) {
 				var group = this.data.groups[i];
 				var groupEL = document.getElementById(this.$getId(group.code));
@@ -65,12 +68,6 @@ Aria.tplScriptDefinition({
 			this.utils.showOverlay(false);
 			this.$json.setValue(this.data, 'showScans', !this.data.showScans);
 
-			/* navigate to focal-data page
-			this.moduleCtrl.navigate(null, {
-				pageRequest: {
-					pageId: 'selectscan'
-				}
-			});*/
 		},
 
 		/**

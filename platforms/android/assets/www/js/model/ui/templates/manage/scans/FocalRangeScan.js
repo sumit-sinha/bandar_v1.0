@@ -11,44 +11,46 @@ Aria.classDefinition({
 		 */
 		createFsRangeWorkBook: function(args) {
 			var fsData = ['Date',
-							'Observer', 
-							'Group', 
-							'Monkey', 
-							'Focal#', 
-							'Start Time', 
-							'End Time', 
-							'Total Time', 
-							'RR - Start Time', 
-							'RR - TimeStp', 
-							'Duration', 
-							'Location', 
-							'Whoops', 
+							'Observer',
+							'Group',
+							'Monkey',
+							'Focal#',
+							'Start Time',
+							'End Time',
+							'Total Time',
+							'Behavior Time',
+							'Location',
+							'Whoops',
 							'C-Chase',
 							'S-Stick',
 							'D-Dog',
-							'F-Firework', 
-							'L-Slingshot', 
-							'F-Foraging', 
-							'E-Resting', 
-							'L-Locomoting', 
-							'H-Scratch', 
-							'K-Pick', 
-							'G-Groom', 
-							'T-Tourist Agg', 
-							'C-Con Agg', 
-							'U-Tour Thrt',
-							'S-Con Thrt', 
-							'Yawn', 
-							'Prox Cntct',
-							'Prox No Cntct',
-							'Being Groomed',
+							'F-Firework',
+							'L-Slingshot',
+							'Activity',
+							'Food Item',
+							'Locomotion',
+							'Position',
+							'SDB Stress',
+							'Con Agg',
 							'ID',
-							'Groom Other',
+							'Yawn',
+							'Approach C',
+							'ID',
+							'Leave C',
+							'Yawn', 
+							'Sexual Beh',
+							'Vocal',
+							'Infant Rltd',
+							'Food Rltd',
+							'Affiliative',
+							'Groomee',
+							'ID',
+							'Groomer',
 							'ID',
 							'Notes'];
 
 			// start work sheet
-			var xmlContent = '<ss:Worksheet ss:Name="Focal RR"><ss:Table>';
+			var xmlContent = '<ss:Worksheet ss:Name="Focal CG"><ss:Table>';
 
 			// prepare header [START] */
 			xmlContent += '<ss:Row>';
@@ -89,123 +91,246 @@ Aria.classDefinition({
 		 */
 		__processFSData: function(args) {
 			var output = [];
+			var count = 0;
 			for (var i = 0; i < args.list.length; i++) {
 				var fs = args.list[i];
 
 				if (fs.data.range != null && fs.data.range.length > 0) {
-					var behMap = {};
+
+					var range = fs.data.range[0];
 					var behaviors = fs.data.monkey.behavior_seq.split('-');
-					for (var j = 0; j < behaviors.length; j++) {
-						
-						var monkeyId = null;
-						if (behaviors[j].indexOf('BG') == '0' 
-								|| behaviors[j].indexOf('GO') == '0') {
-							monkeyId = behaviors[j].substring(2);
-							behaviors[j] = behaviors[j].substring(0,2);
-						}
-
-						if (behMap[behaviors[j]] != null) {
-							behMap[behaviors[j]]++;
-						} else {
-							if (monkeyId == null) {
-								behMap[behaviors[j]] = 1;
-							} else {
-								behMap[behaviors[j]] = monkeyId
-							}
-						}
-					}
-
-					for (var j = 0; j < fs.data.range.length; j++) {
-
-						// range object
+					for (var j = 0; j < behaviors.length && range != null; j++) {
 						var row = [];
-						var range = fs.data.range[j];
+						var monkeyIds = [];
+						var behavior = behaviors[j];
 
-						var behMapRange = {};
-						var behaviorsRange = range.behavior_seq.split('-');
-						for (var k = 0; k < behaviorsRange.length; k++) {
-							
-							var monkeyId = null;
-							if (behaviorsRange[k].indexOf('BG') == '0' 
-									|| behaviorsRange[k].indexOf('GO') == '0') {
-								monkeyId = behaviorsRange[k].substring(2);
-								behaviorsRange[k] = behaviorsRange[k].substring(0,2);
-							}
-
-							if (behMapRange[behaviorsRange[k]] != null) {
-								behMapRange[behaviorsRange[k]]++;
-							} else {
-								if (monkeyId == null) {
-									behMapRange[behaviorsRange[k]] = 1;
-								} else {
-									behMapRange[behaviorsRange[k]] = monkeyId
-								}
+						if (behavior.indexOf(',') != '-1') {
+							var entries = behavior.split(',');
+							behavior = behavior.substring(0,2);
+							for (var l = 1; l < entries.length; l++) {
+								monkeyIds.push(entries[l]);
 							}
 						}
 
-
-						row.push(fs.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(fs.timeStamp.substring(4,6))}) + '-' + fs.timeStamp.substring(0,4)); // date
-						row.push(args.user.code); // observer
-						row.push(fs.group); // group
-						row.push(fs.data.monkey.monkey_id); //monkey id
-						row.push(fs.index + 1); // focal #
-
-						var timeArr = fs.data.monkey.startTime.split('-');
-						var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-						row.push(timeArr[3] + ':' + timeArr[4]); // start time
-
-						timeArr = fs.data.monkey.endTime.split('-');
-						var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-						row.push(timeArr[3] + ':' + timeArr[4]); // end time
-
-						row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // total time
-
-						timeArr = range.startTime.split('-');
-						startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-						row.push(timeArr[3] + ':' + timeArr[4]); // rr - start time
-
-						timeArr = range.endTime.split('-');
-						endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-						row.push(timeArr[3] + ':' + timeArr[4]); // rr - end time
-
-						row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // duration
-						row.push(range.area_code); // location
-						row.push((range.rr_type == 'W')?1: 0); // Whoops
-						row.push((range.rr_type == 'C')?1: 0); // Chase
-						row.push((range.rr_type == 'S')?1: 0); // Stick
-						row.push((range.rr_type == 'D')?1: 0); // Dog
-						row.push((range.rr_type == 'F')?1: 0); // Firework
-						row.push((range.rr_type == 'L')?1: 0); // SlingShot
-
-						row.push((fs.data.monkey.activity_code == 'F')?1: 0); // F-Foraging
-						row.push((fs.data.monkey.activity_code == 'R')?1: 0); // R-Resting
-						row.push((fs.data.monkey.activity_code == 'L')?1: 0); // L-Locomoting
-
-						row.push((behMap['H'] != null)?behMap['H']: 0); // H-Scratch
-						row.push((behMap['P'] != null)?behMap['P']: 0); // P-Pick
-						row.push((behMap['G'] != null)?behMap['G']: 0); // G-Groom
-
-						row.push((behMap['AT'] != null)?behMap['AT']: 0); // AT-Tourist Aggrs
-						row.push((behMap['AC'] != null)?behMap['AC']: 0); // Con Agg
-						row.push((behMap['UT'] != null)?behMap['UT']: 0); // Tourist Thrt
-						row.push((behMap['CT'] != null)?behMap['CT']: 0); // Con Thrt
-						row.push((behMap['Y'] != null)?behMap['Y']: 0); // Yawn
-						row.push((behMap['XC'] != null)?behMap['XC']: 0); // Prox Cntnt
-						row.push((behMap['XN'] != null)?behMap['XN']: 0); // Prox No Cntnt
-						row.push((behMap['GO'] != null)?1: 0); // Soc Grooming
-						row.push((behMap['GO'] != null)?behMap['GO']: 0);					
-						row.push((behMap['BG'] != null)?1: 0); // Being Groomed
-						row.push((behMap['BG'] != null)?behMap['BG']: 0); // Being Groomed Monkey Id
-						row.push(range.notes); // Notes
+						row = this._getRowData(row, {
+							fs: fs,
+							utils: args.utils,
+							user: args.user,
+							range: range,
+							behavior: behavior,
+							monkeyIds: monkeyIds,
+							behavior_timestamp: fs.data.monkey.behavior_timestamp[j]
+						});
 
 						// push to list
-						var key = i + j;
-						output.push({key: row});
+						var counter = {};
+						counter[count++] = row;
+						output.push(counter);
 					}
 				}
 			}
 
 			return output;
+		},
+
+		_getRowData: function(row, args) {
+			row.push(args.fs.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(args.fs.timeStamp.substring(4,6))}) + '-' + args.fs.timeStamp.substring(0,4)); // date
+			row.push(args.user.code); // observer
+			row.push(args.fs.group); // group
+			row.push(args.fs.data.monkey.monkey_id); //monkey id
+			row.push(args.fs.index + 1); // focal #
+
+			var timeArr = args.fs.data.monkey.startTime.split('-');
+			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
+			row.push(timeArr[3] + ':' + timeArr[4]); // start time
+
+			timeArr = args.fs.data.monkey.endTime.split('-');
+			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
+			row.push(timeArr[3] + ':' + timeArr[4]); // end time
+
+			row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // total time
+
+			timeArr = args.behavior_timestamp.split('-');
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // Behavior time
+
+			row.push(args.range.area_code); // location
+			
+			if (args.range.rr_type != null) {
+				args.range.rr_type = args.range.rr_type.toUpperCase();
+			} else {
+				args.range.rr_type = '';
+			}
+
+			row.push((args.range.rr_type == 'W')?1: 0); // Whoops
+			row.push((args.range.rr_type == 'C')?1: 0); // Chase
+			row.push((args.range.rr_type == 'S')?1: 0); // Stick
+			row.push((args.range.rr_type == 'D')?1: 0); // Dog
+			row.push((args.range.rr_type == 'F')?1: 0); // Firework
+			row.push((args.range.rr_type == 'L')?1: 0); // SlingShot
+
+			row.push(args.fs.data.monkey.activity_code); // activity
+
+			// get all food items
+			var foodItem = '';
+			var foodItems = ['f','fl','l','a','m','v','an'];
+			for (var l = 0; l < foodItems.length; l++) {
+				if (args.behavior == foodItems[l]) {
+					foodItem += ((foodItem != '')?',':'') + foodItems[l];
+				}
+			}
+
+			row.push(foodItem); // Foor Item
+
+			// get all locomotion
+			var locomotion = '';
+			var locomotions = ['w','r','s','st','cu','cd','l'];
+			for (var l = 0; l < locomotions.length; l++) {
+				if (args.behavior == locomotions[l]) {
+					locomotion += ((locomotion != '')?',':'') + locomotions[l];
+				}
+			}
+
+			row.push(locomotion); // Locomotion
+
+			// get all position items
+			var position = '';
+			var positions = ['0','1','2','3','4','5','6','a','b'];
+			for (var l = 0; l < positions.length; l++) {
+				if (args.behavior == positions[l]) {
+					position += ((position != '')?',':'') + positions[l];
+				}
+			}
+
+			row.push(position); // Position
+
+			// get all stress activities
+			var stress = '';
+			var stresses = ['yg','ys'];
+			for (var l = 0; l < stresses.length; l++) {
+				if (args.behavior == stresses[l]) {
+					stress += ((stress != '')?',':'') + stresses[l];
+				}
+			}
+
+			row.push(stress); // SDB (stress)
+
+			// get all tourist agg behaviours
+			var conAgg = '';
+			var monkeyIds = '';
+			var conAggs = ['at','ad','ac','ab','ak','au','ap','ar','al','as','av','ae','a0','ai'];
+			for (var l = 0; l < conAggs.length; l++) {
+				if (args.behavior == conAggs[l]) {
+					conAgg += ((conAgg != '')?',':'') + conAggs[l];
+					if (args.behavior == conAgg[l] && args.monkeyIds instanceof Array && args.monkeyIds.length > 0) {
+						for (var monkeyId in args.monkeyIds) {
+							monkeyIds += ((monkeyIds != '')?',': '') + monkeyId;
+						}
+					}
+				}
+			}
+
+			row.push(conAgg); // Con Agg
+			row.push(monkeyIds); // ID
+			row.push((args.behavior == 'yy')?1: 0); // Yawn
+
+			var approached = false;
+			if (args.behavior == 'da') {
+				approached = true;
+				row.push(1); // Approach C
+			} else {
+				row.push(0);
+			}
+
+			if (approached) {
+				row.push(args.monkeyIds); // ID
+			} else {
+				row.push('');
+			}
+
+			var left = false;
+			if (args.behavior == 'la') {
+				left = true;
+				row.push(1); // Leave C
+			} else {
+				row.push(0);
+			}
+
+			if (left) {
+				row.push(args.monkeyIds); // ID
+			} else {
+				row.push('');
+			}
+
+			// get all sexual behaviours
+			var sexualBehaviour = '';
+			var sexualBehaviours = ['sp','sa','so','si','sm','sj','sb','s','st','sr'];
+			for (var l = 0; l < sexualBehaviours.length; l++) {
+				if (args.behavior == sexualBehaviours[l]) {
+					sexualBehaviour += ((sexualBehaviour != '')?',':'') + sexualBehaviours[l];
+				}
+			}
+			row.push(sexualBehaviour);
+
+			// get all vocal behaviours
+			var vocalBehaviour = '';
+			var vocalBehaviours = ['vs','vw','vf','vm','vl'];
+			for (var l = 0; l < vocalBehaviours.length; l++) {
+				if (args.behavior == vocalBehaviours[l]) {
+					vocalBehaviour += ((vocalBehaviour != '')?',':'') + vocalBehaviours[l];
+				}
+			}
+			row.push(vocalBehaviour);
+
+			// get all food related behaviours
+			var foodBehaviour = '';
+			var foodBehaviours = ['ih','ii','ir','id','iw','pr'];
+			for (var l = 0; l < foodBehaviours.length; l++) {
+				if (args.behavior == foodBehaviours[l]) {
+					foodBehaviour += ((foodBehaviour != '')?',':'') + foodBehaviours[l];
+				}
+			}
+			row.push(foodBehaviour);
+
+			// get all infant related behaviours
+			var infntRelBehaviour = '';
+			var infntRelBehaviours = ['ct','ce','cp','cm'];
+			for (var l = 0; l < infntRelBehaviours.length; l++) {
+				if (args.behavior == infntRelBehaviours[l]) {
+					infntRelBehaviour += ((infntRelBehaviour != '')?',':'') + infntRelBehaviours[l];
+				}
+			}
+			row.push(infntRelBehaviour);
+
+			// get all affiliative behaviours
+			var afflBehaviour = '';
+			var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0'];
+			for (var l = 0; l < afflBehaviours.length; l++) {
+				if (args.behavior == afflBehaviours[l]) {
+					afflBehaviour += ((afflBehaviour != '')?',':'') + afflBehaviours[l];
+				}
+			}
+
+			row.push(afflBehaviour);
+
+			if (args.behavior == 'mse') {
+				row.push('ms');
+				row.push(1);
+			} else {
+				row.push('');
+				row.push('');
+			}
+
+			if (args.behavior == 'msr') {
+				row.push('ms');
+				row.push(1);
+			} else {
+				row.push('');
+				row.push('');
+			}
+
+			row.push(args.range.notes); // Notes
+
+			return row;
 		}		
 	}
 });
