@@ -61,7 +61,7 @@ Aria.classDefinition({
 							'Groomee',
 							'ID',
 							'Groomer',
-							'ID',,
+							'ID',
 							'MNP Social',
 							'Notes'];
 
@@ -188,18 +188,20 @@ Aria.classDefinition({
 				row.push(range.area_code); // CG Location
 				
 				// for Crop Guarding type
-				if (range.rr_type != null) {
-					range.rr_type = range.rr_type.toUpperCase();
-				} else {
-					range.rr_type = '';
+				var rrMap = {};
+				var rrTypes = range.type_rr.split(';');
+				for (var l = 0; l < rrTypes.length; l++) {
+					if (rrTypes[l] != null && rrTypes[l] != '') {
+						rrMap[rrTypes[l].toUpperCase()] = 1;
+					}
 				}
 
-				row.push((range.rr_type == 'W')?1: 0); // W-Whoops
-				row.push((range.rr_type == 'C')?1: 0); // C-Chase
-				row.push((range.rr_type == 'S')?1: 0); // S-Stick
-				row.push((range.rr_type == 'D')?1: 0); // D-Dog
-				row.push((range.rr_type == 'F')?1: 0); // F-Firework
-				row.push((range.rr_type == 'L')?1: 0); // L-Slngshot
+				row.push((rrMap['W'] == 1)?1: 0); // W-Whoops
+				row.push((rrMap['C'] == 1)?1: 0); // C-Chase
+				row.push((rrMap['S'] == 1)?1: 0); // S-Stick
+				row.push((rrMap['D'] == 1)?1: 0); // D-Dog
+				row.push((rrMap['F'] == 1)?1: 0); // F-Firework
+				row.push((rrMap['L'] == 1)?1: 0); // L-Slngshot
 			} else {
 				// range events
 				for (var l = 0; l < 7; l++) {
@@ -270,37 +272,29 @@ Aria.classDefinition({
 			row.push(stress); // SDB (stress)
 
 			// get all tourist agg behaviours
-			var monkeyIds = '';
+			var touristOrConBehAdded = false;
 			var touristAgg = '';
 			var touristAggs = ['at','ac','ab','ak','au','ap','ar','a0','ai'];
 			for (var l = 0; l < touristAggs.length; l++) {
 				if (args.behavior == touristAggs[l]) {
+					touristOrConBehAdded = true;
 					touristAgg += ((touristAgg != '')?',':'') + touristAggs[l];
-					if (args.behavior == touristAggs[l] && args.monkeyIds instanceof Array && args.monkeyIds.length > 0) {
-						for (var monkeyId in args.monkeyIds) {
-							monkeyIds += ((monkeyIds != '')?',': '') + monkeyId;
-						}
-					}
 				}
 			}
 			row.push(touristAgg); // Tourist Agg
 
-			// get all tourist agg behaviours
+			// get all con agg behaviours
 			var conAgg = '';
 			var conAggs = ['at','ad','ac','ab','ak','au','ap','ar','al','as','av','ae','a0','ai'];
 			for (var l = 0; l < conAggs.length; l++) {
 				if (args.behavior == conAggs[l]) {
+					touristOrConBehAdded = true;
 					conAgg += ((conAgg != '')?',':'') + conAggs[l];
-					if (args.behavior == conAgg[l] && args.monkeyIds instanceof Array && args.monkeyIds.length > 0) {
-						for (var monkeyId in args.monkeyIds) {
-							monkeyIds += ((monkeyIds != '')?',': '') + monkeyId;
-						}
-					}
 				}
 			}
 
 			row.push(conAgg); // Con Agg
-			row.push(monkeyIds); // ID
+			row.push(touristOrConBehAdded?args.monkeyIds:''); // ID
 			row.push((args.behavior == 'yy')?'yy': ''); // Yawn
 
 			var approached = false;

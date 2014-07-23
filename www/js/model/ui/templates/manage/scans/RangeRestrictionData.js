@@ -139,21 +139,17 @@ Aria.classDefinition({
 
 			// get all con agg behaviours
 			var conAgg = '';
-			var monkeyIds = '';
+			var conAggAdded = false;
 			var conAggs = ['at','ad','ac','ab','ak','au','ap','ar','al','as','av','ae','a0','ai'];
 			for (var l = 0; l < conAggs.length; l++) {
 				if (args.behavior == conAggs[l]) {
+					conAggAdded = true;
 					conAgg += ((conAgg != '')?',':'') + conAggs[l];
-					if (args.behavior == conAgg[l] && args.monkeyIds instanceof Array && args.monkeyIds.length > 0) {
-						for (var monkeyId in args.monkeyIds) {
-							monkeyIds += ((monkeyIds != '')?',': '') + monkeyId;
-						}
-					}
 				}
 			}
 
 			row.push(conAgg); // Con Agg
-			row.push(monkeyIds); // ID
+			row.push(conAggAdded?args.monkeyIds:''); // ID
 			row.push((args.behavior == 'yy')?'yy': ''); // Yawn
 
 			var approached = false;

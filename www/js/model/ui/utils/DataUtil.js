@@ -4,6 +4,32 @@ Aria.classDefinition({
 	$prototype: {
 
 		/**
+		 * returns an array containing all the type of Crop Guarding
+		 * @return JSONArray
+		 */
+		getCGTypes: function() {
+			return [{
+				label: 'Whoops',
+				code: 'w'
+			}, {
+				label: 'Chase',
+				code: 'c'
+			}, {
+				label: 'Stick',
+				code: 's'
+			}, {
+				label: 'Dog',
+				code: 'd'
+			}, {
+				label: 'Firework',
+				code: 'f'
+			}, {
+				label: 'Slngshot',
+				code: 'l'
+			}];
+		},
+
+		/**
 		 * return all the possible activity code
 		 * @return JSONArray
 		 */
