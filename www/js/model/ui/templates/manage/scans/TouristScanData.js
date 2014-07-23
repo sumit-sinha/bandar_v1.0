@@ -48,6 +48,7 @@ Aria.classDefinition({
 							'ID',
 							'Groomer',
 							'ID',
+							'MNP Social',
 							'Notes'];
 
 			// start work sheet
@@ -78,7 +79,10 @@ Aria.classDefinition({
 					timeArr = monkey.endTime.split('-');
 					var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
 
-					totalDuration += (endDate.getTime() - startDate.getTime());
+					totalDuration = (endDate.getTime() - startDate.getTime())/1000;
+					var totalMinutes = totalDuration % 60;
+					var totalSeconds = totalDuration - (60 * totalMinutes);
+					totalDuration = ((totalMinutes < 10)?'0':'') + totalMinutes + ':' + ((totalSeconds < 10)?'0':'') + totalSeconds;
 				}
 
 				for (var j = 0; j < ts.data.monkey.length; j++) {
@@ -133,16 +137,21 @@ Aria.classDefinition({
 			row.push(args.ts.group); // group
 
 			var timeArr = args.monkey.startTime.split('-');
-			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-			row.push(timeArr[3] + ':' + timeArr[4]); // start time
+			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // start time
 
 			timeArr = args.monkey.endTime.split('-');
-			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-			row.push(timeArr[3] + ':' + timeArr[4]); // end time
+			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // end time
 
-			row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // total time
+			var totalTime = (endDate.getTime() - startDate.getTime())/1000;
+			var totalSeconds = totalTime % 60;
+			var totalMinutes = (totalTime - totalSeconds)/60;
+			totalTime = ((totalMinutes < 10)?'0':'') + totalMinutes + ':' + ((totalSeconds < 10)?'0':'') + totalSeconds;
+			row.push(totalTime); // total time
+
 			row.push(args.ts.data.monkey.length); // Session
-			row.push(args.totalDuration/(1000 * 60)); // Session Total Time
+			row.push(args.totalDuration); // Session Total Time
 			row.push(args.ts.data.tourist.density); // TDen
 			row.push(args.ts.data.tourist.gender); // TSex
 			row.push(args.ts.data.tourist.nationality); // TNat
@@ -200,21 +209,21 @@ Aria.classDefinition({
 
 			row.push(conAgg); // Con Agg
 			row.push(monkeyIds); // ID
-			row.push((args.behavior == 'yy')?1: 0); // Yawn
+			row.push((args.behavior == 'yy')?'yy': ''); // Yawn
 
 			var approached = false;
 			if (args.behavior == 'tda') {
 				approached = true;
-				row.push(1); // Approach T
+				row.push('tda'); // Approach T
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (args.behavior == 'da') {
 				approached = true;
-				row.push(1); // Approach C
+				row.push('da'); // Approach C
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (approached) {
@@ -226,16 +235,16 @@ Aria.classDefinition({
 			var left = false;
 			if (args.behavior == 'tla') {
 				left = true;
-				row.push(1); // Leave T
+				row.push('tla'); // Leave T
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (args.behavior == 'la') {
 				left = true;
-				row.push(1); // Leave C
+				row.push('la'); // Leave C
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (left) {
@@ -296,7 +305,7 @@ Aria.classDefinition({
 
 			if (args.behavior == 'mse') {
 				row.push('ms');
-				row.push(1);
+				row.push(args.monkeyIds);
 			} else {
 				row.push('');
 				row.push('');
@@ -304,12 +313,13 @@ Aria.classDefinition({
 
 			if (args.behavior == 'msr') {
 				row.push('ms');
-				row.push(1);
+				row.push(args.monkeyIds);
 			} else {
 				row.push('');
 				row.push('');
 			}
 
+			row.push(''); // MNP Social
 			row.push(args.ts.data.tourist.notes); // Notes
 
 			return row;

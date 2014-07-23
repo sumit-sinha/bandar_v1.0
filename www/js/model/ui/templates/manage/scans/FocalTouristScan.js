@@ -22,6 +22,13 @@ Aria.classDefinition({
 							'End Time',
 							'Total Time',
 							'Behavior Time',
+							'CG-Location',
+							'W-Whoops',
+							'C-Chase',
+							'S-Stick',
+							'D-Dog',
+							'F-Firework',
+							'L-Slingshot',
 							'TDen',
 							'TSex',
 							'TNat',
@@ -54,11 +61,12 @@ Aria.classDefinition({
 							'Groomee',
 							'ID',
 							'Groomer',
-							'ID',
+							'ID',,
+							'MNP Social',
 							'Notes'];
 
 			// start work sheet
-			var xmlContent = '<ss:Worksheet ss:Name="Focal Tourist"><ss:Table>';
+			var xmlContent = '<ss:Worksheet ss:Name="Focal"><ss:Table>';
 
 			// prepare header [START] */
 			xmlContent += '<ss:Row>';
@@ -102,36 +110,33 @@ Aria.classDefinition({
 			var output = [];
 			for (var i = 0; i < args.list.length; i++) {
 				var fs = args.list[i];
+				var behaviors = fs.data.monkey.behavior_seq.split('-');
+				for (var j = 0; j < behaviors.length; j++) {
+					var row = [];
+					var monkeyIds = [];
+					var behavior = behaviors[j];
 
-				if (fs.data.range == null || fs.data.range.length == 0) {
-					var behaviors = fs.data.monkey.behavior_seq.split('-');
-					for (var j = 0; j < behaviors.length; j++) {
-						var row = [];
-						var monkeyIds = [];
-						var behavior = behaviors[j];
-
-						if (behavior.indexOf(',') != '-1') {
-							var entries = behavior.split(',');
-							behavior = behavior.substring(0,2);
-							for (var l = 1; l < entries.length; l++) {
-								monkeyIds.push(entries[l]);
-							}
+					if (behavior.indexOf(',') != '-1') {
+						var entries = behavior.split(',');
+						behavior = behavior.substring(0,2);
+						for (var l = 1; l < entries.length; l++) {
+							monkeyIds.push(entries[l]);
 						}
-
-						row = this._getRowData(row, {
-							fs: fs,
-							utils: args.utils,
-							user: args.user,
-							behavior: behavior,
-							monkeyIds: monkeyIds,
-							behavior_timestamp: fs.data.monkey.behavior_timestamp[j]
-						});
-
-						// push to list
-						var counter = {};
-						counter[count++] = row;
-						output.push(counter);
 					}
+
+					row = this._getRowData(row, {
+						fs: fs,
+						utils: args.utils,
+						user: args.user,
+						behavior: behavior,
+						monkeyIds: monkeyIds,
+						behavior_timestamp: fs.data.monkey.behavior_timestamp[j]
+					});
+
+					// push to list
+					var counter = {};
+					counter[count++] = row;
+					output.push(counter);
 				}
 			}
 
@@ -144,6 +149,18 @@ Aria.classDefinition({
 		 * @param args JSONObject containing monkeyIds and corresponding behavior
 		 */
 		_getRowData: function(row, args) {
+
+			var range = null;
+			if (args.fs.data.range != null 
+				&& args.fs.data.range.length > 0) {
+				range = args.fs.data.range[0];
+			}
+
+			if (range != null) {
+				// i.e. its a CG Focal scan
+				args.fs.data.tourist = null;
+			}
+
 			row.push(args.fs.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(args.fs.timeStamp.substring(4,6))}) + '-' + args.fs.timeStamp.substring(0,4)); // date
 			row.push(args.user.code); // observer
 			row.push(args.fs.group); // group
@@ -151,22 +168,57 @@ Aria.classDefinition({
 			row.push(args.fs.index + 1); // focal #
 
 			var timeArr = args.fs.data.monkey.startTime.split('-');
-			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-			row.push(timeArr[3] + ':' + timeArr[4]); // start time
+			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // start time
 
 			timeArr = args.fs.data.monkey.endTime.split('-');
-			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-			row.push(timeArr[3] + ':' + timeArr[4]); // end time
+			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // end time
 
-			row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // total time
+			var totalTime = (endDate.getTime() - startDate.getTime())/1000;
+			var totalSeconds = totalTime % 60;
+			var totalMinutes = (totalTime - totalSeconds)/60;
+			totalTime = ((totalMinutes < 10)?'0':'') + totalMinutes + ':' + ((totalSeconds < 10)?'0':'') + totalSeconds;
+			row.push(totalTime); // total time
 
 			timeArr = args.behavior_timestamp.split('-');
 			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // Behavior time
-			row.push(args.fs.data.tourist.density); // TDen
-			row.push(args.fs.data.tourist.gender); // TSex
-			row.push(args.fs.data.tourist.nationality); // TNat
-			row.push(args.fs.data.tourist.averageAge); // TAge
-			row.push((args.fs.data.tourist.hasTourist)?'1':'0'); // Tourist
+
+			if (range != null) {
+				row.push(range.area_code); // CG Location
+				
+				// for Crop Guarding type
+				if (range.rr_type != null) {
+					range.rr_type = range.rr_type.toUpperCase();
+				} else {
+					range.rr_type = '';
+				}
+
+				row.push((range.rr_type == 'W')?1: 0); // W-Whoops
+				row.push((range.rr_type == 'C')?1: 0); // C-Chase
+				row.push((range.rr_type == 'S')?1: 0); // S-Stick
+				row.push((range.rr_type == 'D')?1: 0); // D-Dog
+				row.push((range.rr_type == 'F')?1: 0); // F-Firework
+				row.push((range.rr_type == 'L')?1: 0); // L-Slngshot
+			} else {
+				// range events
+				for (var l = 0; l < 7; l++) {
+					row.push('');
+				}
+			}
+
+			if (args.fs.data.tourist != null) {
+				row.push(args.fs.data.tourist.density); // TDen
+				row.push(args.fs.data.tourist.gender); // TSex
+				row.push(args.fs.data.tourist.nationality); // TNat
+				row.push(args.fs.data.tourist.averageAge); // TAge
+				row.push((args.fs.data.tourist.hasTourist)?'1':'0'); // Tourist
+			} else {
+				for (var l = 0; l < 5; l++) {
+					row.push('');
+				}
+			}
+
 			row.push((args.behavior == 'tf')?1: 0); // T Feed
 			row.push((args.behavior ==  'ta')?1: 0); // T Aggrs
 			row.push((args.behavior == 'tt')?1: 0); // T Tease
@@ -249,21 +301,21 @@ Aria.classDefinition({
 
 			row.push(conAgg); // Con Agg
 			row.push(monkeyIds); // ID
-			row.push((args.behavior == 'yy')?1: 0); // Yawn
+			row.push((args.behavior == 'yy')?'yy': ''); // Yawn
 
 			var approached = false;
 			if (args.behavior == 'tda') {
 				approached = true;
-				row.push(1); // Approach T
+				row.push('tda'); // Approach T
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (args.behavior == 'da') {
 				approached = true;
-				row.push(1); // Approach C
+				row.push('da'); // Approach C
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (approached) {
@@ -275,16 +327,16 @@ Aria.classDefinition({
 			var left = false;
 			if (args.behavior == 'tla') {
 				left = true;
-				row.push(1); // Leave T
+				row.push('tla'); // Leave T
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (args.behavior == 'la') {
 				left = true;
-				row.push(1); // Leave C
+				row.push('la'); // Leave C
 			} else {
-				row.push(0);
+				row.push('');
 			}
 
 			if (left) {
@@ -345,7 +397,7 @@ Aria.classDefinition({
 
 			if (args.behavior == 'mse') {
 				row.push('ms');
-				row.push(1);
+				row.push(args.monkeyIds);
 			} else {
 				row.push('');
 				row.push('');
@@ -353,13 +405,22 @@ Aria.classDefinition({
 
 			if (args.behavior == 'msr') {
 				row.push('ms');
-				row.push(1);
+				row.push(args.monkeyIds);
 			} else {
 				row.push('');
 				row.push('');
 			}
 
-			row.push(args.fs.data.tourist.notes); // Notes
+			row.push(''); // MNP Social
+			if (range != null) {
+				row.push(range.notes);
+			} else {
+				if (args.fs.data.tourist != null) {
+					row.push(args.fs.data.tourist.notes); // Notes
+				} else {
+					row.push('');
+				}
+			}
 
 			return row;
 		}

@@ -3,6 +3,9 @@ body {
   padding-bottom: 40px;
   background-color: #eee;
 }
+a {
+  color: black;
+}
 .nav-tabs>li>a {
   color: rgb(39, 26, 20);
 }
@@ -231,6 +234,8 @@ a.btn.btn-default {
 }
 input.form-control-radio {
   margin-right: 0.5em;
+  margin-left: 0.2em;
+  transform: scale(1.5);
 }
 .modal {
   display: block;
@@ -313,6 +318,10 @@ div.accordion-inner ul.list-group li.no-data {
 .btn-primary {
   background-color: #222;
   border-color: #101010;
+}
+.btn-primary:hover {
+  background-color: #363636;
+  border-color: #292929;
 }
 button.bootbox-close-button.close {
   font-size: 42px;

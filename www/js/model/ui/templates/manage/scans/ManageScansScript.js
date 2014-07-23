@@ -4,7 +4,6 @@ Aria.tplScriptDefinition({
 		'model.ui.utils.ApplicationUtil',
 		'model.ui.templates.manage.scans.GroupScanData',
 		'model.ui.templates.manage.scans.TouristScanData',
-		'model.ui.templates.manage.scans.FocalRangeScan',
 		'model.ui.templates.manage.scans.FocalTouristScan',
 		'model.ui.templates.manage.scans.RangeRestrictionData'
 	],
@@ -13,8 +12,10 @@ Aria.tplScriptDefinition({
 	},
 	$prototype: {
 
-		$dataReady: function() {
-
+		/**
+		 * initialize data
+		 */
+		initData: function() {
 			// init
 			this.data.scans = {
 				fs: [],
@@ -24,6 +25,11 @@ Aria.tplScriptDefinition({
 			}
 
 			this.data.file_exported = null;
+		},
+
+		$dataReady: function() {
+
+			this.initData();
 
 			// parse data
 			var user = this.utils.getLoggedInUser();
@@ -172,6 +178,11 @@ Aria.tplScriptDefinition({
 		onCloseEvent: function(event, args) {
 			this.utils.hideOverlay();
 			var modalEL = document.getElementById(this.$getId('modalBox'));
+			if (modalEL != null) {
+				modalEL.style.display = 'none';
+			}
+
+			modalEL = document.getElementById(this.$getId('modalDelAll'));
 			if (modalEL != null) {
 				modalEL.style.display = 'none';
 			}
@@ -413,17 +424,11 @@ Aria.tplScriptDefinition({
 			var user = this.utils.getLoggedInUser();
 			var gsData = new model.ui.templates.manage.scans.GroupScanData();
 			var tsData = new model.ui.templates.manage.scans.TouristScanData();
-			var fsRangeData = new model.ui.templates.manage.scans.FocalRangeScan();
 			var rrData = new model.ui.templates.manage.scans.RangeRestrictionData();
 			var fsTouristData = new model.ui.templates.manage.scans.FocalTouristScan();
 			
 			var xmlContent = '<?xml version="1.0"?><ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
 			xmlContent += fsTouristData.createFsTouristWorkBook({
-							user: user,
-							list: this.data.scans.fs,
-							utils: this.utils
-						  });
-			xmlContent += fsRangeData.createFsRangeWorkBook({
 							user: user,
 							list: this.data.scans.fs,
 							utils: this.utils
@@ -466,6 +471,36 @@ Aria.tplScriptDefinition({
 			}
 			
 			this.$json.setValue(this.data, 'file_exported', !this.data.file_exported);
+		},
+
+		/**
+		 * clears all the data from storage
+		 * @param args
+		 * @param event
+		 */
+		clearAll: function(event, args) {
+			// show model dialog
+			this.utils.showOverlay(false);
+			var modalEL = document.getElementById(this.$getId('modalDelAll'));
+			if (modalEL != null) {
+				modalEL.style.display = 'block';
+			}	
+		},
+
+		onDeleteAllClick: function(event, args) {
+			// parse data
+			var user = this.utils.getLoggedInUser();
+			user.groups = null;
+
+			// add back to local storage
+			var copiedUser = aria.utils.Json.copy(user);
+			copiedUser.selectedGroup = null;
+			localStorage.setItem(user.code, aria.utils.Json.convertToJsonString(copiedUser));
+
+			// refresh
+			this.initData();
+			this.onCloseEvent(event, args);
+			this.$refresh({section: 'showData'});
 		}
 	}
 });

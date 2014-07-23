@@ -197,7 +197,7 @@ Aria.classDefinition({
 			var parameters = params.split('&');
 			for (var i = 0; i < parameters.length; i++) {
 				var keyValue = parameters[i].split('=');
-				output[keyValue[0]] = keyValue[1];
+				output[keyValue[0]] = decodeURIComponent(keyValue[1]);
 			}
 
 			return output;

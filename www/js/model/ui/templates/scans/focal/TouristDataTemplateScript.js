@@ -84,7 +84,7 @@ Aria.tplScriptDefinition({
 					nextpage = args.nextpage;
 				}
 
-				if (!args.useSamePage && formData.hasTourist == 'false') {
+				if ((args == null || !args.useSamePage) && formData.hasTourist == 'false') {
 					nextpage = 'rangerestrfocal';
 				}
 

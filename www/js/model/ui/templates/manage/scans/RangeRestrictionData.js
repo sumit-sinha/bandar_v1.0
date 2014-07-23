@@ -38,6 +38,8 @@ Aria.classDefinition({
 							'Groomee',
 							'ID',
 							'Groomer',
+							'ID',
+							'MNP Social',
 							'Notes'];
 
 			// start work sheet
@@ -106,14 +108,19 @@ Aria.classDefinition({
 			row.push(1); // session
 
 			var timeArr = args.rr.data.startTime.split('-');
-			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-			row.push(timeArr[3] + ':' + timeArr[4]); // start time
+			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // start time
 
 			timeArr = args.rr.data.endTime.split('-');
-			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], 0);
-			row.push(timeArr[3] + ':' + timeArr[4]); // end time
+			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
+			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // end time
 
-			row.push((endDate.getTime() - startDate.getTime())/(1000 * 60)); // duration
+			var totalTime = (endDate.getTime() - startDate.getTime())/1000;
+			var totalSeconds = totalTime % 60;
+			var totalMinutes = (totalTime - totalSeconds)/60;
+			totalTime = ((totalMinutes < 10)?'0':'') + totalMinutes + ':' + ((totalSeconds < 10)?'0':'') + totalSeconds;
+			row.push(totalTime); // total time
+
 			row.push(args.rr.data.monkey_id);
 			
 			timeArr = args.behavior_timestamp.split('-');
@@ -147,21 +154,33 @@ Aria.classDefinition({
 
 			row.push(conAgg); // Con Agg
 			row.push(monkeyIds); // ID
-			row.push((args.behavior == 'yy')?1: 0); // Yawn
+			row.push((args.behavior == 'yy')?'yy': ''); // Yawn
 
+			var approached = false;
 			if (args.behavior == 'da') {
-				row.push(1); // Approach C
-				row.push(args.monkeyIds); // ID
+				approached = true;
+				row.push('da'); // Approach C
 			} else {
-				row.push(0);
 				row.push('');
 			}
 
-			if (args.behavior == 'la') {
-				row.push(1); // // Leave C
+			if (approached) {
 				row.push(args.monkeyIds); // ID
 			} else {
-				row.push(0);
+				row.push('');
+			}
+
+			var left = false;
+			if (args.behavior == 'la') {
+				left = true;
+				row.push('la'); // Leave C
+			} else {
+				row.push('');
+			}
+
+			if (left) {
+				row.push(args.monkeyIds); // ID
+			} else {
 				row.push('');
 			}
 
@@ -225,12 +244,13 @@ Aria.classDefinition({
 
 			if (args.behavior == 'msr') {
 				row.push('ms');
-				row.push(1);
+				row.push(args.monkeyIds);
 			} else {
 				row.push('');
-				row.push('');
+				row.push(args.monkeyIds);
 			}
 
+			row.push(''); // MNP Social
 			row.push(args.rr.data.notes); // Notes
 
 			return row;

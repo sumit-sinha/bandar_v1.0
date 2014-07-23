@@ -16,6 +16,11 @@
 		}/}
 
 		{section {
+			id: 'deleteall',
+			macro: "showDeleteAllModal"
+		}/}
+
+		{section {
 			id : "success",
 			type: 'div',
 			macro : "showSuccess",
@@ -27,88 +32,12 @@
 		}/}
 
 		<div class="border-top container-accordion">
-			<div class="accordion">
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseFS'}}/}>
-							Focal Data
-						</a>
-					</div>
-					<div {id "collapseFS"/} class="accordion-body collapse">
-						<div class="accordion-inner">
-							{section {
-								id: 'fsData',
-								type: 'div',
-								macro: {
-									name: 'dataMacro',
-									scope: this,
-									args: ['fs']
-								}
-							}/}
-						</div>
-					</div>
-				</div>
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseGR'}}/}>
-							Group Record
-						</a>
-					</div>
-					<div {id "collapseGR"/} class="accordion-body collapse">
-						<div class="accordion-inner">
-							{section {
-								id: 'gsData',
-								type: 'div',
-								macro: {
-									name: 'dataMacro',
-									scope: this,
-									args: ['gs']
-								}
-							}/}
-						</div>
-					</div>
-				</div>
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseTR'}}/}>
-							Tourist Record
-						</a>
-					</div>
-					<div {id "collapseTR"/} class="accordion-body collapse">
-						<div class="accordion-inner">
-							{section {
-								id: 'tsData',
-								type: 'div',
-								macro: {
-									name: 'dataMacro',
-									scope: this,
-									args: ['ts']
-								}
-							}/}
-						</div>
-					</div>
-				</div>
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseRR'}}/}>
-							${this.resources.label.tx_lbl_range_restriction}
-						</a>
-					</div>
-					<div {id "collapseRR"/} class="accordion-body collapse">
-						<div class="accordion-inner">
-							{section {
-								id: 'rrData',
-								type: 'div',
-								macro: {
-									name: 'dataMacro',
-									scope: this,
-									args: ['rr']
-								}
-							}/}
-						</div>
-					</div>
-				</div>
-			</div>
+			
+			{section {
+				id: 'showData',
+				macro: 'showData'
+			}/}
+
 			<div class="btn-group btn-group-justified border-bottom">
 				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'onExportFileClick', scope: this}/}>
 					Export Text File
@@ -116,6 +45,96 @@
 				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'onExportExcelClick', scope: this}/}>
 					Export Excel Sheet
 				</a>
+			</div>
+			<div class="btn-group btn-group-justified border-bottom">
+				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'clearAll', scope: this}/}>
+					Delete All Scans
+				</a>
+			</div>
+		</div>
+	{/macro}
+
+	{macro showData()}
+		<div class="accordion">
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseFS'}}/}>
+						Focal Data
+					</a>
+				</div>
+				<div {id "collapseFS"/} class="accordion-body collapse">
+					<div class="accordion-inner">
+						{section {
+							id: 'fsData',
+							type: 'div',
+							macro: {
+								name: 'dataMacro',
+								scope: this,
+								args: ['fs']
+							}
+						}/}
+					</div>
+				</div>
+			</div>
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseGR'}}/}>
+						Group Record
+					</a>
+				</div>
+				<div {id "collapseGR"/} class="accordion-body collapse">
+					<div class="accordion-inner">
+						{section {
+							id: 'gsData',
+							type: 'div',
+							macro: {
+								name: 'dataMacro',
+								scope: this,
+								args: ['gs']
+							}
+						}/}
+					</div>
+				</div>
+			</div>
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseTR'}}/}>
+						Tourist Record
+					</a>
+				</div>
+				<div {id "collapseTR"/} class="accordion-body collapse">
+					<div class="accordion-inner">
+						{section {
+							id: 'tsData',
+							type: 'div',
+							macro: {
+								name: 'dataMacro',
+								scope: this,
+								args: ['ts']
+							}
+						}/}
+					</div>
+				</div>
+			</div>
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" href="javascript:void(0);" {on click {fn: 'onToggleClick', scope: this, args: {child: 'collapseRR'}}/}>
+						${this.resources.label.tx_lbl_range_restriction}
+					</a>
+				</div>
+				<div {id "collapseRR"/} class="accordion-body collapse">
+					<div class="accordion-inner">
+						{section {
+							id: 'rrData',
+							type: 'div',
+							macro: {
+								name: 'dataMacro',
+								scope: this,
+								args: ['rr']
+							}
+						}/}
+					</div>
+				</div>
 			</div>
 		</div>
 	{/macro}
@@ -170,6 +189,31 @@
 					label: 'Yes',
 					callback: {
 						fn: 'onYesClick',
+						scope: this
+					}
+				},{
+					label: 'No',
+					callback: {
+						fn: 'onCloseEvent',
+						scope: this
+					}
+				}]
+			})/}
+		</div>
+	{/macro}
+
+	{macro showDeleteAllModal()}
+		<div {id 'modalDelAll'/} style="display: none">
+			{call modal.showModal({
+				message: 'Are you sure you want to delete all the records?',
+				closeCb: {
+					fn: 'onCloseEvent',
+					scope: this
+				},
+				buttons: [{
+					label: 'Yes',
+					callback: {
+						fn: 'onDeleteAllClick',
 						scope: this
 					}
 				},{

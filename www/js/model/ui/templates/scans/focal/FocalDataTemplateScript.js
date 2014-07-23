@@ -44,18 +44,21 @@ Aria.tplScriptDefinition({
 				this.data.focalData = {};
 			} else {
 
-				this.data.paused = true;
-				var timerInfo = this.utils.getTimerInfo();
-				this.data.timer = this.data.focalData.timer;
-				timerInfo.timer = this.data.focalData.timer;
-				this.data.timeStamps = this.data.focalData.behavior_timestamp;
-
 				if (this.data.focalData.timer == null) {
 					this.data.focalData.timer = 120;
 				}
 
 				if (this.data.focalData.behavior_timestamp == null) {
 					this.data.timeStamps = [];
+				}
+
+				var timerInfo = this.utils.getTimerInfo();
+				this.data.timer = this.data.focalData.timer;
+				timerInfo.timer = this.data.focalData.timer;
+				this.data.timeStamps = this.data.focalData.behavior_timestamp;
+
+				if (this.data.timer != 120) {
+					this.data.paused = true;
 				}
 			}
 		},
@@ -113,6 +116,11 @@ Aria.tplScriptDefinition({
 									|| (currentPage.data.timer <=5 && currentPage.data.timer >= 0)) {
 									currentPage.utils.playBeep();
 								}
+							}
+
+							// if continue button is visible
+							if (currentPage.data.paused == true) {
+								currentPage.$json.setValue(this.data, 'paused', false);
 							}
 							
 						}, 1000),

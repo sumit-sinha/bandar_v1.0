@@ -43,7 +43,7 @@ Aria.classDefinition({
 				row.push(gs.group); // group
 				
 				timeArr = gs.data.endTime.split('-');
-				row.push(timeArr[3] + ':' + timeArr[4]); // time
+				row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // time
 
 				row.push(gs.data.use_of_space); // space
 				row.push(gs.data.activity_code); // activity
