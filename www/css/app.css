@@ -325,6 +325,7 @@ div.accordion-inner ul.list-group li.no-data {
 }
 button.bootbox-close-button.close {
   font-size: 42px;
+  margin-bottom: 15px;
 }
 a.btn.btn-default.range {
   background-color: rgb(170, 224, 211);
