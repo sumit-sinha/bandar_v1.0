@@ -39,14 +39,12 @@
 			}/}
 
 			<div class="btn-group btn-group-justified border-bottom">
-				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'onExportFileClick', scope: this}/}>
+				/*<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'onExportFileClick', scope: this}/}>
 					Export Text File
-				</a>
+				</a>*/
 				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'onExportExcelClick', scope: this}/}>
 					Export Excel Sheet
 				</a>
-			</div>
-			<div class="btn-group btn-group-justified border-bottom">
 				<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {on click {fn: 'clearAll', scope: this}/}>
 					Delete All Scans
 				</a>

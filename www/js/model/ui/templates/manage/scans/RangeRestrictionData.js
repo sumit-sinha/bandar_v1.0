@@ -34,7 +34,9 @@ Aria.classDefinition({
 							'Vocal',
 							'Infant Rltd',
 							'Food Rltd',
+							'Food Item',
 							'Affiliative',
+							'ID',
 							'Groomee',
 							'ID',
 							'Groomer',
@@ -65,9 +67,34 @@ Aria.classDefinition({
 					var monkeyIds = [];
 					var behavior = behaviors[j];
 
-					if (behavior.indexOf(',') != '-1') {
+					if (behavior.indexOf('#') != -1) {
+						var multipleBehaviors = behavior.split('#');
+						behavior = '';
+						for (var x = 0; x < multipleBehaviors.length; x++) {
+							var monkeys = '';
+							var substrIndex = multipleBehaviors[x].length;
+							if (multipleBehaviors[x].indexOf(',') != '-1') {
+								
+								var entries = multipleBehaviors[x].split(',');
+								for (var l = 1; l < entries.length; l++) {
+									if (newBehavior != entries[l]) {
+										monkeys += ((monkeys != '')?',':'') + entries[l];
+									}
+								}
+
+								substrIndex = multipleBehaviors[x].indexOf(',');
+							}
+
+							var newBehavior = multipleBehaviors[x].substring(0,substrIndex);
+							behavior += ((behavior != null && behavior != '')?'/': '') 
+												+ newBehavior;
+
+
+							monkeyIds.push(monkeys);
+						}
+					} else if (behavior.indexOf(',') != '-1') {
 						var entries = behavior.split(',');
-						behavior = behavior.substring(0,2);
+						behavior = behavior.substring(0,behavior.indexOf(','));
 						for (var l = 1; l < entries.length; l++) {
 							monkeyIds.push(entries[l]);
 						}
@@ -75,6 +102,7 @@ Aria.classDefinition({
 
 					row = this._getRowData(row, {
 						rr: rr,
+						session: i + 1,
 						utils: args.utils,
 						user: args.user,
 						behavior: behavior,
@@ -105,7 +133,7 @@ Aria.classDefinition({
 			row.push(args.rr.data.area_code); // location
 			row.push(args.rr.data.type_rr); // type
 			row.push(args.rr.data.group_behavior); // group behavior
-			row.push(1); // session
+			row.push(args.session); // session
 
 			var timeArr = args.rr.data.startTime.split('-');
 			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
@@ -220,6 +248,16 @@ Aria.classDefinition({
 			}
 			row.push(foodBehaviour);
 
+			// get all food items
+			var foodItems = '';
+			var foods = ['f','fl','l','m','an','a', 'v'];
+			for (var l = 0; l < foods.length; l++) {
+				if (args.behavior == foods[l]) {
+					foodItems += ((foodItems != '')?',':'') + foods[l];
+				}
+			}
+			row.push(foodItems); // food item
+
 			// get all affiliative behaviours
 			var afflBehaviour = '';
 			var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0'];
@@ -228,25 +266,41 @@ Aria.classDefinition({
 					afflBehaviour += ((afflBehaviour != '')?',':'') + afflBehaviours[l];
 				}
 			}
+
 			row.push(afflBehaviour);
-
-			if (args.behavior == 'mse') {
-				row.push('ms');
-				row.push(1);
-			} else {
-				row.push('');
-				row.push('');
-			}
-
-			if (args.behavior == 'msr') {
-				row.push('ms');
+			if (afflBehaviour != '') {
 				row.push(args.monkeyIds);
 			} else {
 				row.push('');
-				row.push(args.monkeyIds);
 			}
 
-			row.push(''); // MNP Social
+			if (args.behavior == 'mse/msr') {
+				
+				row.push('mse');
+				var monkeys = {
+					mse: '',
+					msr: ''
+				};
+				if (args.monkeyIds[0] != null) {
+					row.push(args.monkeyIds[0]);
+					monkeys.mse = args.monkeyIds[0];
+				}
+
+				row.push('msr');
+				if (args.monkeyIds[1] != null) {
+					row.push(args.monkeyIds[1]);
+					monkeys.msr = args.monkeyIds[1];
+				}
+
+				row.push(monkeys.mse + 'ms' + monkeys.msr); // MNP Social
+			} else {
+				row.push('');
+				row.push('');
+				row.push('');
+				row.push('');
+				row.push(''); // MNP Social
+			}
+			
 			row.push(args.rr.data.notes); // Notes
 
 			return row;

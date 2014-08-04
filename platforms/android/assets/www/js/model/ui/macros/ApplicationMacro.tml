@@ -25,6 +25,19 @@
 		{/if}
 	{/macro}
 
+	{macro createCGTypeAutoComplete(args)}
+		
+		{if args != null}
+			{if args.source == null}
+				${args.source = model.ui.utils.DataUtil.getCGTypes()|eat}
+			{/if}
+
+			// allow user to enter multiple values
+			${args.multipleValues = true|eat}
+			{call autocomplete.createAutoComplete(args)/}
+		{/if}
+	{/macro}
+
 	{macro createBehaviorField(args)}
 		<div class="${args.divCss}">
 			<label for="${args.id}">Behavior Sequence</label>
@@ -58,7 +71,7 @@
 
 			<div class="btn-group">
 				<button class="btn btn-default ${behavior.code}{if behavior.type != 'list' && behavior.type != 'button'} ${behavior.type}{/if}" type="button" data-toggle="dropdown" {on click {fn: 'onBehaviorButtonClick', args: {glue: glue, behavior: behavior}}/}>
-					${behavior.label}{if behavior.type === 'list'} <span class="caret"></span>{else/} (${behavior.code}){/if}
+					${behavior.label}{if behavior.type === 'list'} <span class="caret"></span>{elseif behavior.code != null/}(${behavior.code}){/if}
 				</button>
 			</div>
 
@@ -85,7 +98,7 @@
 
 								<div class="btn-group">
 									<button class="btn btn-default ${behavior.code}" type="button" data-toggle="dropdown" {on click {fn: 'onBehaviorButtonClick', args: {glue: glue, behavior: behavior}}/}>
-										${behavior.label}{if behavior.type === 'list'} <span class="caret"></span>{else/} (${behavior.code}){/if}
+										${behavior.label}{if behavior.type === 'list'} <span class="caret"></span>{elseif behavior.code != null/} (${behavior.code}){/if}
 									</button>
 								</div>
 

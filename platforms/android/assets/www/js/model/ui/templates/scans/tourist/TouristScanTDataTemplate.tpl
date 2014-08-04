@@ -71,10 +71,6 @@
 										<input type="radio" name="nationality"{if this.data.touristScanSession.nationality == 'SPL'} checked{/if} value="SPL" {id "NATIONALITY_1_3"/} class="form-control-radio">Split</input>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="NOTES_1">Notes/Observation</label>
-									<textarea class="form-control" rows="3" {id "NOTES_1"/} name="notes">{if this.data.touristScanSession.notes != null}${this.data.touristScanSession.notes}{/if}</textarea>
-								</div>
 								<div class="btn-group btn-group-justified border-bottom">
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onSaveClick', scope: this}/}>
 										Save

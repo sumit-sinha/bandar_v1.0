@@ -142,12 +142,13 @@ Aria.classDefinition({
 
 			if (errors.length == 0) {
 
+				var timeStamp = this.utils.getTimeStamp();			
+				var user = this.utils.initUserData(null, {
+					'timeStamp': timeStamp,
+					'user': this.utils.getLoggedInUser()
+				});
+				
 				if (!bothEmpty) {
-					var timeStamp = this.utils.getTimeStamp();			
-					var user = this.utils.initUserData(null, {
-						'timeStamp': timeStamp,
-						'user': this.utils.getLoggedInUser()
-					});
 
 					// set tourist scan information
 					if (this.data.touristScanSession['monkey'] == null) {

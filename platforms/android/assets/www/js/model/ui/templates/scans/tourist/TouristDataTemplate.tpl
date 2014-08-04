@@ -59,7 +59,10 @@
 									<label for="MONKEY_ID_1">Monkey ID</label>
 									<input type="text" name="monkey_id" class="form-control" {id "MONKEY_ID_1"/} placeholder="Monkey ID" value="${this.data.touristData.monkey_id}">
 								</div>
-
+								<div class="form-group">
+									<label for="NOTES_1">Notes/Observation</label>
+									<textarea class="form-control" rows="3" {id "NOTES_1"/} name="notes">{if this.data.touristData.notes != null}${this.data.touristData.notes}{/if}</textarea>
+								</div>
 								{call application.createBehaviorField({
 									divCss: 'form-group',
 									id: 'BEHAVIOR_SEQUENCE_1',

@@ -5,7 +5,8 @@
 		resources: 'model.ui.resources.AppLocalization'
 	},
 	$macrolibs : {
-        message : "model.ui.macros.MessageMacro"
+        message : "model.ui.macros.MessageMacro",
+        application: "model.ui.macros.ApplicationMacro"
     }
 }}
 	{macro main()}
@@ -54,8 +55,17 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="RR_TYPE">${this.resources.label.tx_lbl_range_restriction} Type</label>
-									<input type="text" name="type_rr" class="form-control" {id "RR_TYPE"/} placeholder="Type of ${this.resources.label.tx_lbl_range_restriction}" {if this.data.rrSession.type_rr != null}value="${this.data.rrSession.type_rr}"{/if}>
+									{call application.createCGTypeAutoComplete({
+										id: 'RR_TYPE',
+										labelText: this.resources.label.tx_lbl_range_restriction,
+										name: 'type_rr',
+										type: 'text',
+										value: this.data.rrSession.type_rr,
+										placeholder: 'Type of ' + this.resources.label.tx_lbl_range_restriction,
+										class: 'form-control',
+										noDel: true,
+										populate: 'C'
+									})/}
 								</div>
 								<div class="form-group inline">
 									<label for="RR_TYPE">Group Behavior</label>

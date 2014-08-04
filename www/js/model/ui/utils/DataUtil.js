@@ -320,14 +320,8 @@ Aria.classDefinition({
 						input_monkey_id: true
 					}
 				}, {
-					label: 'Groomee',
-					code: 'mse',
-					properties: {
-						input_monkey_id: true
-					}
-				}, {
-					label: 'Groomer',
-					code: 'msr',
+					label: 'Groomee/Groomer',
+					codes: ['mse', 'msr'],
 					properties: {
 						input_monkey_id: true
 					}

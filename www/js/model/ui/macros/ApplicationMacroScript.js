@@ -34,10 +34,6 @@ Aria.tplScriptDefinition({
 		onBehaviorButtonClick: function(event, args) {
 
 			if (args.behavior.items == null || args.behavior.items.length == 0) {
-				var el = document.getElementById(args.glue.id);
-				if (el != null) {
-					el.value += ((el.value == null || el.value == '')?'':'-') + args.behavior.code;
-				}
 
 				// disable button if only one click is allowed
 				if (args.behavior.properties != null) {
@@ -52,6 +48,16 @@ Aria.tplScriptDefinition({
 					if (args.behavior.properties.input_monkey_id) {
 						args.glue.addMonkeyId = true;
 						aria.utils.Json.setValue(args.glue, 'refresh', !args.glue.refresh);
+					}
+				}
+
+				var el = document.getElementById(args.glue.id);
+				if (el != null) {
+					el.value += (el.value == null || el.value == '')?'':'-';
+					if (args.behavior.codes != null) {	
+						this.behavior = args.behavior;
+					} else {
+						el.value += args.behavior.code;
 					}
 				}
 
@@ -86,8 +92,28 @@ Aria.tplScriptDefinition({
 
 			var el = document.getElementById(args.glue.id);
 			var txt = document.getElementById('BEHAVIOR_MONKEY_ID');
-			if (el != null && txt != null) {
-				el.value += ((el.value == null || el.value == '')?'':',') + txt.value;
+
+			var value = '';
+			if (txt != null) {
+				value = txt.value;
+			}
+
+			if (this.behavior != null 
+				&& this.behavior.codes != null
+				&& this.behavior.codes.length > 0) {
+
+				var values = value.split(';');
+				value = '';
+
+				for (var i = 0; i < this.behavior.codes.length; i++) {
+					value += ((value != '')?'#':'') 
+								+ this.behavior.codes[i] 
+								+ ((values[i] != null && values[i] != '')?',' + values[i]:'');
+				}
+			}
+
+			if (el != null) {
+				el.value += ((this.behavior != null || el.value == null || el.value == '')?'':',') + value;
 			}
 
 			this.onCancelMonkeyId(event, args);
@@ -101,6 +127,9 @@ Aria.tplScriptDefinition({
 		onCancelMonkeyId: function(event, args) {
 			args.glue.addMonkeyId = false;
 			aria.utils.Json.setValue(args.glue, 'refresh', !args.glue.refresh);
+
+			// reset behavior
+			this.behavior = null;
 		},
 
 		onCloseCb: function(event, args) {

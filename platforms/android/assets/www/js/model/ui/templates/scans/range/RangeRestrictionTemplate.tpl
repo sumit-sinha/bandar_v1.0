@@ -48,8 +48,16 @@
 
 							<form role="form" {id "frmRange"/}>
 								<div class="form-group">
-									<label for="RR_TYPE">${this.resources.label.tx_lbl_range_restriction} Type</label>
-									<input type="text" name="type_rr" class="form-control" {id "RR_TYPE"/} placeholder="Type of ${this.resources.label.tx_lbl_range_restriction}" {on keyup {fn: 'startTimer', scope: this}/}>
+									{call application.createCGTypeAutoComplete({
+										id: 'RR_TYPE',
+										labelText: this.resources.label.tx_lbl_range_restriction,
+										name: 'type_rr',
+										type: 'text',
+										placeholder: 'Type of ' + this.resources.label.tx_lbl_range_restriction,
+										class: 'form-control',
+										noDel: true,
+										populate: 'C'
+									})/}
 								</div>
 								<div class="form-group inline">
 									<label for="RR_TYPE">Group Behavior</label>

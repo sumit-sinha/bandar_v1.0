@@ -16,8 +16,7 @@ Aria.classDefinition({
 							'Start Time', 
 							'End Time', 
 							'Total Time', 
-							'Session', 
-							'Session Total Time', 
+							'Session',
 							'T Den',
 							'T Sex',
 							'T Nat',
@@ -43,7 +42,9 @@ Aria.classDefinition({
 							'Vocal',
 							'Infant Rltd',
 							'Food Rltd',
+							'Food Item',
 							'Affiliative',
+							'ID',
 							'Groomee',
 							'ID',
 							'Groomer',
@@ -68,6 +69,16 @@ Aria.classDefinition({
 			var count = 0;
 			for (var i = 0; i < args.list.length; i++) {
 				var ts = args.list[i];
+				if (ts.data.monkey == null) {
+					ts.data.monkey = [{
+						startTime: '00-00-00-00-00-00',
+						endTime: '00-00-00-00-00-00',
+						behavior_seq: '',
+						behavior_timestamp: ['00-00-00-00-00-00'],
+						monkey_id: '',
+						notes: ''
+					}];
+				}
 
 				var totalDuration = 0;
 				for (var j = 0; j < ts.data.monkey.length; j++) {
@@ -95,9 +106,34 @@ Aria.classDefinition({
 						var monkeyIds = [];
 						var behavior = behaviors[k];
 
-						if (behavior.indexOf(',') != '-1') {
+						if (behavior.indexOf('#') != -1) {
+							var multipleBehaviors = behavior.split('#');
+							behavior = '';
+							for (var x = 0; x < multipleBehaviors.length; x++) {
+								var monkeys = '';
+								var substrIndex = multipleBehaviors[x].length;
+								if (multipleBehaviors[x].indexOf(',') != '-1') {
+									
+									var entries = multipleBehaviors[x].split(',');
+									for (var l = 1; l < entries.length; l++) {
+										if (newBehavior != entries[l]) {
+											monkeys += ((monkeys != '')?',':'') + entries[l];
+										}
+									}
+
+									substrIndex = multipleBehaviors[x].indexOf(',');
+								}
+
+								var newBehavior = multipleBehaviors[x].substring(0,substrIndex);
+								behavior += ((behavior != null && behavior != '')?'/': '') 
+													+ newBehavior;
+
+
+								monkeyIds.push(monkeys);
+							}
+						} else if (behavior.indexOf(',') != '-1') {
 							var entries = behavior.split(',');
-							behavior = behavior.substring(0,2);
+							behavior = behavior.substring(0,behavior.indexOf(','));
 							for (var l = 1; l < entries.length; l++) {
 								monkeyIds.push(entries[l]);
 							}
@@ -105,6 +141,7 @@ Aria.classDefinition({
 
 						row = this._getRowData(row, {
 							ts: ts,
+							session: i + 1,
 							totalDuration: totalDuration,
 							monkey: monkey,
 							utils: args.utils,
@@ -150,8 +187,7 @@ Aria.classDefinition({
 			totalTime = ((totalMinutes < 10)?'0':'') + totalMinutes + ':' + ((totalSeconds < 10)?'0':'') + totalSeconds;
 			row.push(totalTime); // total time
 
-			row.push(args.ts.data.monkey.length); // Session
-			row.push(args.totalDuration); // Session Total Time
+			row.push(args.session); // Session
 			row.push(args.ts.data.tourist.density); // TDen
 			row.push(args.ts.data.tourist.gender); // TSex
 			row.push(args.ts.data.tourist.nationality); // TNat
@@ -284,6 +320,16 @@ Aria.classDefinition({
 				}
 			}
 			row.push(foodBehaviour);
+			
+			// get all food items
+			var foodItems = '';
+			var foods = ['f','fl','l','m','an','a', 'v'];
+			for (var l = 0; l < foods.length; l++) {
+				if (args.behavior == foods[l]) {
+					foodItems += ((foodItems != '')?',':'') + foods[l];
+				}
+			}
+			row.push(foodItems); // food item
 
 			// get all affiliative behaviours
 			var afflBehaviour = '';
@@ -294,25 +340,40 @@ Aria.classDefinition({
 				}
 			}
 			row.push(afflBehaviour);
-
-			if (args.behavior == 'mse') {
-				row.push('ms');
+			if (afflBehaviour != '') {
 				row.push(args.monkeyIds);
 			} else {
 				row.push('');
-				row.push('');
 			}
 
-			if (args.behavior == 'msr') {
-				row.push('ms');
-				row.push(args.monkeyIds);
+			if (args.behavior == 'mse/msr') {
+				
+				row.push('mse');
+				var monkeys = {
+					mse: '',
+					msr: ''
+				};
+				if (args.monkeyIds[0] != null) {
+					row.push(args.monkeyIds[0]);
+					monkeys.mse = args.monkeyIds[0];
+				}
+
+				row.push('msr');
+				if (args.monkeyIds[1] != null) {
+					row.push(args.monkeyIds[1]);
+					monkeys.msr = args.monkeyIds[1];
+				}
+
+				row.push(monkeys.mse + 'ms' + monkeys.msr); // MNP Social
 			} else {
 				row.push('');
 				row.push('');
+				row.push('');
+				row.push('');
+				row.push(''); // MNP Social
 			}
 
-			row.push(''); // MNP Social
-			row.push(args.ts.data.tourist.notes); // Notes
+			row.push(args.monkey.notes); // Notes
 
 			return row;
 		}
