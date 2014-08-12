@@ -5,7 +5,8 @@ Aria.tplScriptDefinition({
 		'model.ui.templates.manage.scans.GroupScanData',
 		'model.ui.templates.manage.scans.TouristScanData',
 		'model.ui.templates.manage.scans.FocalTouristScan',
-		'model.ui.templates.manage.scans.RangeRestrictionData'
+		'model.ui.templates.manage.scans.RangeRestrictionData',
+		'model.ui.templates.manage.scans.TakeNoteData'
 	],
 	$constructor: function() {
 		this.utils = model.ui.utils.ApplicationUtil;
@@ -426,6 +427,7 @@ Aria.tplScriptDefinition({
 			var tsData = new model.ui.templates.manage.scans.TouristScanData();
 			var rrData = new model.ui.templates.manage.scans.RangeRestrictionData();
 			var fsTouristData = new model.ui.templates.manage.scans.FocalTouristScan();
+			var noteData = new model.ui.templates.manage.scans.TakeNoteData();
 			
 			var xmlContent = '<?xml version="1.0"?><ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
 			xmlContent += fsTouristData.createFsTouristWorkBook({
@@ -446,6 +448,11 @@ Aria.tplScriptDefinition({
 			xmlContent += rrData.createRRWorkBook({
 							user: user,
 							list: this.data.scans.rr,
+							utils: this.utils
+						  });
+			xmlContent += noteData.createNoteWorkBook({
+							user: user,
+							list: user.notes,
 							utils: this.utils
 						  });
 			

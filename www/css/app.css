@@ -23,6 +23,12 @@ button.btn.btn-default.btn-primary.btn-big-rect {
   padding: 15px;
   margin: 0 auto;
 }
+div.container.take-note {
+  margin-top: 25px;
+}
+div.container.take-note div.form-border {
+  padding-top: 15px;
+}
 div.form-group.inline {
   display: inline-block;
   width: 49.5%;

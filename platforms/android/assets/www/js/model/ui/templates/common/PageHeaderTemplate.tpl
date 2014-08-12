@@ -59,6 +59,12 @@
 						<li class="divider"></li>
 					{/if}
 					<li>
+						<a href="javascript:void(0)" {on click {fn: 'onNoteClick', scope: this}/}>
+							Take Note
+						</a>
+					</li>
+					<li class="divider"></li>
+					<li>
 						<a href="javascript:void(0)" {on click {fn: 'onLogoutClick', scope: this}/}>
 							Logout
 						</a>

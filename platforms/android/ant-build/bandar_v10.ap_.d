@@ -59,6 +59,7 @@ D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\rangerestrfocal.json \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\rangerestriction.json \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\register.json \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\takenote.json \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\touristfocalscan.json \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\touristscanm.json \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\config\pages\mobile\touristscant.json \
@@ -84,11 +85,15 @@ D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\login \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\manage \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\scans \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\IPageHeaderCtrl.js \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\ITakeNoteCtrl.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\MainLayout.tpl \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\MainLayoutScript.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\PageHeaderCtrl.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\PageHeaderTemplate.tpl \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\PageHeaderTemplateScript.js \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\TakeNoteCtrl.js \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\TakeNoteTemplate.tpl \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\common\TakeNoteTemplateScript.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\groups\MyGroupList.tpl \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\groups\MyGroupListScript.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\login\AuthenticationCtrl.js \
@@ -104,6 +109,7 @@ D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\manage\
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\manage\scans\ManageScans.tpl \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\manage\scans\ManageScansScript.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\manage\scans\RangeRestrictionData.js \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\manage\scans\TakeNoteData.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\manage\scans\TouristScanData.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\scans\focal \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\templates\scans\group \

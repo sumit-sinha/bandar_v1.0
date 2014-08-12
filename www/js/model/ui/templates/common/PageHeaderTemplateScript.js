@@ -16,6 +16,20 @@ Aria.tplScriptDefinition({
 		},
 
 		/**
+		 * function triggered when user clicks on note button
+		 * @param event
+		 * @param args
+		 */
+		onNoteClick: function(event, args) {
+			// navigate to next page
+			this.moduleCtrl.navigate(null, {
+				pageRequest: {
+					pageId: 'takenote'
+				}
+			});
+		},
+
+		/**
 		 * function activated when user click to open or collapse menu items
 		 * @param event 
 		 * @param args
