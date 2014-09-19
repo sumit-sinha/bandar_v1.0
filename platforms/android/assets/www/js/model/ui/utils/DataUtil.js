@@ -30,6 +30,29 @@ Aria.classDefinition({
 		},
 
 		/**
+		 * returns an array containing all the type of female swelling
+		 * @return JSONArray
+		 */
+		getSwellingTypes: function() {
+			return [{
+				label: '',
+				code: 'n'
+			}, {
+				label: '',
+				code: '0'
+			}, {
+				label: '',
+				code: '1'
+			}, {
+				label: '',
+				code: '1-2'
+			}, {
+				label: '',
+				code: '2'
+			}];
+		},
+
+		/**
 		 * return all the possible activity code
 		 * @return JSONArray
 		 */

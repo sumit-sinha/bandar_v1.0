@@ -17,6 +17,7 @@ Aria.classDefinition({
 							'Observer',
 							'Group',
 							'Monkey',
+							'Swelling',
 							'Focal#',
 							'Start Time',
 							'End Time',
@@ -231,6 +232,7 @@ Aria.classDefinition({
 			row.push(args.user.code); // observer
 			row.push(args.fs.group); // group
 			row.push(args.fs.data.monkey.monkey_id); //monkey id
+			row.push(args.fs.data.monkey.female_swelling); // female swelling
 			
 			var timeArr = args.fs.data.monkey.startTime.split('-');
 			row.push('FJ' 

@@ -26,6 +26,7 @@ D:\jdevcc\bandar_v1.0\platforms\android\assets\www\img \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\index.html \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\media \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\mongoose-free-5.4.1.exe \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\phonegap.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\res \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\spec \

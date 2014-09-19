@@ -58,9 +58,26 @@
 							}/}
 
 							<form role="form" {id "frmFocal"/}>
-								<div class="form-group">
+								<div class="form-group inline">
 									<label for="MONKEY_ID_1">Monkey ID</label>
 									<input type="text" name="monkey_id" class="form-control" {id "MONKEY_ID_1"/} placeholder="Monkey ID" value="${this.data.focalData.monkey_id}" {on keyup {fn: 'startTimer', scope: this}/}>
+								</div>
+								<div class="form-group inline">
+									{call application.createSwellingAutoComplete({
+										id: 'FEMALE_SWELLING_1',
+										labelText: 'Female Swelling',
+										name: 'feamle_swelling',
+										type: 'text',
+										value: this.data.focalData.feamle_swelling,
+										placeholder: 'Female Swelling',
+										keyupFn: {
+											fn: 'startTimer',
+											scope: this
+										},
+										class: 'form-control',
+										noDel: true,
+										populate: 'C'
+									})/}
 								</div>
 								<div class="form-group">
 									{call application.createActivityAutoComplete({

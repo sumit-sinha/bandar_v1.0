@@ -93,7 +93,7 @@
 						style="text-decoration:none"
 						href="javascript:void(0);"
 						class="ui-corner-all">
-							${suggestion.label} - ${suggestion.code}
+							{if suggestion.label != null && suggestion.label != ''}${suggestion.label}{/if}{if (suggestion.label != null && suggestion.label != '') && (suggestion.code != null && suggestion.code != '')} - {/if}{if suggestion.code != null && suggestion.code != ''}${suggestion.code}{/if}
 					</a>					
 				  </li>
 				{/foreach}

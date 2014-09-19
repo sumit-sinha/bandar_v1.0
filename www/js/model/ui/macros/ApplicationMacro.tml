@@ -25,6 +25,19 @@
 		{/if}
 	{/macro}
 
+	{macro createSwellingAutoComplete(args)}
+		
+		{if args != null}
+			{if args.source == null}
+				${args.source = model.ui.utils.DataUtil.getSwellingTypes()|eat}
+			{/if}
+
+			// allow user to enter multiple values
+			${args.multipleValues = true|eat}
+			{call autocomplete.createAutoComplete(args)/}
+		{/if}
+	{/macro}
+
 	{macro createCGTypeAutoComplete(args)}
 		
 		{if args != null}
