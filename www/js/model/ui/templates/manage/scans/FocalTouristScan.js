@@ -115,16 +115,15 @@ Aria.classDefinition({
 				var behaviors = fs.data.monkey.behavior_seq.split('-');
 				for (var j = 0; j < behaviors.length; j++) {
 					var row = [];
-					var behavior = behaviors[j];
-					var monkeyIds = this._getMonkeys(behavior);
+					var behaviorData = this._getMonkeys(behaviors[j]);
 
 					row = this._getRowData(row, {
 						fs: fs,
 						session: ((count < 9)?'0':'') + (count + 1),
 						utils: args.utils,
 						user: args.user,
-						behavior: behavior,
-						monkeyIds: monkeyIds,
+						behavior: behaviorData.behavior,
+						monkeyIds: behaviorData.monkeyIds,
 						behavior_timestamp: fs.data.monkey.behavior_timestamp[j]
 					});
 
@@ -190,7 +189,7 @@ Aria.classDefinition({
 				}
 			}
 
-			return monkeyIds;
+			return {monkeyIds: monkeyIds, behavior: behavior};
 		},
 
 		/**
@@ -211,7 +210,7 @@ Aria.classDefinition({
 					}
 
 					behaviorMap[temp] = {
-						monkeys: this._getMonkeys(args.behaviors[i]),
+						monkeys: this._getMonkeys(args.behaviors[i])['monkeyIds'],
 						behavior_timestamp: args.fs.data.monkey.behavior_timestamp[i]
 					}
 				}

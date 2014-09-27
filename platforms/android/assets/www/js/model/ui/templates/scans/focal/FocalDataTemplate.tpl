@@ -66,9 +66,9 @@
 									{call application.createSwellingAutoComplete({
 										id: 'FEMALE_SWELLING_1',
 										labelText: 'Female Swelling',
-										name: 'feamle_swelling',
+										name: 'female_swelling',
 										type: 'text',
-										value: this.data.focalData.feamle_swelling,
+										value: this.data.focalData.female_swelling,
 										placeholder: 'Female Swelling',
 										keyupFn: {
 											fn: 'startTimer',

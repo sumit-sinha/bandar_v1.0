@@ -54,7 +54,7 @@ Aria.classDefinition({
 		 */
 		_processNoteData: function(args) {
 			var output = [];
-			for (var i = 0; i < args.list.length; i++) {
+			for (var i = 0; args.list != null && i < args.list.length; i++) {
 				var row = [];
 				row.push(args.user.code); // observer
 

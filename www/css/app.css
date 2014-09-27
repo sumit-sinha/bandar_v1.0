@@ -133,6 +133,17 @@ div.rr-data-border:after {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+div.group-data-border:after {
+  content: "Group Collection";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 div#container.splash {
   background: url('../img/logo.png') no-repeat center;
   position: absolute;
@@ -248,6 +259,7 @@ input.form-control-radio {
   margin-left: 0.6em;
   margin-bottom: 0.5em;
   transform: scale(2.5);
+  -webkit-transform: scale(2.5);
   margin-top: 0.7em;
 }
 .modal {
