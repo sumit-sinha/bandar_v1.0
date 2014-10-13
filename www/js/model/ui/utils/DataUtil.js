@@ -545,28 +545,55 @@ Aria.classDefinition({
 		 */
 		getTouristBehaviors: function() {
 
-			return [
-				{
+			return [{
 					label: 'Tourist Feeding',
 					code: 'tf',
 					type: 'tourist'
-				},
-				{
+				}, {
 					label: 'Tourist Agression',
 					code: 'ta',
 					type: 'tourist'
-				},
-				{
+				}, {
 					label: 'Tourist Tease',
 					code: 'tt',
 					type: 'tourist'
-				},
-				{
+				}, {
 					label: 'Tourist Attention',
 					code: 'tn',
 					type: 'tourist'
-				}
-			];
+				}, {
+					type: 'list',
+					label: 'Tourist Directed Aggression',
+					code: 'tagg tourist',
+					items: [{
+						label: 'Half Open Mouth/Bared Teeth/...',
+						code: 'tat',
+						properties: {
+							input_monkey_id: true
+						}
+					}, {
+						label: 'Displacement',
+						code: 'ad',
+						properties: {
+							input_monkey_id: true
+						}
+					}, {
+						label: 'Hit/Grab/Push/...',
+						code: 'tab',
+						properties: {
+							input_monkey_id: true
+						}
+					}, {
+						label: 'Support Shake',
+						code: 'tak'
+					}, {
+						label: 'Lunge',
+						code: 'tau',
+						properties: {
+							input_monkey_id: true
+						}
+					}]
+				}];
 		},
 
 		/**

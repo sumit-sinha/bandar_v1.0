@@ -75,10 +75,6 @@
 									<label for="AREA_CODE_1">Area Code</label>
 									<input type="text" name="area_code" class="form-control" {id "AREA_CODE_1"/} placeholder="Area Code" {if this.data.rrSession.area_code != null}value="${this.data.rrSession.area_code}"{/if}>
 								</div>
-								<div class="form-group">
-									<label for="NOTES_1">Notes</label>
-									<textarea class="form-control" name="notes" rows="3" {id "NOTES_1"/}>{if this.data.rrSession.notes != null}${this.data.rrSession.notes}{/if}</textarea>
-								</div>
 								<div class="btn-group btn-group-justified border-bottom">
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnAddMore"/} {on click {fn: 'onAddMore', scope: this}/}>
 										Save

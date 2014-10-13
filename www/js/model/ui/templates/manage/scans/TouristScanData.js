@@ -216,11 +216,11 @@ Aria.classDefinition({
 			// get all tourist agg behaviours
 			var touristOrConBehAdded = false;
 			var touristAgg = '';
-			var touristAggs = ['at','ac','ab','ak','au','ap','ar','a0','ai'];
+			var touristAggs = ['tat','tab','tau','tak','tap'];
 			for (var l = 0; l < touristAggs.length; l++) {
 				if (args.behavior == touristAggs[l]) {
 					touristOrConBehAdded = true;
-					touristAgg += ((touristAgg != '')?',':'') + touristAggs[l];
+					touristAgg += ((touristAgg != '')?',':'') + touristAggs[l].substring(1);
 				}
 			}
 			row.push(touristAgg); // Tourist Agg

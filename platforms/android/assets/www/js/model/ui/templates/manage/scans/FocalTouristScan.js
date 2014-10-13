@@ -234,7 +234,7 @@ Aria.classDefinition({
 			row.push(args.fs.data.monkey.female_swelling); // female swelling
 			
 			var timeArr = args.fs.data.monkey.startTime.split('-');
-			row.push('FJ' 
+			row.push(args.fs.data.monkey.monkey_id 
 						+ args.session + '' 
 						+ ((timeArr[0] < 1900)?(1900 + timeArr[0]):timeArr[0]) + '' 
 						+ ((timeArr[1] < 10)?'0':'') + timeArr[1] + '' 
@@ -337,11 +337,11 @@ Aria.classDefinition({
 			// get all tourist agg behaviours
 			var touristOrConBehAdded = false;
 			var touristAgg = '';
-			var touristAggs = ['at','ac','ab','ak','au','ap','ar','a0','ai'];
+			var touristAggs = ['tat','tab','tau','tak','tap'];
 			for (var l = 0; l < touristAggs.length; l++) {
 				if (args.behavior == touristAggs[l] || (behaviorMap != null && behaviorMap[touristAggs[l]] != null)) {
 					touristOrConBehAdded = true;
-					touristAgg += ((touristAgg != '')?',':'') + touristAggs[l];
+					touristAgg += ((touristAgg != '')?',':'') + touristAggs[l].substring(1);
 
 					if (behaviorMap != null) {
 						behaviorMonkeys += behaviorMap[touristAggs[l]];
@@ -544,7 +544,7 @@ Aria.classDefinition({
 					}
 				}
 
-				row.push(monkeys.mse + 'ms' + monkeys.msr); // MNP Social
+				row.push(monkeys.mse.trim() + 'ms' + monkeys.msr.trim()); // MNP Social
 			} else {
 				row.push('');
 				row.push('');

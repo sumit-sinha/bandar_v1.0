@@ -104,6 +104,7 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 
+
 			// save before navigation
 			this.moduleCtrl.saveRRSessionData(input);
 
@@ -111,13 +112,24 @@ Aria.tplScriptDefinition({
 				'input': input
 			});
 
-			// show error
-			this.$json.setValue(this.data.errors, 'error_occured', !this.data.errors.error_occured);
+			// check if crop guard is required
+			if (input.hasRange === "true") {
+				// show error
+				this.$json.setValue(this.data.errors, 'error_occured', !this.data.errors.error_occured);
 
-			if (this.data.errors.list == null || this.data.errors.list == null || this.data.errors.list.length == 0) {
+				if (this.data.errors.list == null || this.data.errors.list == null || this.data.errors.list.length == 0) {
 
-				// refresh buttons
-				this.$json.setValue(this.data, 'behavior_button_refresh', !this.data.behavior_button_refresh);
+					// refresh buttons
+					this.$json.setValue(this.data, 'behavior_button_refresh', !this.data.behavior_button_refresh);
+
+					// navigate to next page
+					this.moduleCtrl.navigate(null, {
+						pageRequest: {
+							pageId: 'focalscan'
+						}
+					});
+				}
+			} else {
 
 				// navigate to next page
 				this.moduleCtrl.navigate(null, {

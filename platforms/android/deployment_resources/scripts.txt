@@ -1,0 +1,3 @@
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore D:\jdevcc\bandar_v1.0\platforms\android\deployment_resources\bandar-release-key.keystore D:\jdevcc\bandar_v1.0\platforms\android\ant-build\bandar_v10-release-unsigned.apk bandar
+jarsigner -verify -verbose -certs D:\jdevcc\bandar_v1.0\platforms\android\ant-build\bandar_v10-release-unsigned.apk
+D:\java\adt-bundle-windows\sdk\build-tools\android-4.4W\zipalign -v 4 D:\jdevcc\bandar_v1.0\platforms\android\ant-build\bandar_v10-release-unsigned.apk D:\jdevcc\bandar_v1.0\platforms\android\ant-build\bandar.apk
