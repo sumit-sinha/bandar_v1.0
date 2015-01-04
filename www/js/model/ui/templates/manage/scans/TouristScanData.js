@@ -13,6 +13,8 @@ Aria.classDefinition({
 			var tsData = ['Date',
 							'Observer', 
 							'Group', 
+							'Location',
+							'Guide Name',
 							'Start Time', 
 							'End Time', 
 							'Total Time', 
@@ -172,6 +174,8 @@ Aria.classDefinition({
 			row.push(args.ts.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(args.ts.timeStamp.substring(4,6))}) + '-' + args.ts.timeStamp.substring(0,4)); // date
 			row.push(args.user.code); // observer
 			row.push(args.ts.group); // group
+			row.push(args.ts.data.tourist.areaCode); // location
+			row.push(args.ts.data.tourist.guideName); // Guide Name
 
 			var timeArr = args.monkey.startTime.split('-');
 			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);

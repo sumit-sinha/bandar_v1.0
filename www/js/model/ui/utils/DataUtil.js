@@ -58,68 +58,6 @@ Aria.classDefinition({
 		 */
 		getActivityCodes: function() {
 			return [{
-				label: 'Ingesting',
-				code: 'fe'
-			}, {
-				label: 'Processing',
-				code: 'fp'
-			}, {
-				label: 'Foraging',
-				code: 'fo'
-			}, {
-				label: 'Regurgitation',
-				code: 'fg'
-			}, {
-				label: 'Drinking',
-				code: 'd'
-			}, {
-				label: 'Locomotion',
-				code: 'l'
-			}, {
-				label: 'Position',
-				code: 'p'
-			}, {
-				label: 'Autogrooming',
-				code: 'a'
-			}, {
-				label: 'Aggressive',
-				code: 'a'
-			}, {
-				label: 'Out of sight',
-				code: 'oos'
-			}, {
-				label: 'Contact - Grooming',
-				code: 'g',
-				type: 'contact'
-			}, {
-				label: 'Contact - Affilative Interactions',
-				code: 'af',
-				type: 'contact'
-			}, {
-				label: 'Contact - Mating',
-				code: 'm',
-				type: 'contact'
-			}, {
-				label: 'Contact - Other/Unknown',
-				code: 's',
-				type: 'contact'
-			}, {
-				label: 'Walk/Run',
-				code: 'w',
-				type: 'locomotion'
-			}, {
-				label: 'Run',
-				code: 'r',
-				type: 'locomotion'
-			}, {
-				label: 'Sit',
-				code: 's',
-				type: 'locomotion'
-			}, {
-				label: 'stand',
-				code: 'st',
-				type: 'locomotion'
-			}, {
 				label: 'Climb Up',
 				code: 'cu',
 				type: 'locomotion'
@@ -127,42 +65,6 @@ Aria.classDefinition({
 				label: 'Climb Down',
 				code: 'cd',
 				type: 'locomotion'
-			}, {
-				label: 'Canopy - Upto 1m',
-				code: '0',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Between 1-5m',
-				code: '1',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Between 6-10m',
-				code: '2',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Between 11-15m',
-				code: '3',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Between 16-20m',
-				code: '4',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Between 21-25',
-				code: '5',
-				type: 'canopy'
-			}, {
-				label: 'Canopy > 25m',
-				code: '6',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Centre of tree',
-				code: 'a',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Periphery',
-				code: 'b',
-				type: 'canopy'
 			}];
 		},
 
@@ -353,7 +255,10 @@ Aria.classDefinition({
 					code: 'fp'
 				}, {
 					label: 'Hug/Embrace/...',
-					code: 'fe'
+					code: 'fe',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Expressive Run',
 					code: 'fx'
@@ -391,7 +296,10 @@ Aria.classDefinition({
 					}
 				}, {
 					label: 'Chase',
-					code: 'ac'
+					code: 'ac',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Hit/Grab/Push/...',
 					code: 'ab',
