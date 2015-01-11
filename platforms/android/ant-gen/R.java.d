@@ -8,4 +8,11 @@ D:\jdevcc\bandar_v1.0\platforms\android\res\drawable-xxhdpi\icon.png \
 D:\jdevcc\bandar_v1.0\platforms\android\res\drawable-xxxhdpi\icon.png \
 D:\jdevcc\bandar_v1.0\platforms\android\res\values\strings.xml \
 D:\jdevcc\bandar_v1.0\platforms\android\res\xml\config.xml \
+D:\jdevcc\bandar_v1.0\platforms\android\ant-build\res\drawable\icon.png \
+D:\jdevcc\bandar_v1.0\platforms\android\ant-build\res\drawable-hdpi\icon.png \
+D:\jdevcc\bandar_v1.0\platforms\android\ant-build\res\drawable-ldpi\icon.png \
+D:\jdevcc\bandar_v1.0\platforms\android\ant-build\res\drawable-mdpi\icon.png \
+D:\jdevcc\bandar_v1.0\platforms\android\ant-build\res\drawable-xhdpi\icon.png \
+D:\jdevcc\bandar_v1.0\platforms\android\ant-build\res\drawable-xxhdpi\icon.png \
+D:\jdevcc\bandar_v1.0\platforms\android\ant-build\res\drawable-xxxhdpi\icon.png \
 D:\jdevcc\bandar_v1.0\platforms\android\ant-build\AndroidManifest.xml \

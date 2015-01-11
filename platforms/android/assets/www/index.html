@@ -27,6 +27,7 @@
                 classes: [
                           "model.ui.utils.DataUtil",
                           "aria.pageEngine.PageEngine",
+                          "model.ui.utils.ApplicationUtil",
                           "aria.pageEngine.pageProviders.BasePageProvider"
                 ],
                 oncomplete: function() {
@@ -45,6 +46,16 @@
                             'homePageId' : homePageId
                         })
                     });
+
+                    // set timer for beep
+                    setInterval(function() {
+                        var dt = new Date();
+                        if (dt.getMinutes() === 0 
+                            && dt.getSeconds() === 0) {
+                            // play beep every hour
+                            model.ui.utils.ApplicationUtil.playBeep();
+                        }
+                    }, 1000);
                 }
             });
         </script>

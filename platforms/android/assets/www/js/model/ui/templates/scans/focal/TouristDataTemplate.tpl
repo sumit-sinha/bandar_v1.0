@@ -58,6 +58,10 @@
 									<input type="text" class="form-control" name="density" {id "DENSITY_1"/} placeholder="Torist Density" value="${this.data.focalSession.density}">
 								</div>
 								<div class="form-group">
+									<label for="GUIDE_NAME_1">Guide Name</label>
+									<input type="text" class="form-control" name="guideName" {id "GUIDE_NAME_1"/} placeholder="Guide Name" value="${this.data.focalSession.guideName}">
+								</div>
+								<div class="form-group">
 									<label for="AVERAGE_AGE_1">Average Age</label>
 									<div>
 										<input type="radio" name="averageAge" value="ADT"{if this.data.focalSession.averageAge == null || this.data.focalSession.averageAge == 'ADT'} checked{/if} {id "AVERAGE_AGE_1_1"/} class="form-control-radio">Adult</input>
