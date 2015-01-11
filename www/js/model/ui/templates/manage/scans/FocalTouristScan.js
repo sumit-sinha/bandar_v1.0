@@ -16,6 +16,7 @@ Aria.classDefinition({
 			var fsData = ['Date',
 							'Observer',
 							'Group',
+							'Guide Name',
 							'Monkey',
 							'Swelling',
 							'Focal#',
@@ -230,6 +231,7 @@ Aria.classDefinition({
 			row.push(args.fs.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(args.fs.timeStamp.substring(4,6))}) + '-' + args.fs.timeStamp.substring(0,4)); // date
 			row.push(args.user.code); // observer
 			row.push(args.fs.group); // group
+			row.push(args.fs.data.tourist.guideName); // guide name
 			row.push(args.fs.data.monkey.monkey_id); //monkey id
 			row.push(args.fs.data.monkey.female_swelling); // female swelling
 			

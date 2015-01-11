@@ -58,6 +58,68 @@ Aria.classDefinition({
 		 */
 		getActivityCodes: function() {
 			return [{
+				label: 'Ingesting',
+				code: 'fe'
+			}, {
+				label: 'Processing',
+				code: 'fp'
+			}, {
+				label: 'Foraging',
+				code: 'fo'
+			}, {
+				label: 'Regurgitation',
+				code: 'fg'
+			}, {
+				label: 'Drinking',
+				code: 'd'
+			}, {
+				label: 'Locomotion',
+				code: 'l'
+			}, {
+				label: 'Position',
+				code: 'p'
+			}, {
+				label: 'Autogrooming',
+				code: 'a'
+			}, {
+				label: 'Aggressive',
+				code: 'a'
+			}, {
+				label: 'Out of sight',
+				code: 'oos'
+			}, {
+				label: 'Contact - Grooming',
+				code: 'g',
+				type: 'contact'
+			}, {
+				label: 'Contact - Affilative Interactions',
+				code: 'af',
+				type: 'contact'
+			}, {
+				label: 'Contact - Mating',
+				code: 'm',
+				type: 'contact'
+			}, {
+				label: 'Contact - Other/Unknown',
+				code: 's',
+				type: 'contact'
+			}, {
+				label: 'Walk/Run',
+				code: 'w',
+				type: 'locomotion'
+			}, {
+				label: 'Run',
+				code: 'r',
+				type: 'locomotion'
+			}, {
+				label: 'Sit',
+				code: 's',
+				type: 'locomotion'
+			}, {
+				label: 'stand',
+				code: 'st',
+				type: 'locomotion'
+			}, {
 				label: 'Climb Up',
 				code: 'cu',
 				type: 'locomotion'
@@ -65,6 +127,18 @@ Aria.classDefinition({
 				label: 'Climb Down',
 				code: 'cd',
 				type: 'locomotion'
+			}, {
+				label: 'Canopy > 25m',
+				code: '6',
+				type: 'canopy'
+			}, {
+				label: 'Canopy - Centre of tree',
+				code: 'a',
+				type: 'canopy'
+			}, {
+				label: 'Canopy - Periphery',
+				code: 'b',
+				type: 'canopy'
 			}];
 		},
 
@@ -273,7 +347,10 @@ Aria.classDefinition({
 					code: 'fm'
 				}, {
 					label: 'Hip Holding',
-					code: 'fa'
+					code: 'fb',
+					properties: {
+						input_monkey_id: true
+					}
 				}, {
 					label: 'Unknown Affiliation',
 					code: 'f0'

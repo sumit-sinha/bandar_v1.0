@@ -30,7 +30,6 @@ D:\jdevcc\bandar_v1.0\platforms\android\assets\www\mongoose-free-5.4.1.exe \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\phonegap.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\res \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\spec \
-D:\jdevcc\bandar_v1.0\platforms\android\assets\www\spec.html \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\css\app.css \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\css\bootstrap.min.css \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\img\ajax-loader.gif \
