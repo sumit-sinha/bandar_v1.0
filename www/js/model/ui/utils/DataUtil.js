@@ -514,7 +514,7 @@ Aria.classDefinition({
 					code: 'd'
 				},
 				{
-					text: 'locomotion',
+					text: 'lie down',
 					code: 'l'
 				},
 				{
@@ -552,31 +552,19 @@ Aria.classDefinition({
 					code: 'tagg tourist',
 					items: [{
 						label: 'Half Open Mouth/Bared Teeth/...',
-						code: 'tat',
-						properties: {
-							input_monkey_id: true
-						}
+						code: 'tat'
 					}, {
 						label: 'Displacement',
-						code: 'ad',
-						properties: {
-							input_monkey_id: true
-						}
+						code: 'tad'
 					}, {
 						label: 'Hit/Grab/Push/...',
-						code: 'tab',
-						properties: {
-							input_monkey_id: true
-						}
+						code: 'tab'
 					}, {
 						label: 'Support Shake',
 						code: 'tak'
 					}, {
 						label: 'Lunge',
-						code: 'tau',
-						properties: {
-							input_monkey_id: true
-						}
+						code: 'tau'
 					}]
 				}];
 		},
