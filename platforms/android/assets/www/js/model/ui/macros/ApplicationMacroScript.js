@@ -110,6 +110,8 @@ Aria.tplScriptDefinition({
 								+ this.behavior.codes[i] 
 								+ ((values[i] != null && values[i] != '')?',' + values[i]:'');
 				}
+			} else {
+				this.behavior = null;
 			}
 
 			if (el != null) {

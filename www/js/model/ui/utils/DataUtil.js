@@ -346,7 +346,7 @@ Aria.classDefinition({
 					label: 'Mount',
 					code: 'fm'
 				}, {
-					label: 'Hip Holding',
+					label: 'Body Contact',
 					code: 'fb',
 					properties: {
 						input_monkey_id: true
@@ -394,7 +394,7 @@ Aria.classDefinition({
 					}
 				}, {
 					label: 'Stamp',
-					code: 'ap'
+					code: 'tap'
 				}, {
 					label: 'Harassment',
 					code: 'ar'
