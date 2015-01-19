@@ -210,7 +210,7 @@ Aria.classDefinition({
 
 			// get all sexual behaviours
 			var sexualBehaviour = '';
-			var sexualBehaviours = ['sp','sa','so','si','sm','sj','sb','s','st','sr'];
+			var sexualBehaviours = ['sp','sa','so','si','sm','sj','sb','s','st','sr', 'se'];
 			for (var l = 0; l < sexualBehaviours.length; l++) {
 				if (args.behavior == sexualBehaviours[l]) {
 					sexualBehaviour += ((sexualBehaviour != '')?',':'') + sexualBehaviours[l];
@@ -230,7 +230,7 @@ Aria.classDefinition({
 
 			// get all infant related behaviours
 			var infntRelBehaviour = '';
-			var infntRelBehaviours = ['ih','ii','ir','id','iw','pr'];
+			var infntRelBehaviours = ['ih','ii','ir','id','iw','pr', 'in'];
 			for (var l = 0; l < infntRelBehaviours.length; l++) {
 				if (args.behavior == infntRelBehaviours[l]) {
 					infntRelBehaviour += ((infntRelBehaviour != '')?',':'') + infntRelBehaviours[l];
@@ -260,7 +260,7 @@ Aria.classDefinition({
 
 			// get all affiliative behaviours
 			var afflBehaviour = '';
-			var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0'];
+			var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0', 'fb'];
 			for (var l = 0; l < afflBehaviours.length; l++) {
 				if (args.behavior == afflBehaviours[l]) {
 					afflBehaviour += ((afflBehaviour != '')?',':'') + afflBehaviours[l];

@@ -223,7 +223,9 @@ Aria.classDefinition({
 				range = args.fs.data.range[0];
 			}
 
-			if (range != null) {
+			if (range != null 
+				|| (args.fs.data.tourist != null 
+					&& args.fs.data.tourist.hasTourist === 'false')) {
 				// i.e. its a CG Focal scan
 				args.fs.data.tourist = null;
 			}
@@ -231,7 +233,12 @@ Aria.classDefinition({
 			row.push(args.fs.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(args.fs.timeStamp.substring(4,6))}) + '-' + args.fs.timeStamp.substring(0,4)); // date
 			row.push(args.user.code); // observer
 			row.push(args.fs.group); // group
-			row.push(args.fs.data.tourist.guideName); // guide name
+			if (args.fs.data.tourist != null) {
+				row.push(args.fs.data.tourist.guideName); // guide name
+			} else {
+				row.push('');
+			}
+
 			row.push(args.fs.data.monkey.monkey_id); //monkey id
 			row.push(args.fs.data.monkey.female_swelling); // female swelling
 			
@@ -450,7 +457,7 @@ Aria.classDefinition({
 
 			// get all sexual behaviours
 			var sexualBehaviour = '';
-			var sexualBehaviours = ['sp','sa','so','si','sm','sj','sb','s','st','sr'];
+			var sexualBehaviours = ['sp','sa','so','si','sm','sj','sb','s','st','sr', 'se'];
 			for (var l = 0; l < sexualBehaviours.length; l++) {
 				if (args.behavior == sexualBehaviours[l] || (behaviorMap != null && behaviorMap[sexualBehaviours[l]] != null)) {
 					sexualBehaviour += ((sexualBehaviour != '')?',':'') + sexualBehaviours[l];
@@ -470,7 +477,7 @@ Aria.classDefinition({
 
 			// get all infant related behaviours
 			var infntRelBehaviour = '';
-			var infntRelBehaviours = ['ct','ce','cp','cm'];
+			var infntRelBehaviours = ['ih','ii','ir','id','iw','pr'];
 			for (var l = 0; l < infntRelBehaviours.length; l++) {
 				if (args.behavior == infntRelBehaviours[l] || (behaviorMap != null && behaviorMap[infntRelBehaviours[l]] != null)) {
 					infntRelBehaviour += ((infntRelBehaviour != '')?',':'') + infntRelBehaviours[l];
@@ -480,7 +487,7 @@ Aria.classDefinition({
 
 			// get all food related behaviours
 			var foodBehaviour = '';
-			var foodBehaviours = ['ih','ii','ir','id','iw','pr'];
+			var foodBehaviours = ['ct','ce','cp','cm'];
 			for (var l = 0; l < foodBehaviours.length; l++) {
 				if (args.behavior == foodBehaviours[l] || (behaviorMap != null && behaviorMap[foodBehaviours[l]] != null)) {
 					foodBehaviour += ((foodBehaviour != '')?',':'') + foodBehaviours[l];

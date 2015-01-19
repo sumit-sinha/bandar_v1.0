@@ -307,7 +307,7 @@ Aria.classDefinition({
 
 			// get all infant related behaviours
 			var infntRelBehaviour = '';
-			var infntRelBehaviours = ['ct','ce','cp','cm'];
+			var infntRelBehaviours = ['ih','ii','ir','id','iw','pr'];
 			for (var l = 0; l < infntRelBehaviours.length; l++) {
 				if (args.behavior == infntRelBehaviours[l]) {
 					infntRelBehaviour += ((infntRelBehaviour != '')?',':'') + infntRelBehaviours[l];
@@ -317,7 +317,7 @@ Aria.classDefinition({
 
 			// get all food related behaviours
 			var foodBehaviour = '';
-			var foodBehaviours = ['ih','ii','ir','id','iw','pr'];
+			var foodBehaviours = ['ct','ce','cp','cm'];
 			for (var l = 0; l < foodBehaviours.length; l++) {
 				if (args.behavior == foodBehaviours[l]) {
 					foodBehaviour += ((foodBehaviour != '')?',':'') + foodBehaviours[l];

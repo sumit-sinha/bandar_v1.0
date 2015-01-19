@@ -242,10 +242,10 @@ Aria.classDefinition({
 					label: 'Alarm',
 					code: 'vw'
 				}, {
-					label: 'Female Capulation Call',
+					label: 'Female Copulation Call',
 					code: 'vf'
 				}, {
-					label: 'Male Capulation Call',
+					label: 'Male Copulation Call',
 					code: 'vm'
 				}, {
 					label: 'Loud Call',
@@ -554,8 +554,8 @@ Aria.classDefinition({
 						label: 'Half Open Mouth/Bared Teeth/...',
 						code: 'tat'
 					}, {
-						label: 'Displacement',
-						code: 'tad'
+						label: 'Stamp',
+						code: 'tap'
 					}, {
 						label: 'Hit/Grab/Push/...',
 						code: 'tab'
