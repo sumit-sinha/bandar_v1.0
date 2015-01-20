@@ -118,15 +118,20 @@ Aria.classDefinition({
 					var row = [];
 					var behaviorData = this._getMonkeys(behaviors[j]);
 
-					row = this._getRowData(row, {
+					var params = {
 						fs: fs,
-						session: ((count < 9)?'0':'') + (count + 1),
 						utils: args.utils,
 						user: args.user,
 						behavior: behaviorData.behavior,
 						monkeyIds: behaviorData.monkeyIds,
 						behavior_timestamp: fs.data.monkey.behavior_timestamp[j]
-					});
+					};
+
+					if (j == 0) {
+						params['session'] = ((i < 9)?'0':'') + (i + 1);
+					}
+
+					row = this._getRowData(row, params);
 
 					// push to list
 					var counter = {};
@@ -243,14 +248,12 @@ Aria.classDefinition({
 			row.push(args.fs.data.monkey.female_swelling); // female swelling
 			
 			var timeArr = args.fs.data.monkey.startTime.split('-');
-			row.push(args.fs.data.monkey.monkey_id 
-						+ args.session + '' 
-						+ ((timeArr[0] < 1900)?(1900 + timeArr[0]):timeArr[0]) + '' 
-						+ ((timeArr[1] < 10)?'0':'') + timeArr[1] + '' 
-						+ ((timeArr[2] < 10)?'0':'') + timeArr[2] + '' 
-						+ ((timeArr[3] < 10)?'0':'') + timeArr[3] + '' 
-						+ ((timeArr[4] < 10)?'0':'') + timeArr[4] + '' 
-						+ ((timeArr[5] < 10)?'0':'') + timeArr[5]); // focal #
+			
+			if (args.session != null) {
+				row.push(args.session); // focal #
+			} else {
+				row.push('');
+			}
 
 			var startDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
 			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // start time
@@ -312,7 +315,7 @@ Aria.classDefinition({
 
 			// get all locomotion
 			var locomotion = '';
-			var locomotions = ['w','r','s','st','cu','cd','l'];
+			var locomotions = ['w','r','s','cu','cd'];
 			for (var l = 0; l < locomotions.length; l++) {
 				if (args.behavior == locomotions[l] || (behaviorMap != null && behaviorMap[locomotions[l]] != null)) {
 					locomotion += ((locomotion != '')?',':'') + locomotions[l];
@@ -323,7 +326,7 @@ Aria.classDefinition({
 
 			// get all position items
 			var position = '';
-			var positions = ['0','1','2','3','4','5','6','a','b'];
+			var positions = ['0','1','2','3','4','5','6','b'];
 			for (var l = 0; l < positions.length; l++) {
 				if (args.behavior == positions[l] || (behaviorMap != null && behaviorMap[positions[l]] != null)) {
 					position += ((position != '')?',':'') + positions[l];
@@ -350,7 +353,7 @@ Aria.classDefinition({
 			for (var l = 0; l < touristAggs.length; l++) {
 				if (args.behavior == touristAggs[l] || (behaviorMap != null && behaviorMap[touristAggs[l]] != null)) {
 					touristOrConBehAdded = true;
-					touristAgg += ((touristAgg != '')?',':'') + touristAggs[l].substring(1);
+					touristAgg += ((touristAgg != '')?',':'') + touristAggs[l];
 
 					if (behaviorMap != null) {
 						behaviorMonkeys += behaviorMap[touristAggs[l]];
@@ -477,7 +480,7 @@ Aria.classDefinition({
 
 			// get all infant related behaviours
 			var infntRelBehaviour = '';
-			var infntRelBehaviours = ['ih','ii','ir','id','iw','pr'];
+			var infntRelBehaviours = ['ih','ii','ir','id','iw','pr', 'in'];
 			for (var l = 0; l < infntRelBehaviours.length; l++) {
 				if (args.behavior == infntRelBehaviours[l] || (behaviorMap != null && behaviorMap[infntRelBehaviours[l]] != null)) {
 					infntRelBehaviour += ((infntRelBehaviour != '')?',':'') + infntRelBehaviours[l];
@@ -498,7 +501,7 @@ Aria.classDefinition({
 			// get all affiliative behaviours
 			var afflBehaviour = '';
 			behaviorMonkeys = '';
-			var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0'];
+			var afflBehaviours = ['fa','fp','fe','fx','fg','fm','f0', 'fb'];
 			for (var l = 0; l < afflBehaviours.length; l++) {
 				if (args.behavior == afflBehaviours[l] || (behaviorMap != null && behaviorMap[afflBehaviours[l]] != null)) {
 					afflBehaviour += ((afflBehaviour != '')?',':'') + afflBehaviours[l];

@@ -143,6 +143,7 @@ D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\widgets\autocompl
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\widgets\autocomplete\AutoCompleteLibrary.tml \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\widgets\autocomplete\AutoCompleteLibraryScript.js \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\js\model\ui\widgets\autocomplete\AutoCompleteResources.js \
+D:\jdevcc\bandar_v1.0\platforms\android\assets\www\media\alarm.mp3 \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\media\beep.mp3 \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\res\icon \
 D:\jdevcc\bandar_v1.0\platforms\android\assets\www\res\screen \

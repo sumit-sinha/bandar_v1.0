@@ -47,16 +47,10 @@
 							}/}
 
 							<form role="form" {id "frmGroup"/}>
-								{call application.createActivityAutoComplete({
-									id: 'ACTIVITY_CODE_1',
-									labelText: 'Activity Code',
-									name: 'activity_code',
-									type: 'text',
-									placeholder: 'Activity Code',
-									class: 'form-control',
-									noDel: true,
-									populate: 'C'
-								})/}
+								<div class="form-group">
+									<label for="ACTIVITY_CODE_1">Activity Code</label>
+									<input id="ACTIVITY_CODE_1" name="activity_code" type="text" role="textbox" placeholder="Activity Code" class="form-control">
+								</div>
 								<div class="form-group">
 									<label for="USE_SPACE_1">Use of Space</label>
 									<input type="text" name="use_of_space" class="form-control" {id "USE_SPACE_1"/} placeholder="Use of Space">

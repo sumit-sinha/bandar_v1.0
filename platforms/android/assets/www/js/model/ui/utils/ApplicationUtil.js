@@ -20,8 +20,20 @@ Aria.classDefinition({
 		 * plays a beep sound
 		 */
 		playBeep: function() {
-  			if (typeof audio != 'undefined') {
-  				audio.playAudio("www/media/beep.mp3");
+			this.playMedia({
+				'path': 'www/media/beep.mp3'
+			});
+		},
+
+		/**
+		 * plays a media packaged in app
+		 * @param args JSON object with key 'path'
+		 */
+		playMedia: function(args) {
+			if (args != null 
+				&& args.path != null 
+				&& typeof audio != 'undefined') {
+  				audio.playAudio(args.path);
   			}
 		},
 

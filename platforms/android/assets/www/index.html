@@ -47,13 +47,15 @@
                         })
                     });
 
-                    // set timer for beep
+                    // set timer for alarm
                     setInterval(function() {
                         var dt = new Date();
                         if (dt.getMinutes() === 0 
                             && dt.getSeconds() === 0) {
-                            // play beep every hour
-                            model.ui.utils.ApplicationUtil.playBeep();
+                            // play alarm every hour
+                            model.ui.utils.ApplicationUtil.playMedia({
+                                'path': 'www/media/alarm.mp3'
+                            });
                         }
                     }, 1000);
                 }
