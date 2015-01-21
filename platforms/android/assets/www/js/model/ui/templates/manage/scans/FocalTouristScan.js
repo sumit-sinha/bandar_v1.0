@@ -128,7 +128,7 @@ Aria.classDefinition({
 					};
 
 					if (j == 0) {
-						params['session'] = ((i < 9)?'0':'') + (i + 1);
+						params['session'] = (i + 1);
 					}
 
 					row = this._getRowData(row, params);
@@ -220,7 +220,12 @@ Aria.classDefinition({
 						behavior_timestamp: args.fs.data.monkey.behavior_timestamp[i]
 					}
 				}
-			}			
+			}
+
+			var activities = [];
+			if (args.fs.data.monkey.activity_code != null) {
+				activities = args.fs.data.monkey.activity_code.split(';');
+			}
 
 			var range = null;
 			if (args.fs.data.range != null 
@@ -300,7 +305,17 @@ Aria.classDefinition({
 			row.push((args.behavior ==  'ta'|| (behaviorMap != null && behaviorMap['ta'] != null))?1: 0); // T Aggrs
 			row.push((args.behavior == 'tt' || (behaviorMap != null && behaviorMap['tt'] != null))?1: 0); // T Tease
 			row.push((args.behavior == 'tn' || (behaviorMap != null && behaviorMap['tn'] != null))?1: 0); // T Attn
-			row.push(args.fs.data.monkey.activity_code); // Activity
+			
+			// get all food items
+			var activityItem = '';
+			var activityItems = {'fo':'','fe':'','fp':'','fg':'','d':''};
+			for (var l = 0; l < activities.length; l++) {
+				if (activityItems[activities[l]] == 1) {
+					activityItem += ((activityItem != '')?',':'') + activities[l];
+				}
+			}
+
+			row.push(activityItem); // Activity
 
 			// get all food items
 			var foodItem = '';
@@ -315,10 +330,10 @@ Aria.classDefinition({
 
 			// get all locomotion
 			var locomotion = '';
-			var locomotions = ['w','r','s','cu','cd'];
-			for (var l = 0; l < locomotions.length; l++) {
-				if (args.behavior == locomotions[l] || (behaviorMap != null && behaviorMap[locomotions[l]] != null)) {
-					locomotion += ((locomotion != '')?',':'') + locomotions[l];
+			var locomotions = {'w': '','r': '','l': '','s': '', 'st': '','cu': '','cd': ''};
+			for (var l = 0; l < activities.length; l++) {
+				if (locomotions[activities[l]] == 1) {
+					locomotion += ((locomotion != '')?',':'') + activities[l];
 				}
 			}
 

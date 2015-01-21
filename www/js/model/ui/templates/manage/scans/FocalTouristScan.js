@@ -310,7 +310,7 @@ Aria.classDefinition({
 			var activityItem = '';
 			var activityItems = {'fo':'','fe':'','fp':'','fg':'','d':''};
 			for (var l = 0; l < activities.length; l++) {
-				if (activityItems[activities[l]] == 1) {
+				if (activityItems[activities[l]] != null) {
 					activityItem += ((activityItem != '')?',':'') + activities[l];
 				}
 			}
@@ -332,7 +332,7 @@ Aria.classDefinition({
 			var locomotion = '';
 			var locomotions = {'w': '','r': '','l': '','s': '', 'st': '','cu': '','cd': ''};
 			for (var l = 0; l < activities.length; l++) {
-				if (locomotions[activities[l]] == 1) {
+				if (locomotions[activities[l]] != null) {
 					locomotion += ((locomotion != '')?',':'') + activities[l];
 				}
 			}

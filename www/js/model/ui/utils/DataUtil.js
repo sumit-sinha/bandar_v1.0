@@ -76,34 +76,6 @@ Aria.classDefinition({
 				label: 'Locomotion',
 				code: 'l'
 			}, {
-				label: 'Position',
-				code: 'p'
-			}, {
-				label: 'Autogrooming',
-				code: 'a'
-			}, {
-				label: 'Aggressive',
-				code: 'a'
-			}, {
-				label: 'Out of sight',
-				code: 'oos'
-			}, {
-				label: 'Contact - Grooming',
-				code: 'g',
-				type: 'contact'
-			}, {
-				label: 'Contact - Affilative Interactions',
-				code: 'af',
-				type: 'contact'
-			}, {
-				label: 'Contact - Mating',
-				code: 'm',
-				type: 'contact'
-			}, {
-				label: 'Contact - Other/Unknown',
-				code: 's',
-				type: 'contact'
-			}, {
 				label: 'Walk/Run',
 				code: 'w',
 				type: 'locomotion'
@@ -127,18 +99,6 @@ Aria.classDefinition({
 				label: 'Climb Down',
 				code: 'cd',
 				type: 'locomotion'
-			}, {
-				label: 'Canopy > 25m',
-				code: '6',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Centre of tree',
-				code: 'a',
-				type: 'canopy'
-			}, {
-				label: 'Canopy - Periphery',
-				code: 'b',
-				type: 'canopy'
 			}];
 		},
 

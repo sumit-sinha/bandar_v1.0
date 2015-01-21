@@ -394,7 +394,7 @@ Aria.classDefinition({
 					}
 				}, {
 					label: 'Stamp',
-					code: 'tap'
+					code: 'ap'
 				}, {
 					label: 'Harassment',
 					code: 'ar'
