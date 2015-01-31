@@ -9,7 +9,7 @@ Aria.resourcesDefinition({
             'tx_error_no_db_connection': 'Ooops!! we are not able to connect with DB.',
             'tx_error_db_registeration': 'Sorry we are not able to register you. Please try again later.',
             'tx_error_user_name_pwd_no_match': 'User name or password does not match. Please try again later',
-            'tx_error_user_not_logged_in': 'Ooops!! You seemed to be logged out. Please login to continue',
+            'tx_error_user_not_logged_in': 'Ooops!! You seemed to be logged out. Please <a href="#authenticate">login</a> to continue',
             'tx_error_invalid_input': 'Please provide valid data to proceed',
             'tx_error_invalid_nationality': 'Please enter a valid country in nationality field',
             'tx_error_invalid_avg_age': 'Please provide a valid entry for average age field',

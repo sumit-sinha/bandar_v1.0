@@ -449,3 +449,7 @@ div.show-bold {
     width: 48.7%;
   }
 }
+div.alert a {
+  color: #FFF7FD;
+  cursor: pointer;
+}
