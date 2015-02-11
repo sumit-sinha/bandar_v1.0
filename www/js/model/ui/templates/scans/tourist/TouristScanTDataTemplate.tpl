@@ -79,7 +79,7 @@
 										<input type="radio" name="nationality"{if this.data.touristScanSession.nationality == 'SPL'} checked{/if} value="SPL" {id "NATIONALITY_1_3"/} class="form-control-radio">Split</input>
 									</div>
 								</div>
-								<div class="btn-group btn-group-justified border-bottom">
+								<div class="btn-group btn-group-justified border-bottom btn-extra-margin">
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onSaveClick', scope: this}/}>
 										Save
 									</a>

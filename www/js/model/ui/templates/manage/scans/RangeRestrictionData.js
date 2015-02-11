@@ -36,6 +36,7 @@ Aria.classDefinition({
 							'Food Rltd',
 							'Food Item',
 							'Affiliative',
+							'nb',
 							'ID',
 							'Groomee',
 							'ID',
@@ -274,6 +275,18 @@ Aria.classDefinition({
 				row.push('');
 			}
 
+			// no behavior
+			var noBehavior = '';
+			behaviorMonkeys = '';
+			var noBehaviors = ['nb'];
+			for (var l = 0; l < noBehaviors.length; l++) {
+				if (args.behavior == noBehaviors[l] || (behaviorMap != null && behaviorMap[noBehaviors[l]] != null)) {
+					noBehavior += ((noBehavior != '')?',':'') + noBehaviors[l];
+				}
+			}
+
+			row.push(noBehavior);
+			
 			if (args.behavior == 'mse/msr') {
 				
 				row.push('mse');

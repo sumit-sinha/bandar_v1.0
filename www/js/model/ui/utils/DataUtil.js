@@ -267,6 +267,9 @@ Aria.classDefinition({
 				}, {
 					label: 'Yawn',
 					code: 'yy'
+				}, {
+					label: 'No Behavior',
+					code: 'nb'
 				}]
 			}, {
 				type: 'list',

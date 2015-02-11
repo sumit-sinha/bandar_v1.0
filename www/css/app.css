@@ -453,3 +453,6 @@ div.alert a {
   color: #FFF7FD;
   cursor: pointer;
 }
+div.btn-group.btn-group-justified.border-bottom.btn-extra-margin {
+  margin-top: 2.5em;
+}

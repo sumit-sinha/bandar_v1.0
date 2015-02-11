@@ -75,7 +75,7 @@
 									<label for="AREA_CODE_1">Area Code</label>
 									<input type="text" name="area_code" class="form-control" {id "AREA_CODE_1"/} placeholder="Area Code" {if this.data.rrSession.area_code != null}value="${this.data.rrSession.area_code}"{/if}>
 								</div>
-								<div class="btn-group btn-group-justified border-bottom">
+								<div class="btn-group btn-group-justified border-bottom btn-extra-margin">
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnAddMore"/} {on click {fn: 'onAddMore', scope: this}/}>
 										Save
 									</a>
