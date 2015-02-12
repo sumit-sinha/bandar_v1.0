@@ -42,7 +42,8 @@ Aria.classDefinition({
 							'Groomer',
 							'ID',
 							'MNP Social',
-							'Notes'];
+							'Notes',
+							'NB'];
 
 			// start work sheet
 			var xmlContent = '<ss:Worksheet ss:Name="Crop Guarding"><ss:Table>';
@@ -273,7 +274,7 @@ Aria.classDefinition({
 			} else {
 				row.push('');
 			}
-
+			
 			if (args.behavior == 'mse/msr') {
 				
 				row.push('mse');
@@ -303,6 +304,18 @@ Aria.classDefinition({
 			
 			row.push(args.rr.data.notes); // Notes
 
+			// no behavior
+			var noBehavior = '';
+			behaviorMonkeys = '';
+			var noBehaviors = ['nb'];
+			for (var l = 0; l < noBehaviors.length; l++) {
+				if (args.behavior == noBehaviors[l] || (behaviorMap != null && behaviorMap[noBehaviors[l]] != null)) {
+					noBehavior += ((noBehavior != '')?',':'') + noBehaviors[l];
+				}
+			}
+
+			row.push(noBehavior);
+			
 			return row;
 		}
 	}

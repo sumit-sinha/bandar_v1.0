@@ -133,7 +133,7 @@
 	{/macro}
 
 	{macro monkeyButtons()}
-		<div class="btn-group btn-group-justified border-bottom">
+		<div class="btn-group btn-group-justified border-bottom btn-extra-margin">
 			<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
 				Save (${this.data.timer})
 			</a>

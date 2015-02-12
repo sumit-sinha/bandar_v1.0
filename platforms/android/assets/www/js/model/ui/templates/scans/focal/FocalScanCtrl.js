@@ -149,6 +149,12 @@ Aria.classDefinition({
 				return errors;
 			}
 
+			// swelling should not be empty
+			if (input.female_swelling == null || input.female_swelling == '') {
+				errors.push('tx_error_invalid_female_swelling');
+				return errors;
+			}
+
 			// activity_code should not be empty
 			if (input.activity_code == null || input.activity_code == '') {
 				errors.push('tx_error_invalid_activity_code');

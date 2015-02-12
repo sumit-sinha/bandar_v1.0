@@ -78,7 +78,7 @@
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnAddMore"/} {on click {fn: 'onAddMore', scope: this}/}>
 										Add and Reset (+)
 									</a>
-									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
+									<a class="btn btn-default btn-primary btn-extra-margin" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
 										Save
 									</a>
 								</div>

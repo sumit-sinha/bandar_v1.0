@@ -182,6 +182,34 @@ Aria.tplScriptDefinition({
 			if (navigator.app != null) {
 				navigator.app.exitApp();
 			}
+		},
+
+		/**
+		 * redirects to registeration screen
+		 * @param event
+		 * @param args
+		 */
+		onRegisterClick: function(event, args) {
+			// navigate to next page
+			this.moduleCtrl.navigate(null, {
+				pageRequest: {
+					pageId: 'register'
+				}
+			});
+		},
+
+		/**
+		 * redirects to registeration screen
+		 * @param event
+		 * @param args
+		 */
+		onLoginClick: function(event, args) {
+			// navigate to next page
+			this.moduleCtrl.navigate(null, {
+				pageRequest: {
+					pageId: 'authenticate'
+				}
+			});
 		}
 	}
 });

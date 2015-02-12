@@ -61,7 +61,8 @@ Aria.classDefinition({
 							'Groomer',
 							'ID',
 							'MNP Social',
-							'Notes'];
+							'Notes',
+							'NB',];
 
 			// start work sheet
 			var xmlContent = '<ss:Styles><ss:Style ss:ID="s23"><ss:Interior ss:Color="#800080" ss:Pattern="Solid"/></ss:Style></ss:Styles><ss:Worksheet ss:Name="Focal"><ss:Table>';
@@ -581,6 +582,18 @@ Aria.classDefinition({
 			}
 
 			row.push(args.fs.data.monkey.notes); // Notes
+
+			// no behavior
+			var noBehavior = '';
+			behaviorMonkeys = '';
+			var noBehaviors = ['nb'];
+			for (var l = 0; l < noBehaviors.length; l++) {
+				if (args.behavior == noBehaviors[l] || (behaviorMap != null && behaviorMap[noBehaviors[l]] != null)) {
+					noBehavior += ((noBehavior != '')?',':'') + noBehaviors[l];
+				}
+			}
+
+			row.push(noBehavior);
 
 			return row;
 		}

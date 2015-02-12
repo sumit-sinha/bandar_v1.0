@@ -21,6 +21,7 @@ Aria.resourcesDefinition({
             'tx_error_invalid_behavior_sequence': 'Please record behavior before saving data',
             'tx_error_invalid_use_of_space': 'Please provide a valid value for use of space',
             'tx_error_invalid_no_of_tourist': 'Please provide a valid value for number of tourist',
+            'tx_error_invalid_female_swelling': 'Please provide a valid value for swelling field',
             'tx_lbl_range_restriction': 'Crop Guarding'
         }
     }

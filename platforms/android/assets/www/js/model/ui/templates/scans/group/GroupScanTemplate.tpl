@@ -70,7 +70,7 @@
 									<label for="NOTES_1">Notes/Observation</label>
 									<textarea class="form-control" name="notes" rows="3" {id "NOTES_1"/}></textarea>
 								</div>
-								<div class="btn-group btn-group-justified border-bottom">
+								<div class="btn-group btn-group-justified border-bottom btn-extra-margin">
 									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
 										Save
 									</a>

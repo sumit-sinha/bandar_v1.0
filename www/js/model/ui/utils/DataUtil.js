@@ -73,10 +73,10 @@ Aria.classDefinition({
 				label: 'Drinking',
 				code: 'd'
 			}, {
-				label: 'Locomotion',
+				label: 'Lie Down',
 				code: 'l'
 			}, {
-				label: 'Walk/Run',
+				label: 'Walk',
 				code: 'w',
 				type: 'locomotion'
 			}, {
