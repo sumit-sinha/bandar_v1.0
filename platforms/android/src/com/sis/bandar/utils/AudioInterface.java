@@ -1,6 +1,7 @@
 package com.sis.bandar.utils;
 
 import java.io.IOException;
+
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
@@ -33,6 +34,15 @@ public class AudioInterface {
 			fileDescriptor.close();
 			mp.prepare();
 			mp.start();
+			
+			// release media player instance
+			mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+				
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					mp.release();					
+				}
+			});
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalStateException e) {

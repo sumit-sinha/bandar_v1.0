@@ -24,6 +24,7 @@ Aria.classDefinition({
 							'End Time',
 							'Total Time',
 							'Behavior Time',
+							'Type',
 							'CG-Location',
 							'CG-Type',
 							'TDen',
@@ -38,7 +39,6 @@ Aria.classDefinition({
 							'Activity',
 							'Food Item',
 							'Locomotion',
-							'Position',
 							'SDB (stress)',
 							'T-Tourist Agg',
 							'C-ConAgg',
@@ -281,6 +281,15 @@ Aria.classDefinition({
 				row.push('');
 			}
 
+			// Type column as per Niki's new request
+			if (range != null) {
+				row.push('C');
+			} else if (args.fs.data.tourist != null) {
+				row.push('T');
+			} else {
+				row.push('N');
+			}
+
 			if (range != null) {
 				row.push(range.area_code); // CG Location
 				row.push(range.type_rr); // CG-Type
@@ -340,7 +349,7 @@ Aria.classDefinition({
 
 			row.push(locomotion); // Locomotion
 
-			// get all position items
+			/*/ get all position items
 			var position = '';
 			var positions = ['0','1','2','3','4','5','6','b'];
 			for (var l = 0; l < positions.length; l++) {
@@ -349,7 +358,7 @@ Aria.classDefinition({
 				}
 			}
 
-			row.push(position); // Position
+			row.push(position); // Position*/
 
 			// get all stress activities
 			var stress = '';
