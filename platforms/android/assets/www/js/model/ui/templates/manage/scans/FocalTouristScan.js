@@ -16,17 +16,17 @@ Aria.classDefinition({
 			var fsData = ['Date',
 							'Observer',
 							'Group',
-							'Guide Name',
 							'Monkey',
 							'Swelling',
+							'Type',
 							'Focal#',
 							'Start Time',
 							'End Time',
 							'Total Time',
 							'Behavior Time',
-							'Type',
 							'CG-Location',
 							'CG-Type',
+							'Guide Name',
 							'TDen',
 							'TSex',
 							'TNat',
@@ -244,17 +244,21 @@ Aria.classDefinition({
 			row.push(args.fs.timeStamp.substring(6,8) + '-' + args.utils.numberToMonth({showShort: true, month: parseInt(args.fs.timeStamp.substring(4,6))}) + '-' + args.fs.timeStamp.substring(0,4)); // date
 			row.push(args.user.code); // observer
 			row.push(args.fs.group); // group
-			if (args.fs.data.tourist != null) {
-				row.push(args.fs.data.tourist.guideName); // guide name
-			} else {
-				row.push('');
-			}
 
 			row.push(args.fs.data.monkey.monkey_id); //monkey id
 			row.push(args.fs.data.monkey.female_swelling); // female swelling
 			
 			var timeArr = args.fs.data.monkey.startTime.split('-');
 			
+			// Type column as per Niki's new request
+			if (range != null) {
+				row.push('C');
+			} else if (args.fs.data.tourist != null) {
+				row.push('T');
+			} else {
+				row.push('N');
+			}
+
 			if (args.session != null) {
 				row.push(args.session); // focal #
 			} else {
@@ -281,15 +285,6 @@ Aria.classDefinition({
 				row.push('');
 			}
 
-			// Type column as per Niki's new request
-			if (range != null) {
-				row.push('C');
-			} else if (args.fs.data.tourist != null) {
-				row.push('T');
-			} else {
-				row.push('N');
-			}
-
 			if (range != null) {
 				row.push(range.area_code); // CG Location
 				row.push(range.type_rr); // CG-Type
@@ -299,6 +294,12 @@ Aria.classDefinition({
 				row.push('');
 			}
 
+			if (args.fs.data.tourist != null) {
+				row.push(args.fs.data.tourist.guideName); // guide name
+			} else {
+				row.push('');
+			}
+			
 			if (args.fs.data.tourist != null) {
 				row.push(args.fs.data.tourist.density); // TDen
 				row.push(args.fs.data.tourist.gender); // TSex
