@@ -151,11 +151,6 @@ Aria.tplScriptDefinition({
 					}
 				}
 
-				// delete general notes
-				if (user.notes != null) {
-					user.notes = null;
-				}
-
 				// add back to local storage
 				var copiedUser = aria.utils.Json.copy(user);
 				copiedUser.selectedGroup = null;
@@ -427,62 +422,66 @@ Aria.tplScriptDefinition({
 		 */
 		onExportExcelClick: function(event, args) {
 			
-			var user = this.utils.getLoggedInUser();
-			var gsData = new model.ui.templates.manage.scans.GroupScanData();
-			var tsData = new model.ui.templates.manage.scans.TouristScanData();
-			var rrData = new model.ui.templates.manage.scans.RangeRestrictionData();
-			var fsTouristData = new model.ui.templates.manage.scans.FocalTouristScan();
-			var noteData = new model.ui.templates.manage.scans.TakeNoteData();
-			
-			var xmlContent = '<?xml version="1.0"?><ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
-			xmlContent += fsTouristData.createFsTouristWorkBook({
-							user: user,
-							list: this.data.scans.fs,
-							utils: this.utils
-						  });
-			xmlContent += gsData.createGroupWorkBook({
-							user: user,
-							list: this.data.scans.gs,
-							utils: this.utils
-						  });
-			xmlContent += tsData.createTouristWorkBook({
-							user: user,
-							list: this.data.scans.ts,
-							utils: this.utils
-						  });
-			xmlContent += rrData.createRRWorkBook({
-							user: user,
-							list: this.data.scans.rr,
-							utils: this.utils
-						  });
-			xmlContent += noteData.createNoteWorkBook({
-							user: user,
-							list: user.notes,
-							utils: this.utils
-						  });
-			
-			xmlContent += '</ss:Workbook>';
+			try {
+				var user = this.utils.getLoggedInUser();
+				var gsData = new model.ui.templates.manage.scans.GroupScanData();
+				var tsData = new model.ui.templates.manage.scans.TouristScanData();
+				var rrData = new model.ui.templates.manage.scans.RangeRestrictionData();
+				var fsTouristData = new model.ui.templates.manage.scans.FocalTouristScan();
+				var noteData = new model.ui.templates.manage.scans.TakeNoteData();
+				
+				var xmlContent = '<?xml version="1.0"?><ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+				xmlContent += fsTouristData.createFsTouristWorkBook({
+								user: user,
+								list: this.data.scans.fs,
+								utils: this.utils
+							  });
+				xmlContent += gsData.createGroupWorkBook({
+								user: user,
+								list: this.data.scans.gs,
+								utils: this.utils
+							  });
+				xmlContent += tsData.createTouristWorkBook({
+								user: user,
+								list: this.data.scans.ts,
+								utils: this.utils
+							  });
+				xmlContent += rrData.createRRWorkBook({
+								user: user,
+								list: this.data.scans.rr,
+								utils: this.utils
+							  });
+				xmlContent += noteData.createNoteWorkBook({
+								user: user,
+								list: user.notes,
+								utils: this.utils
+							  });
+				
+				xmlContent += '</ss:Workbook>';
 
-			if (typeof file != 'undefined') {
-				file.writeFile('exported_excel.xml', xmlContent, 'worksheet');
-			} else {
-				var a = document.createElement('a');
-				a.href = 'data:application/xhtml+xml,' + xmlContent;
-				a.target = '_blank';
-				a.download = 'exported_excel.xml';
+				if (typeof file != 'undefined') {
+					file.writeFile('exported_excel.xml', xmlContent, 'worksheet');
+				} else {
+					var a = document.createElement('a');
+					a.href = 'data:application/xhtml+xml,' + xmlContent;
+					a.target = '_blank';
+					a.download = 'exported_excel.xml';
 
-				document.body.appendChild(a);
-				a.click();
+					document.body.appendChild(a);
+					a.click();
+				}
+
+				// show success popup
+				this.utils.showOverlay();
+				var modalEl = document.getElementById(this.$getId('success'));
+				if (modalEl != null) {
+					modalEl.style.display = 'block';
+				}
+				
+				this.$json.setValue(this.data, 'file_exported', !this.data.file_exported);
+			} catch(e) {
+				alert(e.message + '\n' + e.stack);
 			}
-
-			// show success popup
-			this.utils.showOverlay();
-			var modalEl = document.getElementById(this.$getId('success'));
-			if (modalEl != null) {
-				modalEl.style.display = 'block';
-			}
-			
-			this.$json.setValue(this.data, 'file_exported', !this.data.file_exported);
 		},
 
 		/**
@@ -503,6 +502,11 @@ Aria.tplScriptDefinition({
 			// parse data
 			var user = this.utils.getLoggedInUser();
 			user.groups = null;
+
+			// delete general notes
+			if (user.notes != null) {
+				user.notes = null;
+			}
 
 			// add back to local storage
 			var copiedUser = aria.utils.Json.copy(user);

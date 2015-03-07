@@ -60,6 +60,9 @@ Aria.tplScriptDefinition({
 				if (this.data.timer != 120) {
 					this.data.paused = true;
 				}
+
+				// set start time
+				this.startTime = this.data.focalData.startTime;
 			}
 		},
 
@@ -95,7 +98,9 @@ Aria.tplScriptDefinition({
 			if (timerInfo.interval_focal == null) {
 
 				// set start time
-				this.startTime = this.utils.getCurrentTime();
+				if (this.startTime == null) {
+					this.startTime = this.utils.getCurrentTime();
+				}
 
 				timerInfo = {
 					interval_focal: setInterval(function() {
@@ -136,6 +141,7 @@ Aria.tplScriptDefinition({
 			// serailize form
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmFocal')));
 			input.timer = this.data.timer;
+			input.startTime = this.startTime;
 			input['behavior_timestamp'] = this.data.timeStamps;
 
 			// save data for prefilling
@@ -153,6 +159,7 @@ Aria.tplScriptDefinition({
 			// serailize form
 			var input = this.utils.formToJson(document.getElementById(this.$getId('frmFocal')));
 			input.timer = this.data.timer;
+			input.startTime = this.startTime;
 			input['behavior_timestamp'] = this.data.timeStamps;
 
 			// save data for prefilling
