@@ -56,9 +56,9 @@ Aria.classDefinition({
 							'Food Rltd',
 							'Affiliative',
 							'ID',
-							'Groomee',
-							'ID',
 							'Groomer',
+							'ID',
+							'Groomee',
 							'ID',
 							'MNP Social',
 							'Notes',
@@ -272,11 +272,7 @@ Aria.classDefinition({
 			var endDate = new Date(timeArr[0], timeArr[1], timeArr[2], timeArr[3], timeArr[4], timeArr[5]);
 			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // end time
 
-			var totalTime = (endDate.getTime() - startDate.getTime())/1000;
-			var totalSeconds = totalTime % 60;
-			var totalMinutes = (totalTime - totalSeconds)/60;
-			totalTime = ((totalMinutes < 10)?'0':'') + totalMinutes + ':' + ((totalSeconds < 10)?'0':'') + totalSeconds;
-			row.push(totalTime); // total time
+			row.push(args.fs.data.monkey.totalTime); // total time
 
 			if (behaviorMap == null) {
 				timeArr = args.behavior_timestamp.split('-');

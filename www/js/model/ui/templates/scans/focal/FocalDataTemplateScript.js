@@ -180,6 +180,7 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
+			input['totalTime'] = 120 - this.data.timer;
 			
 			this.data.errors.list = this.moduleCtrl.saveFocalData(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {

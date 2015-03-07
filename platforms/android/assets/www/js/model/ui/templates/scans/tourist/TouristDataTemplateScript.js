@@ -8,6 +8,13 @@ Aria.tplScriptDefinition({
 		this.db = model.ui.utils.DataUtil;
 		this.utils = model.ui.utils.ApplicationUtil;
 	},
+	$destructor: function() {
+		var timerInfo = this.utils.getTimerInfo();
+		if (timerInfo.interval_focal != null) {
+			this.utils.setTimerInfo(null);
+			clearInterval(timerInfo.interval_focal);
+		}
+	},
 	$prototype: {
 
 		$dataReady: function() {
@@ -26,6 +33,8 @@ Aria.tplScriptDefinition({
 			this.data.behaviors = this.db.getMonkeyBehaviors();
 			this.data.touristData = this.moduleCtrl.getTouristSessionData();
 
+			this.data.timer = 60;
+
 			// add tourist behaviors to list
 			var touristBehaviors = this.db.getTouristBehaviors();
 			for (var i = 0; i < touristBehaviors.length; i++) {
@@ -38,6 +47,50 @@ Aria.tplScriptDefinition({
 
 			// indicates scan has started
 			this.startTime = this.utils.getCurrentTime();
+		},
+
+		/**
+		 * triggered when timer need to start
+		 * @param event
+		 * @param args
+		 */
+		startTimer: function(event, args) {
+			var currentPage = this;
+			var timerInfo = this.utils.getTimerInfo();
+
+			if (timerInfo.interval_focal == null) {
+				timerInfo = {
+					interval_focal: setInterval(function() {
+							if (timerInfo.timer <= 0) {
+								clearInterval(timerInfo.interval_focal);
+								timerInfo.timer = 1;
+							}
+								
+							var btnEl = document.getElementById(currentPage.$getId("btnSave"));
+							if (btnEl != null) {
+								btnEl.innerHTML = 'Scan (' + --timerInfo.timer + ')';
+								
+								if (currentPage.data != null) {
+									currentPage.data.timer -= 1;
+								}
+
+								if (currentPage.data.timer == 15 
+									|| (currentPage.data.timer <=5 && currentPage.data.timer >= 0)) {
+									currentPage.utils.playBeep();
+								}
+							}
+
+							// if continue button is visible
+							if (currentPage.data.paused == true) {
+								currentPage.$json.setValue(this.data, 'paused', false);
+							}
+							
+						}, 1000),
+					timer: this.data.timer
+				};
+
+				this.utils.setTimerInfo(timerInfo);
+			}
 		},
 
 		dismissError: function(event, args) {
@@ -71,6 +124,10 @@ Aria.tplScriptDefinition({
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
 				// show success dialog
 				this.data.timeStamps = [];
+				
+				this.data.timer = 0;
+				this.utils.getTimerInfo().timer = 60;
+
 				this.utils.showOverlay(false);
 				this.$json.setValue(this.data, 'tourist_saved', true);
 			} else {
@@ -87,6 +144,7 @@ Aria.tplScriptDefinition({
 		onBehaviorClick: function(event, args) {
 			// set timestamp for each behavior
 			this.data.timeStamps.push(this.utils.getCurrentTime());
+			this.startTimer(event, args);
 		},
 
 		onAddMore: function(event, args) {

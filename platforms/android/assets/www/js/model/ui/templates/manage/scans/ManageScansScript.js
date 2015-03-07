@@ -151,11 +151,6 @@ Aria.tplScriptDefinition({
 					}
 				}
 
-				// delete general notes
-				if (user.notes != null) {
-					user.notes = null;
-				}
-
 				// add back to local storage
 				var copiedUser = aria.utils.Json.copy(user);
 				copiedUser.selectedGroup = null;
@@ -507,6 +502,11 @@ Aria.tplScriptDefinition({
 			// parse data
 			var user = this.utils.getLoggedInUser();
 			user.groups = null;
+
+			// delete general notes
+			if (user.notes != null) {
+				user.notes = null;
+			}
 
 			// add back to local storage
 			var copiedUser = aria.utils.Json.copy(user);

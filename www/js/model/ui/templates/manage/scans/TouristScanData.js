@@ -28,6 +28,7 @@ Aria.classDefinition({
 							'T Tease',
 							'T Attn',
 							'Monkey Id',
+							'Scan',
 							'Behavior Time',
 							'SDB (Stress)',
 							'Tourist Agg',
@@ -47,9 +48,9 @@ Aria.classDefinition({
 							'Food Item',
 							'Affiliative',
 							'ID',
-							'Groomee',
-							'ID',
 							'Groomer',
+							'ID',
+							'Groomee',
 							'ID',
 							'MNP Social',
 							'Notes',
@@ -203,6 +204,8 @@ Aria.classDefinition({
 			row.push(args.behavior == 'tt'?1: 0); // Tease
 			row.push(args.behavior == 'tn'?1: 0); // Attn
 			row.push(args.monkey.monkey_id); // monkey id
+
+			row.push(''); // scan number
 
 			timeArr = args.behavior_timestamp.split('-');
 			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // Behavior time

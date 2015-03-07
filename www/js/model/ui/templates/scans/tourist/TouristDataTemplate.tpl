@@ -57,7 +57,7 @@
 							<form role="form" {id "frmTourist"/}>
 								<div class="form-group">
 									<label for="MONKEY_ID_1">Monkey ID</label>
-									<input type="text" name="monkey_id" class="form-control" {id "MONKEY_ID_1"/} placeholder="Monkey ID" value="${this.data.touristData.monkey_id}">
+									<input type="text" name="monkey_id" class="form-control" {id "MONKEY_ID_1"/} placeholder="Monkey ID" value="${this.data.touristData.monkey_id}" {on change {fn: 'startTimer', scope: this}/}>
 								</div>
 								<div class="form-group">
 									<label for="NOTES_1">Notes/Observation</label>
@@ -79,7 +79,7 @@
 										Add and Reset (+)
 									</a>
 									<a class="btn btn-default btn-primary btn-extra-margin" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
-										Save
+										Save (${this.data.timer})
 									</a>
 								</div>
 							</form>
