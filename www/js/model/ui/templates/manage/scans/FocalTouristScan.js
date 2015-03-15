@@ -547,7 +547,7 @@ Aria.classDefinition({
 
 			if (args.behavior == 'mse/msr' || (behaviorMap != null && behaviorMap['mse/msr'] != null)) {
 				
-				row.push('mse');
+				row.push('msr');
 				var monkeys = {
 					mse: '',
 					msr: ''
@@ -565,7 +565,7 @@ Aria.classDefinition({
 					}
 				}
 
-				row.push('msr');
+				row.push('mse');
 				if (behaviorMap == null) {
 					if (args.monkeyIds[1] != null) {
 						row.push(args.monkeyIds[1]);
@@ -578,7 +578,7 @@ Aria.classDefinition({
 					}
 				}
 
-				row.push(monkeys.mse.trim() + 'ms' + monkeys.msr.trim()); // MNP Social
+				row.push(monkeys.msr.trim() + 'ms' + monkeys.mse.trim()); // MNP Social
 			} else {
 				row.push('');
 				row.push('');

@@ -280,7 +280,7 @@ Aria.classDefinition({
 			
 			if (args.behavior == 'mse/msr') {
 				
-				row.push('mse');
+				row.push('msr');
 				var monkeys = {
 					mse: '',
 					msr: ''
@@ -290,13 +290,13 @@ Aria.classDefinition({
 					monkeys.mse = args.monkeyIds[0];
 				}
 
-				row.push('msr');
+				row.push('mse');
 				if (args.monkeyIds[1] != null) {
 					row.push(args.monkeyIds[1]);
 					monkeys.msr = args.monkeyIds[1];
 				}
 
-				row.push(monkeys.mse + 'ms' + monkeys.msr); // MNP Social
+				row.push(monkeys.msr + 'ms' + monkeys.mse); // MNP Social
 			} else {
 				row.push('');
 				row.push('');
