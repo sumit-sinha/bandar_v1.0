@@ -44,45 +44,137 @@ Aria.tplScriptDefinition({
 
 								// get all focal scans
 								for (var i = 0; user.groups[key1][key2].FS != null && i < user.groups[key1][key2].FS.length; i++) {
+									
+									var label = 'Group: ' + key1 + ' | ';
+									var data = user.groups[key1][key2].FS[i];
+									if (data.range != null) {
+										label += 'Type: C | ';
+									} else if (data.tourist != null && data.tourist.density > 0) {
+										label += 'Type: T | ';
+									} else {
+										label += 'Type: N | ';
+									}
+									
+									if (data.monkey != null) {
+										label += 'Act Code: ' + data.monkey.activity_code + ' | ';
+									}
+
+									if (key2 != null) {
+										try {
+											var temp =  key2.substring(6,8) + '/' + (parseInt(key2.substring(4,6)) + 1) + '/' + key2.substring(0,4);
+											label += 'Date: ' + temp + ' | ';
+										} catch (e) {
+											// dont log for production version
+										}
+									}
+
+									label += 'Index: ' + (i+1);
+
 									this.data.scans.fs.push({
 										index: i,
 										group: key1,
 										timeStamp: key2,
-										data: user.groups[key1][key2].FS[i],
-										label: key1 + '-' + key2 + '-' + (i + 1)
+										data: data,
+										label: label
 									});
 								}
 
-								// get all focal scans
+								// get all group scans
 								for (var i = 0; user.groups[key1][key2].GS != null && i < user.groups[key1][key2].GS.length; i++) {
+									
+									var label = 'Group: ' + key1 + ' | ';
+									var data = user.groups[key1][key2].GS[i];
+									if (data.activity_code != null) {
+										label += 'Act Code: ' + data.activity_code + ' | ';
+									}
+									
+									if (data.no_of_tourist != null) {
+										label += 'No of Tourist: ' + data.no_of_tourist + ' | ';
+									}
+
+									if (key2 != null) {
+										try {
+											var temp =  key2.substring(6,8) + '/' + (parseInt(key2.substring(4,6)) + 1) + '/' + key2.substring(0,4);
+											label += 'Date: ' + temp + ' | ';
+										} catch (e) {
+											// dont log for production version
+										}
+									}
+
+									label += 'Index: ' + (i+1);
+
 									this.data.scans.gs.push({
 										index: i,
 										group: key1,
 										timeStamp: key2,
-										data: user.groups[key1][key2].GS[i],
-										label: key1 + '-' + key2 + '-' + (i + 1)
+										data: data,
+										label: label
 									});
 								}
 
-								// get all focal scans
+								// get all range scans
 								for (var i = 0; user.groups[key1][key2].RR != null && i < user.groups[key1][key2].RR.length; i++) {
+									
+									var label = 'Group: ' + key1 + ' | ';
+									var data = user.groups[key1][key2].RR[i];
+									if (data.type_rr != null) {
+										label += 'Type: ' + data.type_rr + ' | ';
+									}
+									
+									if (data.area_code != null) {
+										label += 'Area Code: ' + data.area_code + ' | ';
+									}
+
+									if (key2 != null) {
+										try {
+											var temp =  key2.substring(6,8) + '/' + (parseInt(key2.substring(4,6)) + 1) + '/' + key2.substring(0,4);
+											label += 'Date: ' + temp + ' | ';
+										} catch (e) {
+											// dont log for production version
+										}
+									}
+
+									label += 'Index: ' + (i+1);
+
 									this.data.scans.rr.push({
 										index: i,
 										group: key1,
 										timeStamp: key2,
-										data: user.groups[key1][key2].RR[i],
-										label: key1 + '-' + key2 + '-' + (i + 1)
+										data: data,
+										label: label
 									});
 								}
 
-								// get all focal scans
+								// get all tourist scans
 								for (var i = 0; user.groups[key1][key2].TS != null && i < user.groups[key1][key2].TS.length; i++) {
+									
+									var label = 'Group: ' + key1 + ' | ';
+									var data = user.groups[key1][key2].TS[i];
+									if (data.tourist != null && data.tourist.guideName != null) {
+										label += 'Guide Name: ' + data.tourist.guideName + ' | ';
+									}
+									
+									if (data.tourist != null && data.tourist.areaCode != null) {
+										label += 'Area Code: ' + data.tourist.areaCode + ' | ';
+									}
+
+									if (key2 != null) {
+										try {
+											var temp =  key2.substring(6,8) + '/' + (parseInt(key2.substring(4,6)) + 1) + '/' + key2.substring(0,4);
+											label += 'Date: ' + temp + ' | ';
+										} catch (e) {
+											// dont log for production version
+										}
+									}
+
+									label += 'Index: ' + (i+1);
+
 									this.data.scans.ts.push({
 										index: i,
 										group: key1,
 										timeStamp: key2,
-										data: user.groups[key1][key2].TS[i],
-										label: key1 + '-' + key2 + '-' + (i + 1)
+										data: data,
+										label: label
 									});
 								}
 							}

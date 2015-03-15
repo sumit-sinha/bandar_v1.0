@@ -21,6 +21,7 @@ Aria.classDefinition({
 							'End Time',
 							'Duration',
 							'Monkey Id',
+							'Scan',
 							'Behavior Time',
 							'SDB Stress',
 							'Con Agg',
@@ -151,6 +152,8 @@ Aria.classDefinition({
 			row.push(totalTime); // total time
 
 			row.push(args.rr.data.monkey_id);
+
+			row.push(args.rr.data.scanCount); //scan
 			
 			timeArr = args.behavior_timestamp.split('-');
 			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // Behavior time
@@ -309,7 +312,7 @@ Aria.classDefinition({
 			behaviorMonkeys = '';
 			var noBehaviors = ['nb'];
 			for (var l = 0; l < noBehaviors.length; l++) {
-				if (args.behavior == noBehaviors[l] || (behaviorMap != null && behaviorMap[noBehaviors[l]] != null)) {
+				if (args.behavior == noBehaviors[l]) {
 					noBehavior += ((noBehavior != '')?',':'') + noBehaviors[l];
 				}
 			}

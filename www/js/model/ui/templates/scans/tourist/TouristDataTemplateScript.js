@@ -46,6 +46,7 @@ Aria.tplScriptDefinition({
 			}
 
 			// indicates scan has started
+			this.scanCount = 1;
 			this.startTime = this.utils.getCurrentTime();
 		},
 
@@ -119,6 +120,7 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
+			input['scanCount'] = this.scanCount++;
 			
 			this.data.errors.list = this.moduleCtrl.onFinalSave(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
@@ -154,6 +156,7 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
+			input['scanCount'] = this.scanCount;
 
 			this.data.errors.list = this.moduleCtrl.saveTouristScanData(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {

@@ -29,6 +29,7 @@ Aria.tplScriptDefinition({
 			}
 
 			// init
+			this.scanCount = 1;
 			this.data.timer = 600;
 			this.data.timeStamps = [];
 			this.data.behaviors = this.db.getMonkeyBehaviors();
@@ -104,6 +105,7 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
+			input['scanCount'] = this.scanCount;
 
 			this.data.errors.list = this.moduleCtrl.addRangeRestriction(event, {
 				'input': input
@@ -137,6 +139,7 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
+			input['scanCount'] = this.scanCount;
 			
 			this.data.errors.list = this.moduleCtrl.addFinalRangeRestriction(event, {
 				'input': input

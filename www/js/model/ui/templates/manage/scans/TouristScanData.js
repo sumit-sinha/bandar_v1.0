@@ -205,7 +205,7 @@ Aria.classDefinition({
 			row.push(args.behavior == 'tn'?1: 0); // Attn
 			row.push(args.monkey.monkey_id); // monkey id
 
-			row.push(''); // scan number
+			row.push(args.monkey.scanCount); // scan number
 
 			timeArr = args.behavior_timestamp.split('-');
 			row.push(timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5]); // Behavior time
