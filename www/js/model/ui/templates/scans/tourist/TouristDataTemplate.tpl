@@ -75,11 +75,14 @@
 									}
 								})/}
 								<div class="btn-group btn-group-justified border-bottom">
-									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnAddMore"/} {on click {fn: 'onAddMore', scope: this}/}>
+									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnScan"/} {on click {fn: 'onAddMore', scope: this, args: {'reset': true}}/}>
+										Scan (${this.data.timer})
+									</a>
+									<a class="btn btn-default btn-primary" role="button" href="javascript:void(0);" {id "btnAddMore"/} {on click {fn: 'onAddMore', scope: this, args: {'reset': false}}/}>
 										Add and Reset (+)
 									</a>
 									<a class="btn btn-default btn-primary btn-extra-margin" role="button" href="javascript:void(0);" {id "btnSave"/} {on click {fn: 'onScanOver', scope: this}/}>
-										Save (${this.data.timer})
+										Save
 									</a>
 								</div>
 							</form>

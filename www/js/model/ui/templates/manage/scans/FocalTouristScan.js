@@ -556,12 +556,12 @@ Aria.classDefinition({
 				if (behaviorMap == null) {
 					if (args.monkeyIds[0] != null) {
 						row.push(args.monkeyIds[0]);
-						monkeys.mse = args.monkeyIds[0];
+						monkeys.msr = args.monkeyIds[0];
 					}
 				} else {
 					if (behaviorMap['mse/msr'].monkeys[0] != null) {
 						row.push(behaviorMap['mse/msr'].monkeys[0]);
-						monkeys.mse = behaviorMap['mse/msr'].monkeys[0];
+						monkeys.msr = behaviorMap['mse/msr'].monkeys[0];
 					}
 				}
 
@@ -569,7 +569,7 @@ Aria.classDefinition({
 				if (behaviorMap == null) {
 					if (args.monkeyIds[1] != null) {
 						row.push(args.monkeyIds[1]);
-						monkeys.msr = args.monkeyIds[1];
+						monkeys.mse = args.monkeyIds[1];
 					}
 				} else {
 					if (behaviorMap['mse/msr'].monkeys[1] != null) {

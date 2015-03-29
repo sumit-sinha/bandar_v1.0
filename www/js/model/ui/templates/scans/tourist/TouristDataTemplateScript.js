@@ -64,10 +64,11 @@ Aria.tplScriptDefinition({
 					interval_focal: setInterval(function() {
 							if (timerInfo.timer <= 0) {
 								clearInterval(timerInfo.interval_focal);
+								timerInfo.interval_focal = null;
 								timerInfo.timer = 1;
 							}
 								
-							var btnEl = document.getElementById(currentPage.$getId("btnSave"));
+							var btnEl = document.getElementById(currentPage.$getId("btnScan"));
 							if (btnEl != null) {
 								btnEl.innerHTML = 'Scan (' + --timerInfo.timer + ')';
 								
@@ -120,7 +121,7 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
-			input['scanCount'] = this.scanCount++;
+			input['scanCount'] = this.scanCount;
 			
 			this.data.errors.list = this.moduleCtrl.onFinalSave(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
@@ -132,6 +133,8 @@ Aria.tplScriptDefinition({
 
 				this.utils.showOverlay(false);
 				this.$json.setValue(this.data, 'tourist_saved', true);
+
+				this.scanCount = 1;
 			} else {
 				// show error
 				this.$json.setValue(this.data.errors, 'error_occured', !this.data.errors.error_occured);
@@ -156,7 +159,11 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
-			input['scanCount'] = this.scanCount;
+			if (args.reset) {
+				input['scanCount'] = this.scanCount++;
+			}
+			
+			input['sameSession'] = true;
 
 			this.data.errors.list = this.moduleCtrl.saveTouristScanData(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
@@ -171,7 +178,16 @@ Aria.tplScriptDefinition({
 					behaviorEl.value = '';
 				}
 
+				// show success dialog
 				this.data.timeStamps = [];
+				
+				if (args.reset == true) {
+					this.data.timer = 60;
+					this.utils.getTimerInfo().timer = 60;
+
+					this.startTimer(event, args);
+				}
+
 				this.startTime = this.utils.getCurrentTime();
 			} else {
 				// show error

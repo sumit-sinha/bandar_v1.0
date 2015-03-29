@@ -72,7 +72,10 @@ Aria.classDefinition({
 			// prepare content [START] */
 			var count = 0;
 			for (var i = 0; i < args.list.length; i++) {
+				
 				var ts = args.list[i];
+				var isIncremented = false;
+
 				if (ts.data.monkey == null) {
 					ts.data.monkey = [{
 						startTime: '00-00-00-00-00-00',
@@ -143,9 +146,21 @@ Aria.classDefinition({
 							}
 						}
 
+						var session = (isIncremented)?-1:0;
+						if (monkey.sameSession == null 
+							|| monkey.sameSession === false) {
+							session += count + 1;
+							if (!isIncremented) {
+								count++;
+								isIncremented = true;
+							}
+						} else {
+							session += count + 1;
+						}
+
 						row = this._getRowData(row, {
 							ts: ts,
-							session: i + 1,
+							session: session,
 							totalDuration: totalDuration,
 							monkey: monkey,
 							utils: args.utils,
@@ -194,6 +209,7 @@ Aria.classDefinition({
 			row.push(totalTime); // total time
 
 			row.push(args.session); // Session
+
 			row.push(args.ts.data.tourist.density); // TDen
 			row.push(args.ts.data.tourist.gender); // TSex
 			row.push(args.ts.data.tourist.nationality); // TNat
@@ -363,13 +379,13 @@ Aria.classDefinition({
 				};
 				if (args.monkeyIds[0] != null) {
 					row.push(args.monkeyIds[0]);
-					monkeys.mse = args.monkeyIds[0];
+					monkeys.msr = args.monkeyIds[0];
 				}
 
 				row.push('mse');
 				if (args.monkeyIds[1] != null) {
 					row.push(args.monkeyIds[1]);
-					monkeys.msr = args.monkeyIds[1];
+					monkeys.mse = args.monkeyIds[1];
 				}
 
 				row.push(monkeys.msr + 'ms' + monkeys.mse); // MNP Social

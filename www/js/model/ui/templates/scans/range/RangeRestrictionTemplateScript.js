@@ -31,6 +31,7 @@ Aria.tplScriptDefinition({
 			// init
 			this.scanCount = 1;
 			this.data.timer = 600;
+			this.data.smallTimer = 60;
 			this.data.timeStamps = [];
 			this.data.behaviors = this.db.getMonkeyBehaviors();
 
@@ -74,24 +75,35 @@ Aria.tplScriptDefinition({
 							if (timerInfo.timer <= 0) {
 								clearInterval(timerInfo.interval_focal);
 								timerInfo.timer = 1;
+								timerInfo.smallTimer = 1;
 							}
 								
-							var btnEl = document.getElementById(currentPage.$getId("btnSave"));
-							if (btnEl != null) {
-								btnEl.innerHTML = 'Save (' + --timerInfo.timer + ')';
-								
+							var btnSaveEl = document.getElementById(currentPage.$getId("btnSave"));
+							var btnScanEl = document.getElementById(currentPage.$getId("btnScan"));
+							if (btnSaveEl != null && btnScanEl != null) {
+								btnSaveEl.innerHTML = 'Save (' + --timerInfo.timer + ')';
+
+								if (timerInfo.smallTimer > 0) {
+									btnScanEl.innerHTML = 'Scan (' + --timerInfo.smallTimer + ')';
+								}
+
 								if (currentPage.data != null) {
 									currentPage.data.timer -= 1;
+									currentPage.data.smallTimer -= 1;
 								}
 
 								if (currentPage.data.timer == 15 
 									|| (currentPage.data.timer <=5 && currentPage.data.timer >= 0)) {
 									currentPage.utils.playBeep();
+								} else if (currentPage.data.smallTimer == 15 
+									|| (currentPage.data.smallTimer <=5 && currentPage.data.smallTimer >= 0)) {
+									currentPage.utils.playBeep();
 								}
 							}
 							
 						}, 1000),
-					timer: this.data.timer
+					timer: this.data.timer,
+					smallTimer: this.data.smallTimer
 				};
 
 				this.utils.setTimerInfo(timerInfo);
@@ -105,8 +117,12 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
-			input['scanCount'] = this.scanCount;
-
+			if (args.reset) {
+				input['scanCount'] = this.scanCount++;
+			}
+			
+			input['sameSession'] = true;
+			
 			this.data.errors.list = this.moduleCtrl.addRangeRestriction(event, {
 				'input': input
 			});
@@ -126,6 +142,17 @@ Aria.tplScriptDefinition({
 				// refresh buttons
 				this.$json.setValue(this.data, 'behavior_button_refresh', !this.data.behavior_button_refresh);
 				this.data.timeStamps = [];
+
+				// reset timer
+				if (args.reset) {
+					
+					var newTime = this.data.timer;
+					if (this.data.timer >= 60) {
+						newTime = 60;
+					}
+					this.data.smallTimer = newTime;
+					this.utils.getTimerInfo().smallTimer = newTime;
+				}
 			}
 
 			// show error
@@ -148,12 +175,16 @@ Aria.tplScriptDefinition({
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
 				// reset timer
 				this.data.timer = 0;
+				this.data.smallTimer = 0;
 				this.utils.getTimerInfo().timer = 0;
+				this.utils.getTimerInfo().smallTimer = 0;
 
 				// show success dialog
 				this.utils.showOverlay(false);
 				this.$json.setValue(this.data, 'rr_saved', true);
 				this.data.timeStamps = [];
+
+				this.scanCount = 1;
 			}
 
 			// show error
@@ -195,10 +226,16 @@ Aria.tplScriptDefinition({
 				absoluteId: true
 			});
 
-			this.data.timer = 120;
+			this.data.timer = 600;
+			this.data.smallTimer = 60;
 			var el = document.getElementById(this.$getId('btnSave'));
 			if (el != null) {
 				el.innerHTML = 'Save (' + this.data.timer + ')';
+			}
+
+			el = document.getElementById(this.$getId('btnScan'));
+			if (el != null) {
+				el.innerHTML = 'Scan (' + this.data.smallTimer + ')';
 			}
 
 			var timerInfo = this.utils.getTimerInfo();

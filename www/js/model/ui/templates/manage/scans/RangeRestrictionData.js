@@ -60,8 +60,11 @@ Aria.classDefinition({
 			// prepare header [ END ] */
 
 			// prepare content [START] */
+			var count = 0;
 			for (var i = 0; i < args.list.length; i++) {
+
 				var rr = args.list[i];
+				var isIncremented = false;
 				var behaviors = rr.data.behavior_seq.split('-');
 				for (var j = 0; j < behaviors.length; j++) {
 
@@ -102,9 +105,21 @@ Aria.classDefinition({
 						}
 					}
 
+					var session = (isIncremented)?-1:0;
+					if (rr.data.sameSession == null 
+						|| rr.data.sameSession === false) {
+						session += count + 1;
+						if (!isIncremented) {
+							count++;
+							isIncremented = true;
+						}
+					} else {
+						session += count + 1;
+					}
+
 					row = this._getRowData(row, {
 						rr: rr,
-						session: i + 1,
+						session: session,
 						utils: args.utils,
 						user: args.user,
 						behavior: behavior,
@@ -287,13 +302,13 @@ Aria.classDefinition({
 				};
 				if (args.monkeyIds[0] != null) {
 					row.push(args.monkeyIds[0]);
-					monkeys.mse = args.monkeyIds[0];
+					monkeys.msr = args.monkeyIds[0];
 				}
 
 				row.push('mse');
 				if (args.monkeyIds[1] != null) {
 					row.push(args.monkeyIds[1]);
-					monkeys.msr = args.monkeyIds[1];
+					monkeys.mse = args.monkeyIds[1];
 				}
 
 				row.push(monkeys.msr + 'ms' + monkeys.mse); // MNP Social
