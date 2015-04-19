@@ -8,3 +8,6 @@ $phonegap build android
 
 or for iPhone
 $phonegap build ios
+
+For UI framework please refer to
+http://www.ariatemplates.com/
