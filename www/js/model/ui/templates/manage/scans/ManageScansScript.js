@@ -57,14 +57,19 @@ Aria.tplScriptDefinition({
 									
 									if (data.monkey != null) {
 										label += 'Act Code: ' + data.monkey.activity_code + ' | ';
-									}
 
-									if (key2 != null) {
-										try {
-											var temp =  key2.substring(6,8) + '/' + (parseInt(key2.substring(4,6)) + 1) + '/' + key2.substring(0,4);
-											label += 'Date: ' + temp + ' | ';
-										} catch (e) {
-											// dont log for production version
+										var monkeyId = data.monkey.monkey_id;
+										var startTime = data.monkey.startTime;
+
+										if (monkeyId != null) {
+											label += 'Monkey: ' + monkeyId + ' | ';
+										}
+
+										if (startTime != null) {
+											var timeArr = startTime.split('-');
+											var temp = timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5];
+
+											label += 'Time: ' + temp + ' | ';
 										}
 									}
 
@@ -125,13 +130,18 @@ Aria.tplScriptDefinition({
 										label += 'Area Code: ' + data.area_code + ' | ';
 									}
 
-									if (key2 != null) {
-										try {
-											var temp =  key2.substring(6,8) + '/' + (parseInt(key2.substring(4,6)) + 1) + '/' + key2.substring(0,4);
-											label += 'Date: ' + temp + ' | ';
-										} catch (e) {
-											// dont log for production version
-										}
+									var monkeyId = data.monkey_id;
+									var startTime = data.startTime;
+
+									if (monkeyId != null) {
+										label += 'Monkey: ' + monkeyId + ' | ';
+									}
+
+									if (startTime != null) {
+										var timeArr = startTime.split('-');
+										var temp = timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5];
+
+										label += 'Time: ' + temp + ' | ';
 									}
 
 									label += 'Index: ' + (i+1);
@@ -158,12 +168,19 @@ Aria.tplScriptDefinition({
 										label += 'Area Code: ' + data.tourist.areaCode + ' | ';
 									}
 
-									if (key2 != null) {
-										try {
-											var temp =  key2.substring(6,8) + '/' + (parseInt(key2.substring(4,6)) + 1) + '/' + key2.substring(0,4);
-											label += 'Date: ' + temp + ' | ';
-										} catch (e) {
-											// dont log for production version
+									if (data.monkey != null && data.monkey[0] != null) {
+										var monkeyId = data.monkey[0].monkey_id;
+										var startTime = data.monkey[0].startTime;
+
+										if (monkeyId != null) {
+											label += 'Monkey: ' + monkeyId + ' | ';
+										}
+
+										if (startTime != null) {
+											var timeArr = startTime.split('-');
+											var temp = timeArr[3] + ':' + timeArr[4] + ':' + timeArr[5];
+
+											label += 'Time: ' + temp + ' | ';
 										}
 									}
 

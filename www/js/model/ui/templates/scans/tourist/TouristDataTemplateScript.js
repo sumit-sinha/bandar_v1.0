@@ -159,11 +159,12 @@ Aria.tplScriptDefinition({
 			input['startTime'] = this.startTime;
 			input['endTime'] = this.utils.getCurrentTime();
 			input['behavior_timestamp'] = this.data.timeStamps;
+				
+			input['sameSession'] = true;
+			input['scanCount'] = this.scanCount;
 			if (args.reset) {
 				input['scanCount'] = this.scanCount++;
 			}
-			
-			input['sameSession'] = true;
 
 			this.data.errors.list = this.moduleCtrl.saveTouristScanData(input);
 			if (this.data.errors.list == null || this.data.errors.list.length == 0) {
